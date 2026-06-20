@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:screenshot/screenshot.dart';
-import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 
 class ScreenshotService {
   /// Global screenshot controller to capture frame buffers wrapped in the Screenshot widget.
@@ -21,36 +21,32 @@ class ScreenshotService {
     }
   }
 
-  /// Sends the captured binary PNG bytes using multipart/form-data via Dio.
+  /// Sends the captured binary PNG bytes using multipart/form-data via http.
   static Future<bool> _upload(String screenId, Uint8List bytes) async {
     try {
-      final dio = Dio();
-      final formData = FormData.fromMap({
-        'screen_id': screenId,
-        'image': MultipartFile.fromBytes(
+      final uri = Uri.parse('https://cms.thelocads.com/api/player/screenshot');
+      final request = http.MultipartRequest('POST', uri);
+      request.headers['Accept'] = 'application/json';
+      request.fields['screen_id'] = screenId;
+      request.files.add(
+        http.MultipartFile.fromBytes(
+          'image',
           bytes,
           filename: 'screen_${screenId}_${DateTime.now().millisecondsSinceEpoch}.png',
         ),
-      });
-
-      final response = await dio.post(
-        'https://viewsys.co.in/api/player/screenshot',
-        data: formData,
-        options: Options(
-          headers: {
-            'Accept': 'application/json',
-          },
-        ),
       );
 
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+
       if (response.statusCode == 200) {
-        print('Screenshot uploaded successfully via Dio: ${response.data}');
+        print('Screenshot uploaded successfully via http: $responseBody');
         return true;
       } else {
-        print('Screenshot upload failed with status: ${response.statusCode}, Data: ${response.data}');
+        print('Screenshot upload failed with status: ${response.statusCode}, Data: $responseBody');
       }
     } catch (e) {
-      print('Screenshot upload exception via Dio: $e');
+      print('Screenshot upload exception via http: $e');
     }
     return false;
   }

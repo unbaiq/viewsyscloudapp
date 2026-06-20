@@ -47,7 +47,7 @@ class MediaItem {
   factory MediaItem.fromJson(Map<String, dynamic> json) {
     String url = json['url'] as String? ?? '';
     if (url.isNotEmpty && !url.startsWith('http://') && !url.startsWith('https://')) {
-      final baseUrl = 'https://viewsys.co.in';
+      final baseUrl = 'https://cms.thelocads.com';
       final cleanUrl = url.startsWith('/') ? url : '/$url';
       url = '$baseUrl$cleanUrl';
     }
@@ -55,7 +55,7 @@ class MediaItem {
     final parsedId = int.tryParse(json['id']?.toString() ?? '') ?? 0;
     final type = json['type']?.toString() ?? 'image';
     int parsedDuration = int.tryParse(json['duration']?.toString() ?? '') ?? 10;
-    if (type == 'image') {
+    if (parsedDuration <= 0) {
       parsedDuration = 10;
     }
     final orderStr = json['order']?.toString() ?? json['sort_order']?.toString() ?? '';
@@ -95,11 +95,18 @@ class MediaItem {
   }
 
   /// Determines if this media item should be displayed right now based on its schedule and connectivity.
-  bool isValidNow(DateTime now, {bool isOnline = true}) {
+  bool isValidNow(DateTime now, {bool isOnline = true, bool ignoreSchedule = false}) {
+    // A video item must be locally cached/downloaded to be played
+    if (type == 'video' && !isLocallyAvailable()) {
+      return false;
+    }
+
     // If offline, the item must be locally cached to be displayed
     if (!isOnline && !isLocallyAvailable()) {
       return false;
     }
+
+    if (ignoreSchedule) return true;
 
     final sched = schedule;
     if (sched == null) return true; // No schedule implies persistent fallback execution

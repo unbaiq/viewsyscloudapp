@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'activation_screen.dart';
-import 'screens/player_screen.dart';
+import 'screens/player_shell.dart';
 
 class SplashScreen extends StatefulWidget {
   final Widget? nextScreen;
@@ -71,12 +71,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     final prefs = await SharedPreferences.getInstance();
     final isActivated = prefs.getBool('is_activated') ?? false;
     final deviceCode = prefs.getString('activation_code') ?? '';
+    final layout = prefs.getString('screen_layout') ?? 'fullscreen';
 
     if (!mounted) return;
 
     Widget target;
     if (isActivated && deviceCode.isNotEmpty) {
-      target = const PlayerScreen();
+      target = const PlayerShell();
     } else {
       target = widget.nextScreen ?? const ActivationScreen();
     }

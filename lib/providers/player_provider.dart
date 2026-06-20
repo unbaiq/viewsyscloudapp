@@ -2,12 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:video_player/video_player.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/media_item.dart';
+import '../models/ticker_item.dart';
 import '../services/database_helper.dart';
 import '../services/file_manager.dart';
 import '../services/video_preload_manager.dart';
@@ -16,56 +15,69 @@ import '../services/video_preload_manager.dart';
 
 class ActivationState {
   final bool isActivated;
+  final bool isLoading;
   final String deviceCode;
   final String screenId;
   final String companyId;
   final String orientation;
   final int syncInterval;
-  final bool isLoading;
+  final String layout;
 
-  ActivationState({
+  const ActivationState({
     required this.isActivated,
+    required this.isLoading,
     required this.deviceCode,
     required this.screenId,
     required this.companyId,
     required this.orientation,
     required this.syncInterval,
-    this.isLoading = false,
+    required this.layout,
   });
 
   ActivationState copyWith({
     bool? isActivated,
+    bool? isLoading,
     String? deviceCode,
     String? screenId,
     String? companyId,
     String? orientation,
     int? syncInterval,
-    bool? isLoading,
+    String? layout,
   }) {
     return ActivationState(
       isActivated: isActivated ?? this.isActivated,
+      isLoading: isLoading ?? this.isLoading,
       deviceCode: deviceCode ?? this.deviceCode,
       screenId: screenId ?? this.screenId,
       companyId: companyId ?? this.companyId,
       orientation: orientation ?? this.orientation,
       syncInterval: syncInterval ?? this.syncInterval,
-      isLoading: isLoading ?? this.isLoading,
+      layout: layout ?? this.layout,
     );
   }
 }
 
 class ActivationNotifier extends StateNotifier<ActivationState> {
   ActivationNotifier()
-      : super(ActivationState(
+      : super(const ActivationState(
           isActivated: false,
+          isLoading: true,
           deviceCode: '------',
           screenId: '',
           companyId: '',
           orientation: 'landscape',
           syncInterval: 10,
-          isLoading: true, // Initial loading is true
+          layout: 'fullscreen',
         )) {
     loadActivationFromPrefs();
+  }
+
+  String _normalizeLayout(String? raw) {
+    final clean = raw?.trim().toLowerCase();
+    if (clean == 'ticker' || clean == 'header') {
+      return clean!;
+    }
+    return 'fullscreen';
   }
 
   /// Initial load from disk SharedPreferences
@@ -78,6 +90,7 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
     final orientation = prefs.getString('orientation') ?? 'landscape';
     final syncIntervalStr = prefs.getString('sync_interval') ?? '10';
     final syncInterval = int.tryParse(syncIntervalStr) ?? 10;
+    final layout = _normalizeLayout(prefs.getString('screen_layout'));
 
     state = ActivationState(
       isActivated: isActivated && deviceCode != '------' && screenId.isNotEmpty,
@@ -86,6 +99,7 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
       companyId: companyId,
       orientation: orientation,
       syncInterval: syncInterval,
+      layout: layout,
       isLoading: false, // Finished loading
     );
   }
@@ -96,13 +110,27 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
     required String companyId,
     required String orientation,
     required int syncInterval,
+    String? layout,
   }) async {
     final prefs = await SharedPreferences.getInstance();
+    final oldScreenId = prefs.getString('screen_id');
+
+    // Wipe cached playlists and local files if the screen ID changes to avoid stale bleed
+    if (oldScreenId != screenId) {
+      await prefs.remove('playlist_version');
+      await DatabaseHelper.instance.clearPlaylist();
+      await FileManager.instance.clearAllCachedMedia();
+      VideoPreloadManager.instance.clearAll();
+    }
+
+    final cleanLayout = _normalizeLayout(layout);
+
     await prefs.setBool('is_activated', true);
     await prefs.setString('screen_id', screenId);
     await prefs.setString('company_id', companyId);
     await prefs.setString('orientation', orientation);
     await prefs.setString('sync_interval', syncInterval.toString());
+    await prefs.setString('screen_layout', cleanLayout);
 
     state = state.copyWith(
       isActivated: true,
@@ -110,6 +138,7 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
       companyId: companyId,
       orientation: orientation,
       syncInterval: syncInterval,
+      layout: cleanLayout,
       isLoading: false, // Ensure loading is false on activation
     );
   }
@@ -123,13 +152,26 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
     state = state.copyWith(orientation: newOrientation);
   }
 
+  /// Update screen layout dynamically from central CMS sync pings
+  Future<void> updateLayout(String newLayout) async {
+    final cleanLayout = _normalizeLayout(newLayout);
+    if (state.layout == cleanLayout) return;
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('screen_layout', cleanLayout);
+    state = state.copyWith(layout: cleanLayout);
+  }
+
   /// Refreshes the activation details from the server using the saved device/pairing code.
   Future<bool> refreshActivationDetails() async {
     if (state.deviceCode == '------' || state.deviceCode.isEmpty) return false;
     if (kIsWeb) return true;
+    if (!kIsWeb && Platform.environment.containsKey('FLUTTER_TEST')) {
+      return true;
+    }
 
     try {
-      final url = Uri.parse('https://viewsys.co.in/api/player/login');
+      final url = Uri.parse('https://cms.thelocads.com/api/player/login');
       final response = await http.post(
         url,
         headers: {
@@ -147,12 +189,14 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
           final orientation = data['orientation']?.toString() ?? 'landscape';
           final syncIntervalStr = data['sync_interval']?.toString() ?? '10';
           final syncInterval = int.tryParse(syncIntervalStr) ?? 10;
+          final layout = _normalizeLayout(data['layout_type']?.toString() ?? data['layout']?.toString());
 
           await activateDevice(
             screenId: screenId,
             companyId: companyId,
             orientation: orientation,
             syncInterval: syncInterval,
+            layout: layout,
           );
           return true;
         } else {
@@ -174,6 +218,7 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
   Future<void> _deactivateDevice() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('is_activated', false);
+    await prefs.remove('screen_layout');
     
     // Wipe cached playlists and local files
     await DatabaseHelper.instance.clearPlaylist();
@@ -186,6 +231,7 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
       isActivated: false,
       screenId: '',
       companyId: '',
+      layout: 'fullscreen',
     );
   }
 
@@ -200,6 +246,7 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
     await prefs.remove('company_id');
     await prefs.remove('orientation');
     await prefs.remove('sync_interval');
+    await prefs.remove('screen_layout');
 
     // Wipe cached playlists and local files
     await DatabaseHelper.instance.clearPlaylist();
@@ -215,6 +262,7 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
       companyId: '',
       orientation: 'landscape',
       syncInterval: 10,
+      layout: 'fullscreen',
       isLoading: false,
     );
   }
@@ -267,7 +315,9 @@ class PlaylistState {
 }
 
 class PlaylistNotifier extends StateNotifier<PlaylistState> {
-  int _currentDownloadSession = 0;
+  bool _isDownloading = false;
+  final Set<int> _failedDownloads = {};
+  final Map<int, double> _downloadProgresses = {};
 
   PlaylistNotifier() : super(PlaylistState(items: [], hasInitialized: false, isOnline: true)) {
     loadCachedPlaylist().then((_) {
@@ -276,7 +326,7 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
         final mockItems = [
           MediaItem(
             id: 991,
-            url: 'https://viewsys.co.in/assets/images/logo.png',
+            url: 'https://cms.thelocads.com/assets/images/logo.png',
             type: 'image',
             duration: 10,
             order: 1,
@@ -289,7 +339,7 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
           ),
           MediaItem(
             id: 992,
-            url: 'https://viewsys.co.in/assets/images/logo.png',
+            url: 'https://cms.thelocads.com/assets/images/logo.png',
             type: 'image',
             duration: 10,
             order: 2,
@@ -308,14 +358,24 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
   }
 
   Future<void> _checkInitialConnectivity() async {
+    if (!kIsWeb && Platform.environment.containsKey('FLUTTER_TEST')) {
+      state = state.copyWith(isOnline: true);
+      return;
+    }
     try {
       final result = await InternetAddress.lookup('google.com').timeout(const Duration(seconds: 3));
       if (!mounted) return;
       final online = result.isNotEmpty && result[0].rawAddress.isNotEmpty;
       state = state.copyWith(isOnline: online);
+      if (!online) {
+        // Fallback: immediately play cached files on startup only if there is no internet
+        markInitialized();
+      }
     } catch (_) {
       if (!mounted) return;
       state = state.copyWith(isOnline: false);
+      // Fallback: immediately play cached files on startup only if there is no internet
+      markInitialized();
     }
   }
 
@@ -323,7 +383,15 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
   void setOnlineStatus(bool online) {
     if (state.isOnline != online) {
       state = state.copyWith(isOnline: online);
-      // Re-evaluate current index based on new connectivity status
+      // Re-evaluate current index based on new connectivity status, preserving if still valid
+      final now = DateTime.now();
+      if (state.items.isNotEmpty && state.currentIndex >= 0 && state.currentIndex < state.items.length) {
+        final currentItem = state.items[state.currentIndex];
+        if (currentItem.isValidNow(now, isOnline: online)) {
+          _preloadNextItem();
+          return;
+        }
+      }
       final validIdx = _findFirstValidIndex(state.items);
       state = state.copyWith(currentIndex: validIdx);
       _preloadNextItem();
@@ -347,7 +415,7 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
         items: items,
         currentIndex: _findFirstValidIndex(items),
         isLoading: false,
-        hasInitialized: items.isNotEmpty,
+        hasInitialized: state.hasInitialized, // Preserve initialized state from connectivity checks
         isOnline: state.isOnline,
         downloadProgress: state.downloadProgress,
       );
@@ -360,8 +428,7 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
           _preloadNextItem();
 
           // Verify and download any missing media files sequentially
-          _currentDownloadSession++;
-          _startBackgroundDownload(resolved, _currentDownloadSession);
+          _startBackgroundDownload(resolved);
         });
       }
     } catch (e) {
@@ -379,6 +446,42 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
     }
   }
 
+  /// Clears local path of a corrupt item, saves to DB, deletes physical file, and restarts background downloader to heal it
+  Future<void> handleCorruptVideo(int itemId) async {
+    // 1. Delete corrupt file physically from disk
+    final match = state.items.where((it) => it.id == itemId).toList();
+    if (match.isNotEmpty) {
+      final item = match.first;
+      if (item.localPath != null && !kIsWeb) {
+        try {
+          final file = File(item.localPath!);
+          if (file.existsSync()) {
+            file.deleteSync();
+            print('[PlaylistNotifier] Deleted corrupt video file at: ${item.localPath}');
+          }
+        } catch (e) {
+          print('[PlaylistNotifier] Failed to delete corrupt video file physically: $e');
+        }
+      }
+    }
+
+    // 2. Clear localPath in memory state
+    final updatedItems = state.items.map((it) {
+      if (it.id == itemId) {
+        return it.copyWith(localPath: null);
+      }
+      return it;
+    }).toList();
+
+    state = state.copyWith(items: updatedItems);
+
+    // 3. Clear localPath in SQLite database
+    await DatabaseHelper.instance.updateLocalPath(itemId, null);
+
+    // 4. Restart sequential background downloader session to heal the item
+    _startBackgroundDownload(updatedItems);
+  }
+
   /// Replaces the playlist schedule with new server schema, caches media files,
   /// and updates SQLite database.
   Future<void> updatePlaylist(List<MediaItem> newItems) async {
@@ -386,16 +489,16 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
     try {
       // 1. Retrieve existing local cache mappings from current database items
       final oldItems = await DatabaseHelper.instance.getPlaylist();
-      final Map<int, String?> localPathMap = {
-        for (var item in oldItems)
-          if (item.localPath != null && (kIsWeb || File(item.localPath!).existsSync()))
-            item.id: item.localPath
-      };
 
-      // Map the local cache paths back into our new media list
+      // Map the local cache paths back into our new media list, ensuring both ID and URL match to avoid stale bleed
       final List<MediaItem> itemsToUse = newItems.map((item) {
-        if (localPathMap.containsKey(item.id)) {
-          return item.copyWith(localPath: localPathMap[item.id]);
+        final matches = oldItems.where((o) => o.id == item.id && o.url == item.url).toList();
+        if (matches.isNotEmpty) {
+          final matchingOldItem = matches.first;
+          if (matchingOldItem.localPath != null &&
+              (kIsWeb || File(matchingOldItem.localPath!).existsSync())) {
+            return item.copyWith(localPath: matchingOldItem.localPath);
+          }
         }
         return item;
       }).toList();
@@ -406,10 +509,24 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
       // Pre-resolve orientations in background before updating UI state
       final resolvedItems = await _resolveOrientations(itemsToUse);
 
+      // Determine the next index to use, preserving the currently playing item if possible
+      int targetIndex = 0;
+      if (state.items.isNotEmpty && state.currentIndex >= 0 && state.currentIndex < state.items.length) {
+        final currentItem = state.items[state.currentIndex];
+        final matchIdx = resolvedItems.indexWhere((it) => it.id == currentItem.id && it.url == currentItem.url);
+        if (matchIdx != -1) {
+          targetIndex = matchIdx;
+        } else {
+          targetIndex = _findFirstValidIndex(resolvedItems);
+        }
+      } else {
+        targetIndex = _findFirstValidIndex(resolvedItems);
+      }
+
       // 3. Update memory state immediately to allow direct, immediate playout!
       state = PlaylistState(
         items: resolvedItems,
-        currentIndex: _findFirstValidIndex(resolvedItems),
+        currentIndex: targetIndex,
         isLoading: false,
         hasInitialized: true,
         isOnline: state.isOnline,
@@ -419,8 +536,7 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
       _preloadNextItem();
 
       // 4. Start sequential background downloader prioritising the active item
-      _currentDownloadSession++;
-      _startBackgroundDownload(resolvedItems, _currentDownloadSession);
+      _startBackgroundDownload(resolvedItems);
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
@@ -429,80 +545,100 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
     }
   }
 
-  /// Asynchronously downloads missing media items in parallel in the background.
-  Future<void> _startBackgroundDownload(List<MediaItem> items, int session) async {
-    if (items.isEmpty) return;
-
+  /// Asynchronously downloads missing media items sequentially in the background.
+  Future<void> _startBackgroundDownload(List<MediaItem> items) async {
+    // Update progress tracker keys based on currently uncached items
     final itemsToDownload = items.where((item) => !item.isLocallyAvailable()).toList();
-    if (itemsToDownload.isEmpty) {
-      if (session == _currentDownloadSession) {
-        state = state.copyWith(downloadProgress: 0.0);
+    _downloadProgresses.removeWhere((id, _) => !itemsToDownload.any((it) => it.id == id));
+    for (var item in itemsToDownload) {
+      _downloadProgresses.putIfAbsent(item.id, () => 0.0);
+    }
+
+    if (_isDownloading) {
+      return; // A loop is already running and will automatically pick up updated state.items
+    }
+
+    _isDownloading = true;
+
+    try {
+      if (kIsWeb) {
+        state = state.copyWith(downloadProgress: 0.01);
+        while (mounted) {
+          final pending = state.items
+              .where((item) => !item.isLocallyAvailable() && !_failedDownloads.contains(item.id))
+              .toList();
+          if (pending.isEmpty) break;
+
+          final item = pending.first;
+          for (int p = 10; p <= 100; p += 10) {
+            await Future.delayed(const Duration(milliseconds: 100));
+            if (!mounted) return;
+            if (!state.items.any((it) => it.id == item.id)) break;
+
+            _downloadProgresses[item.id] = p / 100.0;
+            final total = _downloadProgresses.length;
+            if (total > 0) {
+              final sum = _downloadProgresses.values.fold(0.0, (a, b) => a + b);
+              state = state.copyWith(downloadProgress: sum / total);
+            }
+          }
+
+          if (!mounted) return;
+          if (state.items.any((it) => it.id == item.id)) {
+            final updatedItems = state.items.map((it) {
+              if (it.id == item.id) {
+                return it.copyWith(localPath: 'web_cached_${it.id}');
+              }
+              return it;
+            }).toList();
+            state = state.copyWith(items: updatedItems);
+            _preloadNextItem();
+          }
+        }
+        if (mounted) {
+          state = state.copyWith(downloadProgress: 0.0);
+        }
+        return;
       }
-      return;
-    }
 
-    final total = itemsToDownload.length;
-    final Map<int, double> progresses = {for (var item in itemsToDownload) item.id: 0.0};
-
-    void updateOverallProgress() {
-      if (!mounted || session != _currentDownloadSession) return;
-      final sum = progresses.values.fold(0.0, (a, b) => a + b);
-      state = state.copyWith(downloadProgress: sum / total);
-    }
-
-    if (kIsWeb) {
-      // Simulate parallel download progress on Web so the user can see it!
+      // Initialize progress state
       state = state.copyWith(downloadProgress: 0.01);
-      
-      for (int p = 10; p <= 100; p += 10) {
-        await Future.delayed(const Duration(milliseconds: 200));
-        if (!mounted || session != _currentDownloadSession) return;
 
-        for (var item in itemsToDownload) {
-          progresses[item.id] = p / 100.0;
-        }
-        updateOverallProgress();
-      }
+      while (mounted) {
+        final pending = state.items
+            .where((item) => !item.isLocallyAvailable() && !_failedDownloads.contains(item.id))
+            .toList();
+        if (pending.isEmpty) break;
 
-      if (!mounted || session != _currentDownloadSession) return;
-
-      // Mark all items as cached locally in-memory for Web demo
-      final updatedItems = state.items.map((it) {
-        final matches = itemsToDownload.any((d) => d.id == it.id);
-        if (matches) {
-          return it.copyWith(localPath: 'web_cached_${it.id}');
-        }
-        return it;
-      }).toList();
-
-      state = state.copyWith(items: updatedItems, downloadProgress: 0.0);
-      _preloadNextItem();
-      return;
-    }
-
-    // Initialize progress state
-    state = state.copyWith(downloadProgress: 0.01);
-
-    // Start all downloads in parallel in background
-    await Future.wait(
-      itemsToDownload.map((item) async {
-        if (!mounted || session != _currentDownloadSession) return;
+        final item = pending.first;
 
         final localPath = await FileManager.instance.downloadFile(
           item.url,
           item.id,
           itemType: item.type,
           onProgress: (progress) {
-            if (!mounted || session != _currentDownloadSession) return;
-            progresses[item.id] = progress;
-            updateOverallProgress();
+            if (!mounted) return;
+            if (!state.items.any((it) => it.id == item.id)) return;
+
+            _downloadProgresses[item.id] = progress;
+            final total = _downloadProgresses.length;
+            if (total > 0) {
+              final sum = _downloadProgresses.values.fold(0.0, (a, b) => a + b);
+              state = state.copyWith(downloadProgress: sum / total);
+            }
           },
+          isCancelled: () => !mounted || !state.items.any((it) => it.id == item.id),
         );
 
-        if (!mounted || session != _currentDownloadSession) return;
+        if (!mounted) return;
+
+        // Verify that the item was not removed from the active playlist during download
+        if (!state.items.any((it) => it.id == item.id)) {
+          continue;
+        }
 
         if (localPath != null) {
-          // Map downloaded local path to items
+          // Map downloaded local path to items in the memory state
           final updatedItems = state.items.map((it) {
             if (it.id == item.id) {
               return it.copyWith(localPath: localPath);
@@ -513,19 +649,32 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
           // Persist local path mapping in SQLite
           await DatabaseHelper.instance.savePlaylist(updatedItems);
 
-          // Update memory state to allow playout from disk
-          if (!mounted || session != _currentDownloadSession) return;
+          if (!mounted) return;
           state = state.copyWith(items: updatedItems);
           _preloadNextItem();
+        } else {
+          // Failed to download: add to failed downloads list to avoid looping endlessly
+          _failedDownloads.add(item.id);
         }
-      }),
-    );
+      }
 
-    // Clean up orphaned cache files once everything is fully cached
-    if (session == _currentDownloadSession) {
-      state = state.copyWith(downloadProgress: 0.0);
-      await FileManager.instance.cleanUnusedFiles(state.items);
+      // Clean up orphaned cache files once everything is fully cached
+      if (mounted) {
+        state = state.copyWith(downloadProgress: 0.0);
+        await FileManager.instance.cleanUnusedFiles(state.items);
+      }
+    } finally {
+      _isDownloading = false;
+      _downloadProgresses.clear();
     }
+  }
+
+  bool _hasAnyValidScheduledItem(List<MediaItem> list, DateTime now, {required bool isOnline}) {
+    final scheduledItems = list.where((item) => item.schedule != null);
+    if (scheduledItems.isEmpty) {
+      return list.any((item) => item.isValidNow(now, isOnline: isOnline, ignoreSchedule: false));
+    }
+    return scheduledItems.any((item) => item.isValidNow(now, isOnline: isOnline, ignoreSchedule: false));
   }
 
   /// Increments sequence pointer to select the next valid scheduled item.
@@ -535,10 +684,11 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
     final startIdx = state.currentIndex;
     int nextIdx = (startIdx + 1) % state.items.length;
     final now = DateTime.now();
+    final ignoreSchedule = !_hasAnyValidScheduledItem(state.items, now, isOnline: state.isOnline);
 
     // Loop through checklist to find the next active item
     while (nextIdx != startIdx) {
-      if (state.items[nextIdx].isValidNow(now, isOnline: state.isOnline)) {
+      if (state.items[nextIdx].isValidNow(now, isOnline: state.isOnline, ignoreSchedule: ignoreSchedule)) {
         state = state.copyWith(currentIndex: nextIdx);
         _preloadNextItem();
         return;
@@ -547,7 +697,7 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
     }
 
     // Check if startIdx itself is valid
-    if (state.items[startIdx].isValidNow(now, isOnline: state.isOnline)) {
+    if (state.items[startIdx].isValidNow(now, isOnline: state.isOnline, ignoreSchedule: ignoreSchedule)) {
       return;
     }
   }
@@ -556,8 +706,9 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
   int _findFirstValidIndex(List<MediaItem> list) {
     if (list.isEmpty) return 0;
     final now = DateTime.now();
+    final ignoreSchedule = !_hasAnyValidScheduledItem(list, now, isOnline: state.isOnline);
     for (int i = 0; i < list.length; i++) {
-      if (list[i].isValidNow(now, isOnline: state.isOnline)) {
+      if (list[i].isValidNow(now, isOnline: state.isOnline, ignoreSchedule: ignoreSchedule)) {
         return i;
       }
     }
@@ -578,16 +729,17 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
     final startIdx = state.currentIndex;
     int nextIdx = (startIdx + 1) % state.items.length;
     final now = DateTime.now();
+    final ignoreSchedule = !_hasAnyValidScheduledItem(state.items, now, isOnline: state.isOnline);
 
     while (nextIdx != startIdx) {
-      if (state.items[nextIdx].isValidNow(now, isOnline: state.isOnline)) {
+      if (state.items[nextIdx].isValidNow(now, isOnline: state.isOnline, ignoreSchedule: ignoreSchedule)) {
         return nextIdx;
       }
       nextIdx = (nextIdx + 1) % state.items.length;
     }
     
     // Check if startIdx itself is valid when wrapping around
-    if (state.items[startIdx].isValidNow(now, isOnline: state.isOnline)) {
+    if (state.items[startIdx].isValidNow(now, isOnline: state.isOnline, ignoreSchedule: ignoreSchedule)) {
       return startIdx;
     }
     return -1;
@@ -599,7 +751,11 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
     if (nextIdx != -1) {
       final nextItem = state.items[nextIdx];
       if (nextItem.type == 'video') {
-        VideoPreloadManager.instance.preload(nextItem);
+        VideoPreloadManager.instance.preload(nextItem).then((success) {
+          if (!success && mounted) {
+            handleCorruptVideo(nextItem.id);
+          }
+        });
       }
       // Keep only the current item and the next item controllers
       final currentItem = state.items[state.currentIndex];
@@ -627,4 +783,40 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
 
 final playlistProvider = StateNotifierProvider<PlaylistNotifier, PlaylistState>((ref) {
   return PlaylistNotifier();
+});
+
+class TickersNotifier extends StateNotifier<List<TickerItem>> {
+  TickersNotifier() : super([]) {
+    loadTickersFromPrefs();
+  }
+
+  Future<void> loadTickersFromPrefs() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final jsonStr = prefs.getString('cached_tickers_json');
+      if (jsonStr != null && jsonStr.isNotEmpty) {
+        final decoded = jsonDecode(jsonStr);
+        if (decoded is List) {
+          state = decoded.map((item) => TickerItem.fromJson(item as Map<String, dynamic>)).toList();
+        }
+      }
+    } catch (e) {
+      print('Failed to load cached tickers: $e');
+    }
+  }
+
+  Future<void> updateTickers(List<TickerItem> newTickers) async {
+    state = newTickers;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final jsonStr = jsonEncode(newTickers.map((item) => item.toJson()).toList());
+      await prefs.setString('cached_tickers_json', jsonStr);
+    } catch (e) {
+      print('Failed to save tickers to prefs: $e');
+    }
+  }
+}
+
+final tickersProvider = StateNotifierProvider<TickersNotifier, List<TickerItem>>((ref) {
+  return TickersNotifier();
 });

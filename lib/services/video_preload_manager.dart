@@ -12,11 +12,11 @@ class VideoPreloadManager {
   final Map<int, Future<void>> _initFutures = {};
 
   /// Preloads a video controller for the given [item] only if it exists locally.
-  Future<void> preload(MediaItem item) async {
-    if (item.type != 'video') return;
+  Future<bool> preload(MediaItem item) async {
+    if (item.type != 'video') return true;
     if (_controllers.containsKey(item.id)) {
       // Already preloaded or preloading
-      return;
+      return true;
     }
 
     final fileExists = item.localPath != null &&
@@ -27,27 +27,33 @@ class VideoPreloadManager {
 
     // Only preload if the file is cached locally. Network preloading causes severe buffering
     // congestion and stutters the currently playing video.
-    if (!fileExists) return;
+    if (!fileExists) return false;
 
     print('[VideoPreloadManager] Preloading video for item ${item.id}: ${item.localPath}');
     try {
       final controller = VideoPlayerController.file(File(item.localPath!));
       _controllers[item.id] = controller;
       
+      final completer = Completer<bool>();
       final initFuture = controller.initialize().then((_) {
         print('[VideoPreloadManager] Preload successfully initialized for item ${item.id}');
+        if (!completer.isCompleted) completer.complete(true);
       }).catchError((e) {
         print('[VideoPreloadManager] Preload initialization failed for item ${item.id}: $e');
         _controllers.remove(item.id);
         _initFutures.remove(item.id);
+        if (!completer.isCompleted) completer.complete(false);
       });
       
       _initFutures[item.id] = initFuture;
-      await initFuture;
+      
+      final success = await completer.future;
+      return success;
     } catch (e) {
       print('[VideoPreloadManager] Error setting up preload for item ${item.id}: $e');
       _controllers.remove(item.id);
       _initFutures.remove(item.id);
+      return false;
     }
   }
 

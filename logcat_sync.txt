@@ -1,0 +1,958 @@
+﻿--------- beginning of main
+06-18 15:17:34.192  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:34.192  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:34.192  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:34.571  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.008574161]
+06-18 15:17:34.572  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.97018874]
+06-18 15:17:34.572  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.60358304]
+06-18 15:17:34.572  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.151 msecs
+06-18 15:17:34.574  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.585115 msecs
+06-18 15:17:34.576  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.555654 msecs
+06-18 15:17:34.801 20713  9232 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:34.801 20713  9232 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:34.847 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:35.078  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.013697167]
+06-18 15:17:35.078  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9874851]
+06-18 15:17:35.078  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.6193279]
+06-18 15:17:35.078  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.015154 msecs
+06-18 15:17:35.080  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.2005 msecs
+06-18 15:17:35.081  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.125808 msecs
+06-18 15:17:35.192  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:35.192  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:35.192  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:35.583  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.007026046]
+06-18 15:17:35.583  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.90839136]
+06-18 15:17:35.584  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.7220393]
+06-18 15:17:35.584  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.111615 msecs
+06-18 15:17:35.586  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 2.273577 msecs
+06-18 15:17:35.590  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.441884 msecs
+06-18 15:17:35.849 20713  9235 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:35.849 20713  9235 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:35.880 23055  9116 I NearbyMediums: Found Fast Ble Advertisements :
+06-18 15:17:35.880 23055  9116 I NearbyMediums: BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x34 0x38 0x42 0x56 0x11 0x32 0x1f 0x05 0xb1 0x77 0xec 0xd3 0x0c 0x69 0x6b 0x66 0x92 0x1f 0x2a 0xff 0x50 0x3f ], deviceToken=[ 0xe4 0x5b ], rxAdvertisement=null } : 4 times.
+06-18 15:17:35.880 23055  9116 I NearbyMediums: Total 4 fast advertisements from 1 unique advertisers.
+06-18 15:17:35.880 23055  9116 I NearbyMediums: Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-18 15:17:35.882 23055  9115 I NearbyConnections: Processing lost BlePeripheral BlePeripheral{advertisement=BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x52 0x38 0x54 0x46 0x11 0x32 0xcd 0x75 0xe6 0x64 0x04 0x3e 0x65 0xdd 0xb2 0xb9 0x89 0xe6 0xda 0xef 0xc2 0x3b ], deviceToken=[ 0x71 0x82 ], rxAdvertisement=null }, dctAdvertisement=null, address=null, psm=0, deviceToken=<ByteString@8a2abb1 size=2 contents="q\202">, isSecondProfile=false, rxInstantConnectionAdv=null}.
+06-18 15:17:35.882 23055  9115 I NearbyConnections: Lost BleEndpoint for BlePeripheral BlePeripheral{advertisement=BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x52 0x38 0x54 0x46 0x11 0x32 0xcd 0x75 0xe6 0x64 0x04 0x3e 0x65 0xdd 0xb2 0xb9 0x89 0xe6 0xda 0xef 0xc2 0x3b ], deviceToken=[ 0x71 0x82 ], rxAdvertisement=null }, dctAdvertisement=null, address=null, psm=0, deviceToken=<ByteString@8a2abb1 size=2 contents="q\202">, isSecondProfile=false, rxInstantConnectionAdv=null} (with EndpointId R8TF and EndpointInfo [ 0x32 0xcd 0x75 0xe6 0x64 0x04 0x3e 0x65 0xdd 0xb2 0xb9 0x89 0xe6 0xda 0xef 0xc2 0x3b ]).
+06-18 15:17:35.884 23055  9115 I NearbyConnections: ClientProxy(174291486) reporting onEndpointLost(R8TF)
+06-18 15:17:35.885 23055  9236 I NearbySharing: NearbySharing Internal event EndpointLost(endpointId=R8TF)
+06-18 15:17:35.887 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:36.192  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:36.193  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:36.193  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:36.382  1209 25662 D SemWifiUsabilityStatsMonitor: onWifiUsabilityStats - seqNum 80908, isSameBssidAndFreq true
+06-18 15:17:36.385  1209  1565 I SemWifiLinkQualityMonitor: Link Qos Query: 0.640 ms / 12.496 Mbps (52 / 0.000 / 4.161)
+06-18 15:17:36.563  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.01567315]
+06-18 15:17:36.563  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9704553]
+06-18 15:17:36.564  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.836201]
+06-18 15:17:36.564  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.216154 msecs
+06-18 15:17:36.566  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.618731 msecs
+06-18 15:17:36.567  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.647 msecs
+06-18 15:17:36.891 20713  9237 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:36.891 20713  9237 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:36.931 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:37.068  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.008961292]
+06-18 15:17:37.070  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.8606697]
+06-18 15:17:37.070  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.86743706]
+06-18 15:17:37.070  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 2.16523 msecs
+06-18 15:17:37.072  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.614384 msecs
+06-18 15:17:37.074  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.700154 msecs
+06-18 15:17:37.193  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:37.193  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:37.193  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:37.575  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0067543243]
+06-18 15:17:37.576  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9423111]
+06-18 15:17:37.576  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.80892575]
+06-18 15:17:37.576  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.154038 msecs
+06-18 15:17:37.578  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.645346 msecs
+06-18 15:17:37.581  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.482 msecs
+06-18 15:17:37.679   980   401 D AudioAnalytics: gc(1700, 2000): log size:1700 item map size:21, item map items:1700
+06-18 15:17:37.934 20713  9238 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:37.935 20713  9238 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:37.975 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:38.081  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.002582815]
+06-18 15:17:38.081  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.963828]
+06-18 15:17:38.081  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.7698914]
+06-18 15:17:38.081  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 0.812115 msecs
+06-18 15:17:38.083  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.268731 msecs
+06-18 15:17:38.085  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.342231 msecs
+--------- beginning of system
+06-18 15:17:38.126 27731 27731 I wpa_supplicant: Heartbeat 426
+06-18 15:17:38.194  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:38.194  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:38.194  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:38.585  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0060798326]
+06-18 15:17:38.586  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.982625]
+06-18 15:17:38.586  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.9145324]
+06-18 15:17:38.586  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.475423 msecs
+06-18 15:17:38.588  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.680385 msecs
+06-18 15:17:38.590  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.162192 msecs
+06-18 15:17:38.978 20713  9239 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:38.978 20713  9239 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:39.031 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:39.194  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:39.194  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:39.194  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:39.396  1209 25662 D SemWifiUsabilityStatsMonitor: onWifiUsabilityStats - seqNum 80909, isSameBssidAndFreq true
+06-18 15:17:39.398  1209  1565 I SemWifiLinkQualityMonitor: Link Qos Query: 0.952 ms / 8.405 Mbps (39 / 0.000 / 4.640)
+06-18 15:17:39.566  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0035652386]
+06-18 15:17:39.567  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9820064]
+06-18 15:17:39.568  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.7185289]
+06-18 15:17:39.568  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.457461 msecs
+06-18 15:17:39.570  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 2.525154 msecs
+06-18 15:17:39.572  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.2695 msecs
+06-18 15:17:39.843 27630 27871 D BtGatt.GattService: onScanResult to scannerId: 4- eventType=0x10, addressType=1, address=017E35_9, primaryPhy=1, secondaryPhy=0, advertisingSid=0xff, txPower=127, rssi=-86, periodicAdvInt=0x0
+06-18 15:17:40.034 20713  9240 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:40.035 20713  9240 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:40.074  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.045276687]
+06-18 15:17:40.075  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9294498]
+06-18 15:17:40.076  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.9646908]
+06-18 15:17:40.076  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 2.190884 msecs
+06-18 15:17:40.079  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 2.846192 msecs
+06-18 15:17:40.079 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:40.081  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.834461 msecs
+06-18 15:17:40.195  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:40.195  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:40.195  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:40.314 27630 27871 D BtGatt.GattService: onScanResult to scannerId: 4- eventType=0x0, addressType=1, address=0B6A75_5, primaryPhy=1, secondaryPhy=1, advertisingSid=0x3, txPower=127, rssi=-84, periodicAdvInt=0x0
+06-18 15:17:40.317 23055  9236 I NearbyConnections: Found BleAdvertisement [ 0x23 0x52 0x38 0x54 0x46 0x11 0x32 0xcd 0x75 0xe6 0x64 0x04 0x3e 0x65 0xdd 0xb2 0xb9 0x89 0xe6 0xda 0xef 0xc2 0x3b ] (with EndpointId R8TF and EndpointInfo [ 0x32 0xcd 0x75 0xe6 0x64 0x04 0x3e 0x65 0xdd 0xb2 0xb9 0x89 0xe6 0xda 0xef 0xc2 0x3b ])
+06-18 15:17:40.319 23055  9236 I NearbyConnections: ClientProxy(174291486 0p:com.google.android.gms.nearby.sharing) reporting onEndpointFound(R8TF)
+06-18 15:17:40.320 23055  9236 I NearbyConnections: ClientProxy(174291486) reporting onEndpointDistanceChanged(R8TF, UNKNOWN)
+06-18 15:17:40.321 23055  9115 I NearbySharing: NearbySharing Internal event EndpointDiscovered(endpointId=R8TF)
+06-18 15:17:40.582  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.010602724]
+06-18 15:17:40.582  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9798902]
+06-18 15:17:40.582  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.92884785]
+06-18 15:17:40.582  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 0.715308 msecs
+06-18 15:17:40.584  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.226038 msecs
+06-18 15:17:40.585  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 0.877192 msecs
+06-18 15:17:40.611   870  3010 D DlbDap2Process: process() called [123000] times with input format 0x22 and channel mask 0x3 (ProcessingMode=1), htEnable=0(0, 0, 0)
+06-18 15:17:41.083 20713  9241 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:41.083 20713  9241 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:41.086  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0067979405]
+06-18 15:17:41.086  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.89903474]
+06-18 15:17:41.088  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.7257329]
+06-18 15:17:41.088  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 2.073154 msecs
+06-18 15:17:41.090  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 2.034923 msecs
+06-18 15:17:41.092  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.129884 msecs
+06-18 15:17:41.115 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:41.195  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:41.195  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:41.195  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:41.471   810   810 E audit   : type=1400 audit(1781776061.469:229054): avc:  denied  { write } for  pid=22276 comm="PerfettoTrace" name="traced_producer" dev="tmpfs" ino=15699 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:traced_producer_socket:s0 tclass=sock_file permissive=0 SEPF_SM-M127G_13_0001 audit_filtered
+06-18 15:17:41.471   810   810 E audit   : type=1300 audit(1781776061.469:229054): arch=c00000b7 syscall=203 success=no exit=-13 a0=11c a1=76006834a0 a2=1e a3=ffffffff95d47905 items=1 ppid=827 pid=22276 auid=4294967295 uid=10200 gid=10200 euid=10200 suid=10200 fsuid=10200 egid=10200 sgid=10200 fsgid=10200 tty=(none) ses=4294967295 comm="PerfettoTrace" exe="/system/bin/app_process64" subj=u:r:gmscore_app:s0:c512,c768 key=(null)
+06-18 15:17:41.471   810   810 E audit   : type=1306 audit(1781776061.469:229054): saddr=01002F6465762F736F636B65742F7472616365645F70726F647563657200
+06-18 15:17:41.471   810   810 E audit   : type=1302 audit(1781776061.469:229054): item=0 name="/dev/socket/traced_producer" inode=15699 dev=00:10 mode=0140666 ouid=0 ogid=0 rdev=00:00 obj=u:object_r:traced_producer_socket:s0 nametype=NORMAL cap_fp=0000000000000000 cap_fi=0000000000000000 cap_fe=0 cap_fver=0
+06-18 15:17:41.471   810   810 E audit   : type=1327 audit(1781776061.469:229054): proctitle="com.google.android.gms"
+06-18 15:17:41.592  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.075244926]
+06-18 15:17:41.593  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.51820993]
+06-18 15:17:41.593  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.8788125]
+06-18 15:17:41.593  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.004808 msecs
+06-18 15:17:41.595  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.601924 msecs
+06-18 15:17:41.597  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.644154 msecs
+06-18 15:17:42.119 20713  9243 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:42.119 20713  9243 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:42.155 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:42.196  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:42.196  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:42.196  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:42.404  1209 25662 D SemWifiUsabilityStatsMonitor: onWifiUsabilityStats - seqNum 80910, isSameBssidAndFreq true
+06-18 15:17:42.410  1209  1565 I SemWifiLinkQualityMonitor: Link Qos Query: 0.272 ms / 29.421 Mbps (52 / 0.000 / 1.767)
+06-18 15:17:42.572  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.010634606]
+06-18 15:17:42.573  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.94731843]
+06-18 15:17:42.573  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.78182846]
+06-18 15:17:42.573  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.106962 msecs
+06-18 15:17:42.575  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.811885 msecs
+06-18 15:17:42.577  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.446615 msecs
+06-18 15:17:43.077  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.01541931]
+06-18 15:17:43.078  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.63080263]
+06-18 15:17:43.078  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.8745104]
+06-18 15:17:43.078  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 0.652116 msecs
+06-18 15:17:43.079  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 0.989077 msecs
+06-18 15:17:43.080  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 0.988885 msecs
+06-18 15:17:43.159 20713  9244 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:43.159 20713  9244 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:43.196  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:43.196  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:43.196  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:43.207 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:43.282 27630 27871 D BtGatt.GattService: onScanResult to scannerId: 4- eventType=0x10, addressType=1, address=017E35_9, primaryPhy=1, secondaryPhy=0, advertisingSid=0xff, txPower=127, rssi=-85, periodicAdvInt=0x0
+06-18 15:17:43.302   396   396 D io_stats: !@ 179,0 r 45178053 795808211 w 18210843 189986460 d 1196675 58394844 f 0 0 iot 25351104 0 th 0 0 0 pt 0 inp 0 0 538564.552
+06-18 15:17:43.527 27630 27871 D BtGatt.GattService: onScanResult to scannerId: 4- eventType=0x0, addressType=1, address=061E89_C, primaryPhy=1, secondaryPhy=1, advertisingSid=0x1, txPower=127, rssi=-79, periodicAdvInt=0x0
+06-18 15:17:43.582  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.008991197]
+06-18 15:17:43.583  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9180663]
+06-18 15:17:43.583  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.8470208]
+06-18 15:17:43.583  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 2.057423 msecs
+06-18 15:17:43.585  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.517077 msecs
+06-18 15:17:43.587  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.555923 msecs
+06-18 15:17:44.089  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0056457836]
+06-18 15:17:44.089  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.72934043]
+06-18 15:17:44.089  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.85615486]
+06-18 15:17:44.089  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 0.943654 msecs
+06-18 15:17:44.091  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.475808 msecs
+06-18 15:17:44.093  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.087269 msecs
+06-18 15:17:44.197  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:44.197  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:44.197  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:44.211 20713  9245 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:44.211 20713  9245 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:44.259 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:44.593  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.003434771]
+06-18 15:17:44.594  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.97466385]
+06-18 15:17:44.594  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.8069181]
+06-18 15:17:44.594  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 0.975115 msecs
+06-18 15:17:44.596  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.836846 msecs
+06-18 15:17:44.597  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 0.944192 msecs
+06-18 15:17:45.197  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:45.197  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:45.197  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:45.263 20713  9246 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:45.263 20713  9246 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:45.303 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:45.415  1209 25662 D SemWifiUsabilityStatsMonitor: onWifiUsabilityStats - seqNum 80911, isSameBssidAndFreq true
+06-18 15:17:45.418  1209  1565 I SemWifiLinkQualityMonitor: Link Qos Query: 0.579 ms / 13.810 Mbps (58 / 0.000 / 4.200)
+06-18 15:17:45.503   845   904 I SensorsHub: context 6 0 5 1,1,55,0,1,3, 1062734232503709
+06-18 15:17:45.505  1209  1351 D CAE     : onGetSensorHubData(SensorHubParserProvider.java:89) - onGetSensorHubData Event [event buffer len :6], AP_WAKEUP
+06-18 15:17:45.505  1209  1351 I CAE     : parse(SensorHubParserProvider.java:190) - buffer size = 6
+06-18 15:17:45.506  1209  1351 I CAE     : parse(SensorHubParserProvider.java:201) - 1, 1, 55, 0, 1, 3,
+06-18 15:17:45.506  1209  1351 I CAE     : parse(SLocationRunner.java:88) - SLocationRunner parse start : 3
+06-18 15:17:45.507  1209  1351 D CAE     : display(ContextProvider.java:375) - ================= SLOCATION_RUNNER =================
+06-18 15:17:45.508  1209  1351 I CAE     : display(ContextProvider.java:391) - ExtraDataArray=[1, 1, 55, 0, 1, 3]
+06-18 15:17:45.509  1209  1351 I CAE     : parse(SLocationRunner.java:96) - SLocationRunner parse end:6
+06-18 15:17:45.510  1209  1348 D SemContextService: Service.updateContext() : service = SLocation Core
+06-18 15:17:45.513  1209  1209 D SemContextManager: onSemContextChanged() : event = SLocation Core
+06-18 15:17:45.514  1209  1209 D SLocation: SLocationCoreSem - SemContextChanged type = 47, packet received
+06-18 15:17:45.514  1209  2020 I SLocation: SemContextParser -  parse start : 3
+06-18 15:17:45.514  1209  2020 I SLocation: SemContextParser -  packet Length : 1packet total size : 6
+06-18 15:17:45.514  1209  2020 I SLocation: SemContextParser - packet : [3]
+06-18 15:17:45.514  1209  2020 D SLocation: GeofenceCoreManager - received Extra Data from core, len : 1
+06-18 15:17:45.514  1209  2020 D SLocation: CommonCoreManager - received Extra Data from core, len : 1
+06-18 15:17:45.514  1209  2020 D SLocation: PositionManager - last location time exceed threshold 79311 / 30000
+06-18 15:17:45.514  1209  2020 D SLocation: GeopointGeofenceManager - getLastLocation is abnromal!
+06-18 15:17:45.514  1209  2020 D SLocation: LocationProviderStatus - try to update provider status (GPS/NLP)
+06-18 15:17:45.514  1209  2020 D SLocation: LocationProviderStatus - set isGpsOn : true, isNlpOn : true
+06-18 15:17:45.514  1209  2020 D SLocation: LocationProviderStatus - gps & nlp status not changed
+06-18 15:17:45.514  1209  2020 D SLocation: SContentManager - IsNetworkAvailable = true
+06-18 15:17:45.514  1209  2020 D SLocation: PositionManager - requestLocationUpdates(1) : NETWORK_PROVIDER
+06-18 15:17:45.514  1209  2020 D SLocation: NLPManager - requestUpdate - NLP
+06-18 15:17:45.516  1209  2020 D CompatibilityChangeReporter: Compat change id reported: 168936375; UID 1000; state: ENABLED
+06-18 15:17:45.521  1209  2020 D LocationManagerService: network provider added registration from 1000/android[SLocationService]/DF288556 -> Request[@0 BALANCED, WorkSource{1000 android}]
+06-18 15:17:45.527  1209  2020 E AppOps  : attributionTag SLocationService not declared in manifest of android
+06-18 15:17:45.528  1209  2020 D CompatibilityChangeReporter: Compat change id reported: 73144566; UID 1000; state: ENABLED
+06-18 15:17:45.533  2380  2458 I RequestManager_FLP: request from system, change packageName from system to system(slocation)
+06-18 15:17:45.533  2380  2458 E RequestManager_FLP: [LocationManager] Location request DF288556(Listener) network interval=0ms (min=0ms) from system(slocation) (1000_FINE_unknown_false_foreground)
+06-18 15:17:45.556  1209  1362 E AppOps  : attributionTag SLocationService not declared in manifest of android
+06-18 15:17:45.560  1209  2020 D SLocation: PositionManager - ActiveonLocationChanged network 1781776065548
+06-18 15:17:45.560  1209  1362 E AppOps  : attributionTag SLocationService not declared in manifest of android
+06-18 15:17:45.561  1209  2020 D SLocation: ARDistanceBigData - BIGDATA ARD - receive location
+06-18 15:17:45.562  1209  2020 D SLocation: ARDistanceBigData - BIGDATA ARD - end log 79, 1062734291___BIGDATA ARD - end log 80, 1062734291___BIGDATA ARD - end log 81, 1062734291___BIGDATA ARD - end log 82, 1062734291___BIGDATA ARD - end log 83, 1062734291___BIGDATA ARD - end log 84, 1062734291___BIGDATA ARD - end log 85, 1062734291___BIGDATA ARD - end log 86, 1062734291___
+06-18 15:17:45.562  1209  2020 D SLocation: ARDistanceBigData - BIGDATA ARD - unique id 87
+06-18 15:17:45.563  1209  1362 V LocationManagerService: passive provider registration 5023/com.samsung.android.networkdiagnostic/4FDF9C6D dropped delivery - too close
+06-18 15:17:45.563  1209  1362 V LocationManagerService: passive provider registration 5010/com.samsung.android.rubin.app/52D3021A dropped delivery - too close
+06-18 15:17:45.563  1209  1362 V LocationManagerService: passive provider registration 1000/android[SensorNotificationService]/E6401BA6 dropped delivery - too close
+06-18 15:17:45.564  1209  2020 D SLocation: GeopointGeofenceManager - Location reported : fix method = 2 / 100.0
+06-18 15:17:45.564  1209  2020 D SLocation: NLPManager - removeUpdates - NLP
+06-18 15:17:45.567 31190 31190 I Rubin   : [2] com.samsung.android.rubin.inferenceengine.contextanalytics.engine.loggers.y$b.onLocationChanged(SourceFile:7) : Passive location updated
+06-18 15:17:45.567 31190 31271 I Rubin   : [1442] com.samsung.android.rubin.inferenceengine.contextanalytics.engine.loggers.y.p(SourceFile:1) : flush
+06-18 15:17:45.568  1209  2020 E AppOps  : attributionTag SLocationService not declared in manifest of android
+06-18 15:17:45.568  1209  2020 D LocationManagerService: network provider removed registration from 1000/android[SLocationService]/DF288556
+06-18 15:17:45.569  1209  2020 W Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+06-18 15:17:45.571  1209  2020 D SLocation: SLocationCoreSem - send to coreSem, packet length : 23 / [2, 17, 13, 227, 72, 46, 29, 32, 190, 0, 0, 0, 100, 2, 0, 0, 1, 158, 218, 33, 36, 12, 0]
+06-18 15:17:45.571  1209  2020 D SemContextLocationCoreAttribute: setAttribute() mode : 0 action : 23
+06-18 15:17:45.571  1209  2020 D SemContextService: lock : changeParameters
+06-18 15:17:45.571  1209  2020 D SemContext.CaeProvider.LocationCoreImpl: setAttribute() mode : 0 action : 23
+06-18 15:17:45.571  2380  2458 E RequestManager_FLP: [LocationManager] Location remove DF288556 from system
+06-18 15:17:45.571  1209  2020 W CAE     : setCAProperty(ContextAwareService.java:513) - [setProperty 01] Mutex is locked for SLOCATION_RUNNER
+06-18 15:17:45.572  1209  2020 I CAE     : setPropertyValue(SLocationRunner.java:116) - SLocationRunner setProperty header : 2, len : 23
+06-18 15:17:45.572  2380  2458 I LocationRequestData_FLP: Remove in requestInfoList, DF288556 / ListSize[network]=0
+06-18 15:17:45.572  1209  1353 D SensorService: setSContextDataLocked ints length 8 , byte length 26
+06-18 15:17:45.572  1209  1353 D SensorService: setSContextDataLocked 23717c1
+06-18 15:17:45.573   845   845 I SensorsHub: SContextSensor::injecet_sensor_data
+06-18 15:17:45.573   845   845 D SensorsHub: c1 17 37 02 11 0d e3 48 2e 1d 20 be 00 00 00 64  
+06-18 15:17:45.573   845   845 D SensorsHub: 02 00 00 01 9e da 21 24 0c 00  
+06-18 15:17:45.573   845   845 D SensorsHub: inject_scontext_data: New ssp_data_injection_fd(25)
+06-18 15:17:45.573   845   845 D SensorsHub: SContext Data Injection return 64
+06-18 15:17:45.573   845   904 I SensorsHub: context 10 0 9 1,1,55,0,5,2,2,0,0,0, 1062734302754285
+06-18 15:17:45.573  1209  2020 W CAE     : setCAProperty(ContextAwareService.java:519) - [setProperty 02] Mutex is unlocked for SLOCATION_RUNNER
+06-18 15:17:45.574  1209  2020 D SemContextService: unlock : changeParameters
+06-18 15:17:45.574  1209  2020 D SemContextManager:   .changeParameters : listener = com.samsung.android.location.semcontext.a@847e0e8, service=SLocation Core
+06-18 15:17:45.574  1209  2020 D SLocation: ARDistanceLibManager - request distance diff to AR Distance Library
+06-18 15:17:45.574  1209  2020 D SLocation: SLocationCoreSem - send to coreSem, packet length : 1 / [34]
+06-18 15:17:45.574  1209  2020 D SemContextLocationCoreAttribute: setAttribute() mode : 0 action : 23
+06-18 15:17:45.574  1209  2020 D SemContextService: lock : changeParameters
+06-18 15:17:45.574  1209  2020 D SemContext.CaeProvider.LocationCoreImpl: setAttribute() mode : 0 action : 23
+06-18 15:17:45.575  1209  1351 D CAE     : onGetSensorHubData(SensorHubParserProvider.java:89) - onGetSensorHubData Event [event buffer len :10], AP_WAKEUP
+06-18 15:17:45.575  1209  2020 W CAE     : setCAProperty(ContextAwareService.java:513) - [setProperty 01] Mutex is locked for SLOCATION_RUNNER
+06-18 15:17:45.575  1209  1351 I CAE     : parse(SensorHubParserProvider.java:190) - buffer size = 10
+06-18 15:17:45.575  1209  1351 I CAE     : parse(SensorHubParserProvider.java:201) - 1, 1, 55, 0, 5, 2, 2, 0, 0, 0,
+06-18 15:17:45.575  1209  2020 I CAE     : setPropertyValue(SLocationRunner.java:116) - SLocationRunner setProperty header : 34, len : 1
+06-18 15:17:45.575  1209  1351 I CAE     : parse(SLocationRunner.java:88) - SLocationRunner parse start : 3
+06-18 15:17:45.575  1209  1351 D CAE     : display(ContextProvider.java:375) - ================= SLOCATION_RUNNER =================
+06-18 15:17:45.576  1209  1351 I CAE     : display(ContextProvider.java:391) - ExtraDataArray=[1, 1, 55, 0, 5, 2, 2, 0, 0, 0]
+06-18 15:17:45.576  1209  1353 D SensorService: setSContextDataLocked ints length 2 , byte length 4
+06-18 15:17:45.576  1209  1353 D SensorService: setSContextDataLocked 223717c1
+06-18 15:17:45.577   845   845 I SensorsHub: SContextSensor::injecet_sensor_data
+06-18 15:17:45.577   845   845 D SensorsHub: c1 17 37 22  
+06-18 15:17:45.577   845   845 D SensorsHub: inject_scontext_data: New ssp_data_injection_fd(25)
+06-18 15:17:45.577   845   845 D SensorsHub: SContext Data Injection return 64
+06-18 15:17:45.577  1209  1348 D SemContextService: Service.updateContext() : service = SLocation Core
+06-18 15:17:45.577  1209  2020 W CAE     : setCAProperty(ContextAwareService.java:519) - [setProperty 02] Mutex is unlocked for SLOCATION_RUNNER
+06-18 15:17:45.578  1209  2020 D SemContextService: unlock : changeParameters
+06-18 15:17:45.578  1209  2020 D SemContextManager:   .changeParameters : listener = com.samsung.android.location.semcontext.a@847e0e8, service=SLocation Core
+06-18 15:17:45.578  1209  2020 D SLocation: PositionManager - onLocationChanged - filter passive location because it same active location
+06-18 15:17:45.578  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.009496651]
+06-18 15:17:45.578   845   904 I SensorsHub: context 38 0 37 1,1,55,0,33,33,0,0,11,147,24,186,31,175,56,34,224,0,17,14,0,96,46,29,3,192,0,0,0,15,2,24,217,152,0,1,75,6, 1062734306670401
+06-18 15:17:45.578  1209  1209 D SemContextManager: onSemContextChanged() : event = SLocation Core
+06-18 15:17:45.578  1209  1209 D SLocation: SLocationCoreSem - SemContextChanged type = 47, packet received
+06-18 15:17:45.578   845   904 I SensorsHub: context 10 0 9 1,1,55,0,5,2,34,0,0,0, 1062734306727824
+06-18 15:17:45.578  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 21287.791 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:17:45.578  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 2.0420816 padding : 0.0, accuracy : 100.0, provider : network, dir : 1
+06-18 15:17:45.578  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9951497]
+06-18 15:17:45.578  1209  2020 D SLocation: GeopointReceiver - send geopoint result - 1
+06-18 15:17:45.578  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.8984526]
+06-18 15:17:45.578  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 0.547193 msecs
+06-18 15:17:45.578  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 20902.578 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:17:45.578  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 837.1944 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:17:45.579  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 21276.982 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:17:45.579  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 2.0420816 padding : 0.0, accuracy : 100.0, provider : network, dir : 1
+06-18 15:17:45.579  1209  2020 D SLocation: GeopointReceiver - send geopoint result - 1
+06-18 15:17:45.579  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 5162.9746 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:17:45.579  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 5.0027375 padding : 0.0, accuracy : 100.0, provider : network, dir : 1
+06-18 15:17:45.579  1209  2020 D SLocation: GeopointReceiver - send geopoint result - 1
+06-18 15:17:45.579  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 5.23124 padding : 0.0, accuracy : 100.0, provider : network, dir : 1
+06-18 15:17:45.579  1209  2020 D SLocation: GeopointReceiver - send geopoint result - 1
+06-18 15:17:45.579  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 17806.83 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:17:45.579  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 5176.0933 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:17:45.579  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 22647.322 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:17:45.579  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 5994.3975 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:17:45.579  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 17777.338 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:17:45.580  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 21272.043 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:17:45.578  1209  1351 I CAE     : parse(SLocationRunner.java:96) - SLocationRunner parse end:10
+06-18 15:17:45.580  1209  1351 D CAE     : onGetSensorHubData(SensorHubParserProvider.java:89) - onGetSensorHubData Event [event buffer len :38], AP_WAKEUP
+06-18 15:17:45.580  1209  1351 I CAE     : parse(SensorHubParserProvider.java:190) - buffer size = 38
+06-18 15:17:45.580  1209  1351 I CAE     : parse(SensorHubParserProvider.java:201) - 1, 1, 55, 0, 33, 33, 0, 0, 11, -109, 24, -70, 31, -81, 56, 34, -32, 0, 17, 14, 0, 96, 46, 29, 3, -64, 0, 0, 0, 15, 2, 24, -39, -104, 0, 1, 75, 6,
+06-18 15:17:45.580  1209  1351 I CAE     : parse(SLocationRunner.java:88) - SLocationRunner parse start : 3
+06-18 15:17:45.580  1209  1351 D CAE     : display(ContextProvider.java:375) - ================= SLOCATION_RUNNER =================
+06-18 15:17:45.580  1209  2020 I SLocation: SemContextParser -  parse start : 3
+06-18 15:17:45.580  1209  2020 I SLocation: SemContextParser -  packet Length : 5packet total size : 10
+06-18 15:17:45.580  1209  2020 I SLocation: SemContextParser - packet : [2, 2, 0, 0, 0]
+06-18 15:17:45.581  1209  1351 I CAE     : display(ContextProvider.java:391) - ExtraDataArray=[1, 1, 55, 0, 33, 33, 0, 0, 11, -109, 24, -70, 31, -81, 56, 34, -32, 0, 17, 14, 0, 96, 46, 29, 3, -64, 0, 0, 0, 15, 2, 24, -39, -104, 0, 1, 75, 6]
+06-18 15:17:45.581  1209  1351 I CAE     : parse(SLocationRunner.java:96) - SLocationRunner parse end:38
+06-18 15:17:45.581  1209  2020 D SLocation: GeofenceCoreManager - received Extra Data from core, len : 5
+06-18 15:17:45.581  1209  2020 D SLocation: GeofenceCoreManager - handleCommandCallback - UNKNOWN_CALLBACK 2 SUCCESS
+06-18 15:17:45.581  1209  1351 D CAE     : onGetSensorHubData(SensorHubParserProvider.java:89) - onGetSensorHubData Event [event buffer len :10], AP_WAKEUP
+06-18 15:17:45.581  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 2.228962 msecs
+06-18 15:17:45.581  1209  2020 D SLocation: CommonCoreManager - received Extra Data from core, len : 5
+06-18 15:17:45.581  1209  2020 D SLocation: CommonCoreManager - handleCommandCallback - FUNC_TYPE : SET_LOCATION ERROR_CODE : ERROR_NONE
+06-18 15:17:45.581  1209  1351 I CAE     : parse(SensorHubParserProvider.java:190) - buffer size = 10
+06-18 15:17:45.581  1209  1351 I CAE     : parse(SensorHubParserProvider.java:201) - 1, 1, 55, 0, 5, 2, 34, 0, 0, 0,
+06-18 15:17:45.581  1209  1348 D SemContextService: Service.updateContext() : service = SLocation Core
+06-18 15:17:45.581  1209  1351 I CAE     : parse(SLocationRunner.java:88) - SLocationRunner parse start : 3
+06-18 15:17:45.581  1209  1351 D CAE     : display(ContextProvider.java:375) - ================= SLOCATION_RUNNER =================
+06-18 15:17:45.581  1209  1209 D SemContextManager: onSemContextChanged() : event = SLocation Core
+06-18 15:17:45.581  1209  1209 D SLocation: SLocationCoreSem - SemContextChanged type = 47, packet received
+06-18 15:17:45.581  1209  1351 I CAE     : display(ContextProvider.java:391) - ExtraDataArray=[1, 1, 55, 0, 5, 2, 34, 0, 0, 0]
+06-18 15:17:45.581  1209  2020 I SLocation: SemContextParser -  parse start : 3
+06-18 15:17:45.581  1209  2020 I SLocation: SemContextParser -  packet Length : 33packet total size : 38
+06-18 15:17:45.581  1209  1351 I CAE     : parse(SLocationRunner.java:96) - SLocationRunner parse end:10
+06-18 15:17:45.582  1209  2020 I SLocation: SemContextParser - packet : [33, 0, 0, 11, -109, 24, -70, 31, -81, 56, 34, -32, 0, 17, 14, 0, 96, 46, 29, 3, -64, 0, 0, 0, 15, 2, 24, -39, -104, 0, 1, 75, 6]
+06-18 15:17:45.582  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 0.724462 msecs
+06-18 15:17:45.582  1209  2020 D SLocation: ARDistanceGetARDistance - convertSensorHubTimeToElapsedTime 1781769659286668729
+06-18 15:17:45.582  1209  2020 D SLocation: ARDistanceGetARDistance - invalid location time from core pvt 1781769659286668729, do not use distance info
+06-18 15:17:45.582  1209  2020 D SLocation: GeofenceCoreManager - received Extra Data from core, len : 33
+06-18 15:17:45.582  1209  2020 D SLocation: CommonCoreManager - received Extra Data from core, len : 33
+06-18 15:17:45.582  1209  1209 D SemContextManager: onSemContextChanged() : event = SLocation Core
+06-18 15:17:45.582  1209  1209 D SLocation: SLocationCoreSem - SemContextChanged type = 47, packet received
+06-18 15:17:45.583  1209  2020 I SLocation: SemContextParser -  parse start : 3
+06-18 15:17:45.583  1209  2020 I SLocation: SemContextParser -  packet Length : 5packet total size : 10
+06-18 15:17:45.583  1209  2020 I SLocation: SemContextParser - packet : [2, 34, 0, 0, 0]
+06-18 15:17:45.583  1209  2020 D SLocation: ARDistanceLibManager - command callback received - CURRENT_LOCATION_REQUEST_DISTANCE ERROR CODE : ERROR_NONE
+06-18 15:17:45.583  1209  2020 D SLocation: GeofenceCoreManager - received Extra Data from core, len : 5
+06-18 15:17:45.583  1209  1348 D SemContextService: Service.updateContext() : service = SLocation Core
+06-18 15:17:45.583  1209  2020 D SLocation: GeofenceCoreManager - handleCommandCallback - UNKNOWN_CALLBACK 34 SUCCESS
+06-18 15:17:45.583  1209  2020 D SLocation: CommonCoreManager - received Extra Data from core, len : 5
+06-18 15:17:45.883 23055  9115 I NearbyMediums: Found Fast Ble Advertisements :
+06-18 15:17:45.883 23055  9115 I NearbyMediums: BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x52 0x38 0x54 0x46 0x11 0x32 0xcd 0x75 0xe6 0x64 0x04 0x3e 0x65 0xdd 0xb2 0xb9 0x89 0xe6 0xda 0xef 0xc2 0x3b ], deviceToken=[ 0x71 0x82 ], rxAdvertisement=null } : 1 times.
+06-18 15:17:45.883 23055  9115 I NearbyMediums: BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x34 0x38 0x42 0x56 0x11 0x32 0x1f 0x05 0xb1 0x77 0xec 0xd3 0x0c 0x69 0x6b 0x66 0x92 0x1f 0x2a 0xff 0x50 0x3f ], deviceToken=[ 0xe4 0x5b ], rxAdvertisement=null } : 3 times.
+06-18 15:17:45.883 23055  9115 I NearbyMediums: Total 4 fast advertisements from 2 unique advertisers.
+06-18 15:17:45.883 23055  9115 I NearbyMediums: Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-18 15:17:46.082  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0046400265]
+06-18 15:17:46.083  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9252011]
+06-18 15:17:46.083  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.7695041]
+06-18 15:17:46.083  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.231654 msecs
+06-18 15:17:46.085  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.486731 msecs
+06-18 15:17:46.088  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 2.281307 msecs
+06-18 15:17:46.146  1209  2242 D CustomizedBinderCallsStatsInternal: reportCpuUsage() : 1%
+06-18 15:17:46.147  1209  1243 I BinderCallsStats: Collected cpu time : 2110us, collected call count : 2755 for 60184 ms
+06-18 15:17:46.198  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:46.198  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:46.198  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:46.310 20713  9247 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:46.310 20713  9247 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:46.350 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:46.589  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0063714357]
+06-18 15:17:46.589  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9021338]
+06-18 15:17:46.590  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.8670699]
+06-18 15:17:46.590  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.198961 msecs
+06-18 15:17:46.592  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.623962 msecs
+06-18 15:17:46.593  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.358038 msecs
+06-18 15:17:46.961  1209  1239 E Watchdog: !@Sync: 17940 heap: 153 / 161 FD: 1093 objects: 2751685 WaitTime: 0.000 GCcnt: 0 FullGC: 0 [2026-06-18 15:17:46.958]
+06-18 15:17:47.095  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0038729084]
+06-18 15:17:47.095  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.91639507]
+06-18 15:17:47.096  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.801212]
+06-18 15:17:47.096  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.040115 msecs
+06-18 15:17:47.097  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.539923 msecs
+06-18 15:17:47.100  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 2.448423 msecs
+06-18 15:17:47.198  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:47.198  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:47.198  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:47.304   396   396 D io_stats: !@ 179,0 r 45178080 795808335 w 18210853 189986500 d 1196675 58394844 f 0 0 iot 25351116 0 th 0 0 0 pt 0 inp 0 0 538568.553
+06-18 15:17:47.353 20713  9249 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:47.354 20713  9249 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:47.391 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:47.601  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.007794678]
+06-18 15:17:47.601  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.8856367]
+06-18 15:17:47.602  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.8453686]
+06-18 15:17:47.602  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.000231 msecs
+06-18 15:17:47.604  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.782538 msecs
+06-18 15:17:47.605  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.48327 msecs
+06-18 15:17:48.056  1209  1521 W DeviceStorageMonitorService: updateBroadcasts(/data) oldLevel:0, newLevel:0, seq:1
+06-18 15:17:48.058  1209  1521 D DeviceStorageMonitorService: Available File Node Number is [13270979]
+06-18 15:17:48.058  1209  1521 W DeviceStorageMonitorService: updateBroadcasts_filenode(/data) fn_oldLevel:0, fn_newLevel:0, seq:1
+06-18 15:17:48.134 27731 27731 I wpa_supplicant: Heartbeat 427
+06-18 15:17:48.198  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:48.199  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:48.199  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:48.395 20713  9250 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:48.395 20713  9250 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:48.435 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:48.435  1209 25662 D SemWifiUsabilityStatsMonitor: onWifiUsabilityStats - seqNum 80912, isSameBssidAndFreq true
+06-18 15:17:48.440  1209  1565 I SemWifiLinkQualityMonitor: Link Qos Query: 1.667 ms / 4.800 Mbps (26 / 0.000 / 5.417)
+06-18 15:17:48.581  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0049335873]
+06-18 15:17:48.581  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.82834595]
+06-18 15:17:48.582  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.5291546]
+06-18 15:17:48.582  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.084731 msecs
+06-18 15:17:48.583  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.532962 msecs
+06-18 15:17:48.585  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.43623 msecs
+06-18 15:17:49.087  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.003551736]
+06-18 15:17:49.088  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.8203593]
+06-18 15:17:49.088  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.832531]
+06-18 15:17:49.088  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.157346 msecs
+06-18 15:17:49.090  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 2.333 msecs
+06-18 15:17:49.092  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.435308 msecs
+06-18 15:17:49.199  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:49.199  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:49.199  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:49.288 27630 27871 D BtGatt.GattService: onScanResult to scannerId: 4- eventType=0x10, addressType=1, address=017E35_9, primaryPhy=1, secondaryPhy=0, advertisingSid=0xff, txPower=127, rssi=-85, periodicAdvInt=0x0
+06-18 15:17:49.301   870  3010 D DlbDap2Process: process() called [124500] times with input format 0x22 and channel mask 0x3 (ProcessingMode=1), htEnable=0(0, 0, 0)
+06-18 15:17:49.441 27630 27871 D BtGatt.GattService: onScanResult to scannerId: 4- eventType=0x0, addressType=1, address=0B6A75_5, primaryPhy=1, secondaryPhy=1, advertisingSid=0x3, txPower=127, rssi=-91, periodicAdvInt=0x0
+06-18 15:17:49.443 20713  9251 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:49.443 20713  9251 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:49.491 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:49.547 27630 27871 D BtGatt.GattService: onScanResult to scannerId: 4- eventType=0x0, addressType=1, address=061E89_C, primaryPhy=1, secondaryPhy=1, advertisingSid=0x1, txPower=127, rssi=-86, periodicAdvInt=0x0
+06-18 15:17:49.594  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.009237004]
+06-18 15:17:49.594  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.71011233]
+06-18 15:17:49.595  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.8940103]
+06-18 15:17:49.595  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.225884 msecs
+06-18 15:17:49.597  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.699385 msecs
+06-18 15:17:49.599  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 2.042269 msecs
+06-18 15:17:50.100  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.006867383]
+06-18 15:17:50.100  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.94798625]
+06-18 15:17:50.101  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.75679517]
+06-18 15:17:50.101  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.052116 msecs
+06-18 15:17:50.102  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.548885 msecs
+06-18 15:17:50.104  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.290038 msecs
+06-18 15:17:50.199  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:50.199  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:50.199  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:50.494 20713  9252 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:50.494 20713  9252 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:50.535 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:50.605  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.007996584]
+06-18 15:17:50.606  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.95521593]
+06-18 15:17:50.606  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.7429959]
+06-18 15:17:50.606  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.475308 msecs
+06-18 15:17:50.608  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.704 msecs
+06-18 15:17:50.611  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 2.024193 msecs
+06-18 15:17:51.200  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:51.200  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:51.200  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:51.447  1209 25662 D SemWifiUsabilityStatsMonitor: onWifiUsabilityStats - seqNum 80913, isSameBssidAndFreq true
+06-18 15:17:51.448  1209  1565 I SemWifiLinkQualityMonitor: Link Qos Query: 0.615 ms / 13.000 Mbps (26 / 0.000 / 2.000)
+06-18 15:17:51.537 20713  9253 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:51.537 20713  9253 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:51.575 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:51.586  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.014029367]
+06-18 15:17:51.587  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.76818854]
+06-18 15:17:51.587  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.9171549]
+06-18 15:17:51.587  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.661615 msecs
+06-18 15:17:51.589  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.425346 msecs
+06-18 15:17:51.590  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 0.930884 msecs
+06-18 15:17:52.091  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.010396514]
+06-18 15:17:52.092  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.95548433]
+06-18 15:17:52.092  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.97133666]
+06-18 15:17:52.092  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.211192 msecs
+06-18 15:17:52.095  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 2.020153 msecs
+06-18 15:17:52.096  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.352538 msecs
+06-18 15:17:52.200  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:52.200  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:52.200  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:52.579 20713  9254 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:52.579 20713  9254 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:52.598  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0054243854]
+06-18 15:17:52.599  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9534687]
+06-18 15:17:52.599  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.9256809]
+06-18 15:17:52.599  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.802 msecs
+06-18 15:17:52.601  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.543846 msecs
+06-18 15:17:52.603  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.568693 msecs
+06-18 15:17:52.623 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:53.103  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.027604051]
+06-18 15:17:53.104  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.4477371]
+06-18 15:17:53.104  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.95442986]
+06-18 15:17:53.104  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.266461 msecs
+06-18 15:17:53.106  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.583769 msecs
+06-18 15:17:53.108  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.348038 msecs
+06-18 15:17:53.201  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:53.201  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:53.201  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:53.223  1829 27765 D IpClient/wlan0: interfaceLinkStateChanged: ifindex 12 up
+06-18 15:17:53.609  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.014436592]
+06-18 15:17:53.611  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.10115337]
+06-18 15:17:53.611  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.989484]
+06-18 15:17:53.611  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.64227 msecs
+06-18 15:17:53.613  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.578615 msecs
+06-18 15:17:53.616  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.124846 msecs
+06-18 15:17:53.627 20713  9255 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:53.627 20713  9255 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:53.675 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:54.201  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:54.201  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:54.201  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:54.456  1209 25662 D SemWifiUsabilityStatsMonitor: onWifiUsabilityStats - seqNum 80914, isSameBssidAndFreq true
+06-18 15:17:54.460  1209  1565 I SemWifiLinkQualityMonitor: Link Qos Query: 0.852 ms / 9.389 Mbps (26 / 0.000 / 2.769)
+06-18 15:17:54.591  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.023327226]
+06-18 15:17:54.592  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.87608236]
+06-18 15:17:54.592  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.98226947]
+06-18 15:17:54.592  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.82427 msecs
+06-18 15:17:54.594  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.665846 msecs
+06-18 15:17:54.596  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.393308 msecs
+06-18 15:17:54.679 20713  9256 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:54.679 20713  9256 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:54.715 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:55.096  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.02153644]
+06-18 15:17:55.097  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.905726]
+06-18 15:17:55.097  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.78253007]
+06-18 15:17:55.097  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.016654 msecs
+06-18 15:17:55.099  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.282884 msecs
+06-18 15:17:55.100  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.107692 msecs
+06-18 15:17:55.202  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:55.202  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:55.202  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:55.600  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.024031462]
+06-18 15:17:55.601  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.3005279]
+06-18 15:17:55.601  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.93758726]
+06-18 15:17:55.601  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 0.940923 msecs
+06-18 15:17:55.603  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.547077 msecs
+06-18 15:17:55.604  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.270808 msecs
+06-18 15:17:55.607 27630 27871 D BtGatt.GattService: onScanResult to scannerId: 4- eventType=0x10, addressType=1, address=017E35_9, primaryPhy=1, secondaryPhy=0, advertisingSid=0xff, txPower=127, rssi=-94, periodicAdvInt=0x0
+06-18 15:17:55.672 27630 27871 D BtGatt.GattService: onScanResult to scannerId: 4- eventType=0x10, addressType=1, address=2BADE4_7, primaryPhy=1, secondaryPhy=0, advertisingSid=0xff, txPower=127, rssi=-93, periodicAdvInt=0x0
+06-18 15:17:55.718 20713  9257 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:55.719 20713  9257 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:55.767 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:55.885 23055  9236 I NearbyMediums: Found Fast Ble Advertisements :
+06-18 15:17:55.885 23055  9236 I NearbyMediums: BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x52 0x38 0x54 0x46 0x11 0x32 0xcd 0x75 0xe6 0x64 0x04 0x3e 0x65 0xdd 0xb2 0xb9 0x89 0xe6 0xda 0xef 0xc2 0x3b ], deviceToken=[ 0x71 0x82 ], rxAdvertisement=null } : 2 times.
+06-18 15:17:55.885 23055  9236 I NearbyMediums: BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x34 0x38 0x42 0x56 0x11 0x32 0x1f 0x05 0xb1 0x77 0xec 0xd3 0x0c 0x69 0x6b 0x66 0x92 0x1f 0x2a 0xff 0x50 0x3f ], deviceToken=[ 0xe4 0x5b ], rxAdvertisement=null } : 3 times.
+06-18 15:17:55.885 23055  9236 I NearbyMediums: Total 5 fast advertisements from 2 unique advertisers.
+06-18 15:17:55.885 23055  9236 I NearbyMediums: Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-18 15:17:56.106  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.003360463]
+06-18 15:17:56.107  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.2999956]
+06-18 15:17:56.107  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.9491012]
+06-18 15:17:56.107  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.193077 msecs
+06-18 15:17:56.109  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.578962 msecs
+06-18 15:17:56.112  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 2.720308 msecs
+06-18 15:17:56.202  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:56.202  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:56.202  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:56.612  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.012749257]
+06-18 15:17:56.613  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9029891]
+06-18 15:17:56.613  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.94599414]
+06-18 15:17:56.613  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.165231 msecs
+06-18 15:17:56.615  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.718577 msecs
+06-18 15:17:56.617  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.470231 msecs
+06-18 15:17:56.775 20713  9258 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:56.775 20713  9258 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:56.815 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:57.202  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:57.203  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:57.203  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:57.309   396   396 D io_stats: !@ 179,0 r 45178080 795808335 w 18210859 189986520 d 1196675 58394844 f 0 0 iot 25351116 0 th 0 0 0 pt 0 inp 0 0 538578.558
+06-18 15:17:57.472  1209 25662 D SemWifiUsabilityStatsMonitor: onWifiUsabilityStats - seqNum 80915, isSameBssidAndFreq true
+06-18 15:17:57.476  1209  1565 I SemWifiLinkQualityMonitor: Link Qos Query: 0.331 ms / 24.167 Mbps (58 / 0.000 / 2.400)
+06-18 15:17:57.593  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.005627887]
+06-18 15:17:57.594  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9773037]
+06-18 15:17:57.594  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.7539664]
+06-18 15:17:57.594  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.007307 msecs
+06-18 15:17:57.595  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.340269 msecs
+06-18 15:17:57.597  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.067308 msecs
+06-18 15:17:57.820 20713  9259 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:57.820 20713  9259 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:57.822   810   810 E audit   : type=1400 audit(1781776077.817:229056): avc:  denied  { write } for  pid=22276 comm="ThreadPoolForeg" name="traced_producer" dev="tmpfs" ino=15699 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:traced_producer_socket:s0 tclass=sock_file permissive=0 SEPF_SM-M127G_13_0001 audit_filtered
+06-18 15:17:57.822   810   810 E audit   : type=1300 audit(1781776077.817:229056): arch=c00000b7 syscall=203 success=no exit=-13 a0=11c a1=b400007ba30bc9c0 a2=1e a3=ffffffff95d47905 items=1 ppid=827 pid=22276 auid=4294967295 uid=10200 gid=10200 euid=10200 suid=10200 fsuid=10200 egid=10200 sgid=10200 fsgid=10200 tty=(none) ses=4294967295 comm="ThreadPoolForeg" exe="/system/bin/app_process64" subj=u:r:gmscore_app:s0:c512,c768 key=(null)
+06-18 15:17:57.822   810   810 E audit   : type=1306 audit(1781776077.817:229056): saddr=01002F6465762F736F636B65742F7472616365645F70726F647563657200
+06-18 15:17:57.822   810   810 E audit   : type=1302 audit(1781776077.817:229056): item=0 name="/dev/socket/traced_producer" inode=15699 dev=00:10 mode=0140666 ouid=0 ogid=0 rdev=00:00 obj=u:object_r:traced_producer_socket:s0 nametype=NORMAL cap_fp=0000000000000000 cap_fi=0000000000000000 cap_fe=0 cap_fver=0
+06-18 15:17:57.822   810   810 E audit   : type=1327 audit(1781776077.817:229056): proctitle="com.google.android.gms"
+06-18 15:17:57.859 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:58.020   870  3010 D DlbDap2Process: process() called [126000] times with input format 0x22 and channel mask 0x3 (ProcessingMode=1), htEnable=0(0, 0, 0)
+06-18 15:17:58.099  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.005893549]
+06-18 15:17:58.099  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9521261]
+06-18 15:17:58.100  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.8380793]
+06-18 15:17:58.100  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.945615 msecs
+06-18 15:17:58.101  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.202154 msecs
+06-18 15:17:58.103  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.210347 msecs
+06-18 15:17:58.143 27731 27731 I wpa_supplicant: Heartbeat 428
+06-18 15:17:58.203  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:58.203  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:58.203  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:58.324  3536  4361 I SDHMS:D : SIOP:: AP:386 BAT:308 USB:0 CHG:378 PA:437 BLK:0 SUBBAT:0 SKIN:332 SKINF:332 SKINB:332 LRP:332 LRF:332 LRB:332 
+06-18 15:17:58.604  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0034482758]
+06-18 15:17:58.604  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.7013095]
+06-18 15:17:58.605  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.9387195]
+06-18 15:17:58.605  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.252731 msecs
+06-18 15:17:58.607  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.753962 msecs
+06-18 15:17:58.610  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.85473 msecs
+06-18 15:17:58.677   856   856 E sehhealth-service: Could not open /sys/class/power_supply/battery/lrp
+06-18 15:17:58.867 20713  9260 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:58.867 20713  9260 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:58.899 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:17:59.103 27630 27871 D BtGatt.GattService: onScanResult to scannerId: 4- eventType=0x10, addressType=1, address=2BADE4_7, primaryPhy=1, secondaryPhy=0, advertisingSid=0xff, txPower=127, rssi=-92, periodicAdvInt=0x0
+06-18 15:17:59.110  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0043515577]
+06-18 15:17:59.111  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.97630686]
+06-18 15:17:59.111  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.929005]
+06-18 15:17:59.111  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.257116 msecs
+06-18 15:17:59.113  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.5325 msecs
+06-18 15:17:59.115  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.821192 msecs
+06-18 15:17:59.203  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:17:59.203  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:17:59.203  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:17:59.615  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.02413707]
+06-18 15:17:59.616  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.808193]
+06-18 15:17:59.617  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.9850219]
+06-18 15:17:59.617  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.6935 msecs
+06-18 15:17:59.619  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.306461 msecs
+06-18 15:17:59.621  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.977192 msecs
+06-18 15:17:59.735  4463  4508 I ContactsProvider_EventLog: cp_s: [CONTACT con(312) dat(2311) acc({phone(1)=32, sim(4)=2, google(78)=133, com.whatsapp(58)=143, org.telegram.messenger(110)=174})  trash_sync(26) calls([logtype:100 cnt:39, logtype:500 cnt:1, logtype:1000 cnt:1960]) Iso(IN) uId(0) ]
+
+06-18 15:17:59.735  4463  4508 I ContactsProvider_EventLog: cp_s: [ agr({[4]=2, [1]=4, [1 ,58 ,110]=9, [58 ,78 ,110]=21, [78 ,58 ,110]=21, [78]=46, [58 ,78]=17, [110]=105, [1 ,58]=18, [1 ,110]=1, [58]=34, [110 ,110]=3, [78 ,110]=8, [78 ,58]=20, [58 ,110]=3}) ]
+
+06-18 15:17:59.735  4463  4508 I ContactsProvider_EventLog: cp_s: [ cnt({acore(4463)=1}) ]
+
+06-18 15:17:59.735  4463  4508 I ContactsProvider_EventLog: cp_s: [PROFILE ] [SAPROFILE ]
+
+06-18 15:17:59.735  4463  4508 I ContactsProvider_EventLog: cp_s: [STATE R(F) ]
+06-18 15:17:59.903 20713  9261 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:17:59.903 20713  9261 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:17:59.951 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:18:00.005  1714  1714 D KeyguardUpdateMonitor: received broadcast android.intent.action.TIME_TICK
+06-18 15:18:00.006  1714  1714 D KeyguardUpdateMonitor: handleTimeUpdate
+06-18 15:18:00.006  1714  2297 D QSClockBellTower: onReceive(android.intent.action.TIME_TICK) mTimeZoneString:null
+06-18 15:18:00.008  1714  1714 D FaceWidgetPagesController: onTimeChanged()
+06-18 15:18:00.014  1714  1714 D QSClockBellTower: He is ready to ring the bell. (((QSClockBellSound - TimeText:3:18, TimeContentDescription:3:18 pm, DateText:Thu, 18 June, ShortDateText:Thu, 18 Jun, Demo:false, QuickStar-Second(false|12:34:56))))
+06-18 15:18:00.016  1714  1714 D QSClockIndicatorView: Home Indicator status_bar_clock 3:18 notifyTimeChanged(QSClockBellSound - TimeText:3:18, TimeContentDescription:3:18 pm, DateText:Thu, 18 June, ShortDateText:Thu, 18 Jun, Demo:false, QuickStar-Second(false|12:34:56)) ClockVisibleByPolicy:true, ClockVisibleByUser:true, visible?true, parent:android.widget.LinearLayout{7dd81fa V.E...... ......ID 0,0-51,37 #7f0b04f0 app:id/left_clock_container}
+06-18 15:18:00.016  1714  1714 D QSClockBellTower: Everyone heard the bell. run(currentTime:1781776080012,   getTime():Thu Jun 18 15:18:00 GMT+05:30 2026,   getTimeZone():libcore.util.ZoneInfo[mDstSavings=0,mUseDst=false,mDelegate=[id="Asia/Kolkata",mRawOffset=19800000,mEarliestRawOffset=21208000,transitions=7]])
+06-18 15:18:00.026  1714  1714 I FaceWidgetPositionAlgorithm: getClockContainerHeight() supplier = 330, bottom margin = 0, real height = 375
+06-18 15:18:00.026  1714  1714 I FaceWidgetPositionAlgorithm: getClockContainerHeight() supplier = 330, bottom margin = 45, real height = 375
+06-18 15:18:00.026  1714  1714 I FaceWidgetPositionAlgorithm: getMediaContainerHeight() height = 0 container Visibility = 8, isValid = true, mIsDozing = false, fraction = 1.0, source = 0, target = 0
+06-18 15:18:00.026  1714  1714 I FaceWidgetPositionAlgorithm: getMediaContainerHeight() supplier = 0
+06-18 15:18:00.027  1714  1714 V QsExpandAnimator: setQsExpansionPosition 0.0
+06-18 15:18:00.028  1714  1714 D MediaControlPanel: mActionButtonNumCollapsed = 3, mActionButtonNumExpand = 5
+06-18 15:18:00.029  1714  1714 D MediaControlPanel: mActionButtonNumCollapsed = 3, mActionButtonNumExpand = 5
+06-18 15:18:00.029  1714  1714 D MediaControlPanel: mActionButtonNumCollapsed = 3, mActionButtonNumExpand = 5
+06-18 15:18:00.029  1714  1714 D MediaControlPanel: mActionButtonNumCollapsed = 3, mActionButtonNumExpand = 5
+06-18 15:18:00.029  1714  1714 D MediaControlPanel: mActionButtonNumCollapsed = 3, mActionButtonNumExpand = 5
+06-18 15:18:00.029  1714  1714 D MediaControlPanel: mActionButtonNumCollapsed = 3, mActionButtonNumExpand = 5
+06-18 15:18:00.029  1714  1714 D MediaControlPanel: mActionButtonNumCollapsed = 3, mActionButtonNumExpand = 5
+06-18 15:18:00.029  1714  1714 D MediaControlPanel: mActionButtonNumCollapsed = 3, mActionButtonNumExpand = 5
+06-18 15:18:00.030  1714  1714 D MediaControlPanel: mActionButtonNumCollapsed = 3, mActionButtonNumExpand = 5
+06-18 15:18:00.030  1714  1714 D MediaControlPanel: mActionButtonNumCollapsed = 3, mActionButtonNumExpand = 5
+06-18 15:18:00.030  1714  1714 D MediaControlPanel: mActionButtonNumCollapsed = 3, mActionButtonNumExpand = 5
+06-18 15:18:00.030  1714  1714 D MediaControlPanel: mActionButtonNumCollapsed = 3, mActionButtonNumExpand = 5
+06-18 15:18:00.034  1714  1714 V QsExpandAnimator: updateAnimators
+06-18 15:18:00.034  1714  1714 V QsExpandAnimator: clearAnimationState 
+06-18 15:18:00.035  1714  1714 V QsExpandAnimator: updateViews
+06-18 15:18:00.036  1714  1714 V QsExpandAnimator: updateTileAnimator
+06-18 15:18:00.037  1714  1714 V QsExpandAnimator: updateHeaderAnimator
+06-18 15:18:00.038  1714  1714 V QsExpandAnimator: updateBarAnimator
+06-18 15:18:00.038  1714  1714 V QsExpandAnimator: setQsExpansionPosition 0.0
+06-18 15:18:00.038  1714  1714 V QsExpandAnimator: onAnimationAtStart
+06-18 15:18:00.054   892   892 I SurfaceFlinger: SFWD update time=538581304256733
+06-18 15:18:00.062  3826  3826 W NavigableAppWidgetHostView: setResizeScaleResult() 668/ 238 scaleToResize = 1.0(widget id = 3) 41bbe92 0,484-668,722
+06-18 15:18:00.063  3826  3826 W NavigableAppWidgetHostView: setResizeScaleResult() 668/ 238 scaleToResize = 1.0(widget id = 19) 9a50f78 0,242-668,480
+06-18 15:18:00.090   892   892 I DisplayDevice: [Display 0 (internal, primary, "Primary display")] ActiveConfigToHWC, ID : 0
+06-18 15:18:00.090   843   843 I display : Use default fps instead of 90 for setting capacity
+06-18 15:18:00.090   892   892 I LayerHistory: com.sec.android.app.launcher/com.sec.android.app.launcher.activities.LauncherActivity$_3826#129101 Max (can't resolve refresh rate)
+06-18 15:18:00.090   892   892 I LayerHistory: StatusBar$_1714#116 voted 1, 0.00 fps
+06-18 15:18:00.090   892   892 I SurfaceFlinger: Best - choose 90.00 Hz
+06-18 15:18:00.119   892  1027 I VSyncReactor: Current= 60, TransitioningTo= 90, Distance= 90
+06-18 15:18:00.128   892   892 I Scheduler: DisplayModeChanged : 0
+06-18 15:18:00.204  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:18:00.204  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:18:00.204  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:18:00.228  1829 27765 D IpClient/wlan0: interfaceLinkStateChanged: ifindex 12 up
+06-18 15:18:00.489  1209 25662 D SemWifiUsabilityStatsMonitor: onWifiUsabilityStats - seqNum 80916, isSameBssidAndFreq true
+06-18 15:18:00.492  1209  1565 I SemWifiLinkQualityMonitor: Link Qos Query: 0.576 ms / 13.890 Mbps (39 / 0.000 / 2.808)
+06-18 15:18:00.593  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.038618658]
+06-18 15:18:00.594  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.78854376]
+06-18 15:18:00.594  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.99409604]
+06-18 15:18:00.594  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.268038 msecs
+06-18 15:18:00.597  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 2.069192 msecs
+06-18 15:18:00.598  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.215192 msecs
+06-18 15:18:00.649   892  1416 D NativeSemDvfsManager: acquire:: timeout = 2000 mIsAcquired = 1  mTagName : SurfaceFlinger 
+06-18 15:18:00.651   892  1416 E NativeCustomFrequencyManager: [NativeCFMS] BpCustomFrequencyManager::acquire()
+06-18 15:18:00.652   851   912 I HYPER-HAL: [RequestManager.cpp]acquire(): Acquired ID : 1791778  [892 / 1000]    HINT : SF_GPU_MINLOCK    list : [TIMEOUT / 2000] 
+06-18 15:18:00.684   892   892 I DisplayDevice: [Display 0 (internal, primary, "Primary display")] ActiveConfigToHWC, ID : 1
+06-18 15:18:00.685   892   892 I LayerHistory: com.sec.android.app.launcher/com.sec.android.app.launcher.activities.LauncherActivity$_3826#129101 Max (can't resolve refresh rate)
+06-18 15:18:00.685   892   892 I LayerHistory: StatusBar$_1714#116 voted 1, 0.00 fps
+06-18 15:18:00.685   892   892 I SurfaceFlinger: Idle - choose 60.00 Hz
+06-18 15:18:00.726   892  1027 I VSyncReactor: Current= 90, TransitioningTo= 60, Distance= 61
+06-18 15:18:00.954 20713  9262 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:18:00.955 20713  9262 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:18:00.991 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:18:01.099  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.011764874]
+06-18 15:18:01.100  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9124058]
+06-18 15:18:01.100  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.9620515]
+06-18 15:18:01.100  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 0.929 msecs
+06-18 15:18:01.102  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.555231 msecs
+06-18 15:18:01.104  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.481577 msecs
+06-18 15:18:01.204  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:18:01.205  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:18:01.205  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:18:01.311   396   396 D io_stats: !@ 179,0 r 45178081 795808395 w 18210867 189986556 d 1196675 58394844 f 0 0 iot 25351120 0 th 0 0 0 pt 0 inp 0 0 538582.560
+06-18 15:18:01.604  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.07430215]
+06-18 15:18:01.605  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.8014937]
+06-18 15:18:01.605  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.99245435]
+06-18 15:18:01.605  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 0.796807 msecs
+06-18 15:18:01.607  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 2.357077 msecs
+06-18 15:18:01.609  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.416385 msecs
+06-18 15:18:01.967 27630 27871 D BtGatt.GattService: onScanResult to scannerId: 4- eventType=0x10, addressType=1, address=2BADE4_7, primaryPhy=1, secondaryPhy=0, advertisingSid=0xff, txPower=127, rssi=-86, periodicAdvInt=0x0
+06-18 15:18:01.995 20713  9264 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:18:01.996 20713  9264 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:18:02.031 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:18:02.110  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.02870436]
+06-18 15:18:02.111  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.8773389]
+06-18 15:18:02.111  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.9838304]
+06-18 15:18:02.111  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 0.451539 msecs
+06-18 15:18:02.112  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 0.714077 msecs
+06-18 15:18:02.113  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 0.925769 msecs
+06-18 15:18:02.205  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:18:02.205  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:18:02.205  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:18:02.614  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.010309074]
+06-18 15:18:02.614  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.8083728]
+06-18 15:18:02.615  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.9530012]
+06-18 15:18:02.615  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.498 msecs
+06-18 15:18:02.617  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.524115 msecs
+06-18 15:18:02.618  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.514961 msecs
+06-18 15:18:02.654   851  9263 I HYPER-HAL: [RequestManager.cpp]releaseLocked(): Released ID : 1791778
+06-18 15:18:03.035 20713  9265 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:18:03.035 20713  9265 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:18:03.075 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:18:03.205  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:18:03.205  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:18:03.205  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:18:03.500  1209 25662 D SemWifiUsabilityStatsMonitor: onWifiUsabilityStats - seqNum 80917, isSameBssidAndFreq true
+06-18 15:18:03.501  1209  1565 I SemWifiLinkQualityMonitor: Link Qos Query: 0.341 ms / 23.454 Mbps (65 / 0.000 / 2.771)
+06-18 15:18:03.601  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.026259283]
+06-18 15:18:03.602  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.40154764]
+06-18 15:18:03.602  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.9854671]
+06-18 15:18:03.602  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.30327 msecs
+06-18 15:18:03.604  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.453115 msecs
+06-18 15:18:03.606  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.355115 msecs
+06-18 15:18:04.079 20713  9266 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:18:04.079 20713  9266 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:18:04.106  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.012583373]
+06-18 15:18:04.107  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.9197783]
+06-18 15:18:04.107  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.97131]
+06-18 15:18:04.107  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.214962 msecs
+06-18 15:18:04.109  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.451846 msecs
+06-18 15:18:04.111  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 2.044385 msecs
+06-18 15:18:04.119 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:18:04.206  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:18:04.206  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:18:04.206  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:18:04.613  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.0097022345]
+06-18 15:18:04.613  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.72702336]
+06-18 15:18:04.614  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.94486916]
+06-18 15:18:04.614  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.179808 msecs
+06-18 15:18:04.616  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.60573 msecs
+06-18 15:18:04.617  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.295 msecs
+06-18 15:18:04.970 27630 27871 D BtGatt.GattService: onScanResult to scannerId: 4- eventType=0x0, addressType=1, address=061E89_C, primaryPhy=1, secondaryPhy=1, advertisingSid=0x1, txPower=127, rssi=-92, periodicAdvInt=0x0
+06-18 15:18:05.118  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.039360393]
+06-18 15:18:05.119  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.172193]
+06-18 15:18:05.119  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.93273216]
+06-18 15:18:05.119  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.052654 msecs
+06-18 15:18:05.120  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.146308 msecs
+06-18 15:18:05.122  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.114616 msecs
+06-18 15:18:05.123 20713  9267 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:18:05.123 20713  9267 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:18:05.167 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:18:05.206  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:18:05.206  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:18:05.206  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:18:05.565  1209  1362 E AppOps  : attributionTag SLocationService not declared in manifest of android
+06-18 15:18:05.566  1209  2020 D SLocation: PositionManager - PassiveonLocationChanged network 1781776085551
+06-18 15:18:05.566  1209  2020 D SLocation: ARDistanceBigData - BIGDATA ARD - receive location
+06-18 15:18:05.566  1209  2020 D SLocation: GeopointGeofenceManager - Location reported : fix method = 4 / 100.0
+06-18 15:18:05.566  1209  2020 W Settings: Setting airplane_mode_on has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+06-18 15:18:05.567  1209  2020 D SLocation: SLocationCoreSem - send to coreSem, packet length : 23 / [2, 17, 13, 227, 72, 46, 29, 32, 190, 0, 0, 0, 100, 2, 0, 0, 1, 158, 218, 33, 114, 47, 0]
+06-18 15:18:05.567  1209  2020 D SemContextLocationCoreAttribute: setAttribute() mode : 0 action : 23
+06-18 15:18:05.567  1209  2020 D SemContextService: lock : changeParameters
+06-18 15:18:05.567  1209  2020 D SemContext.CaeProvider.LocationCoreImpl: setAttribute() mode : 0 action : 23
+06-18 15:18:05.567  1209  2020 W CAE     : setCAProperty(ContextAwareService.java:513) - [setProperty 01] Mutex is locked for SLOCATION_RUNNER
+06-18 15:18:05.567  1209  2020 I CAE     : setPropertyValue(SLocationRunner.java:116) - SLocationRunner setProperty header : 2, len : 23
+06-18 15:18:05.568  1209  1353 D SensorService: setSContextDataLocked ints length 8 , byte length 26
+06-18 15:18:05.568  1209  1353 D SensorService: setSContextDataLocked 23717c1
+06-18 15:18:05.568  1209  1362 V LocationManagerService: passive provider registration 5023/com.samsung.android.networkdiagnostic/4FDF9C6D dropped delivery - too close
+06-18 15:18:05.568  1209  1362 V LocationManagerService: passive provider registration 5010/com.samsung.android.rubin.app/EB662DBD dropped delivery - too fast
+06-18 15:18:05.568  1209  1362 V LocationManagerService: passive provider registration 5010/com.samsung.android.rubin.app/52D3021A dropped delivery - too close
+06-18 15:18:05.568   845   845 I SensorsHub: SContextSensor::injecet_sensor_data
+06-18 15:18:05.568  1209  1362 V LocationManagerService: passive provider registration 1000/android[SensorNotificationService]/E6401BA6 dropped delivery - too close
+06-18 15:18:05.568   845   845 D SensorsHub: c1 17 37 02 11 0d e3 48 2e 1d 20 be 00 00 00 64  
+06-18 15:18:05.568   845   845 D SensorsHub: 02 00 00 01 9e da 21 72 2f 00  
+06-18 15:18:05.568   845   845 D SensorsHub: inject_scontext_data: New ssp_data_injection_fd(25)
+06-18 15:18:05.568   845   845 D SensorsHub: SContext Data Injection return 64
+06-18 15:18:05.569   845   904 I SensorsHub: context 10 0 9 1,1,55,0,5,2,2,0,0,0, 1062754298301079
+06-18 15:18:05.569  1209  2020 W CAE     : setCAProperty(ContextAwareService.java:519) - [setProperty 02] Mutex is unlocked for SLOCATION_RUNNER
+06-18 15:18:05.569  1209  2020 D SemContextService: unlock : changeParameters
+06-18 15:18:05.569  1209  2020 D SemContextManager:   .changeParameters : listener = com.samsung.android.location.semcontext.a@847e0e8, service=SLocation Core
+06-18 15:18:05.569  1209  1351 D CAE     : onGetSensorHubData(SensorHubParserProvider.java:89) - onGetSensorHubData Event [event buffer len :10], AP_WAKEUP
+06-18 15:18:05.569  1209  2020 D SLocation: ARDistanceLibManager - request distance diff to AR Distance Library
+06-18 15:18:05.570  1209  2020 D SLocation: SLocationCoreSem - send to coreSem, packet length : 1 / [34]
+06-18 15:18:05.570  1209  2020 D SemContextLocationCoreAttribute: setAttribute() mode : 0 action : 23
+06-18 15:18:05.570  1209  1351 I CAE     : parse(SensorHubParserProvider.java:190) - buffer size = 10
+06-18 15:18:05.570  1209  2020 D SemContextService: lock : changeParameters
+06-18 15:18:05.570  1209  2020 D SemContext.CaeProvider.LocationCoreImpl: setAttribute() mode : 0 action : 23
+06-18 15:18:05.570  1209  1351 I CAE     : parse(SensorHubParserProvider.java:201) - 1, 1, 55, 0, 5, 2, 2, 0, 0, 0,
+06-18 15:18:05.570  1209  1351 I CAE     : parse(SLocationRunner.java:88) - SLocationRunner parse start : 3
+06-18 15:18:05.570  1209  2020 W CAE     : setCAProperty(ContextAwareService.java:513) - [setProperty 01] Mutex is locked for SLOCATION_RUNNER
+06-18 15:18:05.570  1209  1351 D CAE     : display(ContextProvider.java:375) - ================= SLOCATION_RUNNER =================
+06-18 15:18:05.570  1209  1351 I CAE     : display(ContextProvider.java:391) - ExtraDataArray=[1, 1, 55, 0, 5, 2, 2, 0, 0, 0]
+06-18 15:18:05.570  1209  2020 I CAE     : setPropertyValue(SLocationRunner.java:116) - SLocationRunner setProperty header : 34, len : 1
+06-18 15:18:05.570  1209  1351 I CAE     : parse(SLocationRunner.java:96) - SLocationRunner parse end:10
+06-18 15:18:05.570  1209  1353 D SensorService: setSContextDataLocked ints length 2 , byte length 4
+06-18 15:18:05.570  1209  1353 D SensorService: setSContextDataLocked 223717c1
+06-18 15:18:05.571  1209  1348 D SemContextService: Service.updateContext() : service = SLocation Core
+06-18 15:18:05.571   845   845 I SensorsHub: SContextSensor::injecet_sensor_data
+06-18 15:18:05.571   845   845 D SensorsHub: c1 17 37 22  
+06-18 15:18:05.571   845   845 D SensorsHub: inject_scontext_data: New ssp_data_injection_fd(25)
+06-18 15:18:05.571   845   845 D SensorsHub: SContext Data Injection return 64
+06-18 15:18:05.571   845   904 I SensorsHub: context 38 0 37 1,1,55,0,33,33,0,0,2,200,24,186,31,175,56,34,224,0,17,14,0,96,46,29,3,192,0,0,0,15,2,26,10,72,0,1,77,206, 1062754300679156
+06-18 15:18:05.571  1209  1209 D SemContextManager: onSemContextChanged() : event = SLocation Core
+06-18 15:18:05.571   845   904 I SensorsHub: context 10 0 9 1,1,55,0,5,2,34,0,0,0, 1062754300737810
+06-18 15:18:05.571  1209  1209 D SLocation: SLocationCoreSem - SemContextChanged type = 47, packet received
+06-18 15:18:05.571  1209  2020 W CAE     : setCAProperty(ContextAwareService.java:519) - [setProperty 02] Mutex is unlocked for SLOCATION_RUNNER
+06-18 15:18:05.571  1209  2020 D SemContextService: unlock : changeParameters
+06-18 15:18:05.572  1209  2020 D SemContextManager:   .changeParameters : listener = com.samsung.android.location.semcontext.a@847e0e8, service=SLocation Core
+06-18 15:18:05.572  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 21287.791 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:18:05.572  1209  1351 D CAE     : onGetSensorHubData(SensorHubParserProvider.java:89) - onGetSensorHubData Event [event buffer len :38], AP_WAKEUP
+06-18 15:18:05.572  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 2.0420816 padding : 0.0, accuracy : 100.0, provider : network, dir : 1
+06-18 15:18:05.572  1209  2020 D SLocation: GeopointReceiver - send geopoint result - 1
+06-18 15:18:05.572  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 20902.578 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:18:05.572  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 837.1944 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:18:05.572  1209  1351 I CAE     : parse(SensorHubParserProvider.java:190) - buffer size = 38
+06-18 15:18:05.572  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 21276.982 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:18:05.572  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 2.0420816 padding : 0.0, accuracy : 100.0, provider : network, dir : 1
+06-18 15:18:05.572  1209  2020 D SLocation: GeopointReceiver - send geopoint result - 1
+06-18 15:18:05.572  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 5162.9746 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:18:05.572  1209  1351 I CAE     : parse(SensorHubParserProvider.java:201) - 1, 1, 55, 0, 33, 33, 0, 0, 2, -56, 24, -70, 31, -81, 56, 34, -32, 0, 17, 14, 0, 96, 46, 29, 3, -64, 0, 0, 0, 15, 2, 26, 10, 72, 0, 1, 77, -50,
+06-18 15:18:05.572  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 5.0027375 padding : 0.0, accuracy : 100.0, provider : network, dir : 1
+06-18 15:18:05.572  1209  2020 D SLocation: GeopointReceiver - send geopoint result - 1
+06-18 15:18:05.572  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 5.23124 padding : 0.0, accuracy : 100.0, provider : network, dir : 1
+06-18 15:18:05.572  1209  1351 I CAE     : parse(SLocationRunner.java:88) - SLocationRunner parse start : 3
+06-18 15:18:05.572  1209  2020 D SLocation: GeopointReceiver - send geopoint result - 1
+06-18 15:18:05.573  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 17806.83 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:18:05.573  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 5176.0933 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:18:05.573  1209  1351 D CAE     : display(ContextProvider.java:375) - ================= SLOCATION_RUNNER =================
+06-18 15:18:05.573  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 22647.322 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:18:05.573  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 5994.3975 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:18:05.573  1209  1351 I CAE     : display(ContextProvider.java:391) - ExtraDataArray=[1, 1, 55, 0, 33, 33, 0, 0, 2, -56, 24, -70, 31, -81, 56, 34, -32, 0, 17, 14, 0, 96, 46, 29, 3, -64, 0, 0, 0, 15, 2, 26, 10, 72, 0, 1, 77, -50]
+06-18 15:18:05.573  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 17777.338 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:18:05.573  1209  2020 D SLocation: LocationProcessingAlgorithm - entry condition - dist : 21272.043 padding : 0.0, accuracy : 100.0, provider : network, dir : 2
+06-18 15:18:05.573  1209  1351 I CAE     : parse(SLocationRunner.java:96) - SLocationRunner parse end:38
+06-18 15:18:05.573  1209  1351 D CAE     : onGetSensorHubData(SensorHubParserProvider.java:89) - onGetSensorHubData Event [event buffer len :10], AP_WAKEUP
+06-18 15:18:05.573  1209  1348 D SemContextService: Service.updateContext() : service = SLocation Core
+06-18 15:18:05.573  1209  1351 I CAE     : parse(SensorHubParserProvider.java:190) - buffer size = 10
+06-18 15:18:05.573  1209  1351 I CAE     : parse(SensorHubParserProvider.java:201) - 1, 1, 55, 0, 5, 2, 34, 0, 0, 0,
+06-18 15:18:05.573  1209  1209 D SemContextManager: onSemContextChanged() : event = SLocation Core
+06-18 15:18:05.573  1209  1209 D SLocation: SLocationCoreSem - SemContextChanged type = 47, packet received
+06-18 15:18:05.573  1209  1351 I CAE     : parse(SLocationRunner.java:88) - SLocationRunner parse start : 3
+06-18 15:18:05.573  1209  2020 I SLocation: SemContextParser -  parse start : 3
+06-18 15:18:05.573  1209  2020 I SLocation: SemContextParser -  packet Length : 5packet total size : 10
+06-18 15:18:05.573  1209  2020 I SLocation: SemContextParser - packet : [2, 2, 0, 0, 0]
+06-18 15:18:05.574  1209  1351 D CAE     : display(ContextProvider.java:375) - ================= SLOCATION_RUNNER =================
+06-18 15:18:05.574  1209  1351 I CAE     : display(ContextProvider.java:391) - ExtraDataArray=[1, 1, 55, 0, 5, 2, 34, 0, 0, 0]
+06-18 15:18:05.574  1209  2020 I SLocation: SemContextParser -  parse start : 3
+06-18 15:18:05.574  1209  2020 I SLocation: SemContextParser -  packet Length : 33packet total size : 38
+06-18 15:18:05.574  1209  2020 I SLocation: SemContextParser - packet : [33, 0, 0, 2, -56, 24, -70, 31, -81, 56, 34, -32, 0, 17, 14, 0, 96, 46, 29, 3, -64, 0, 0, 0, 15, 2, 26, 10, 72, 0, 1, 77, -50]
+06-18 15:18:05.574  1209  1351 I CAE     : parse(SLocationRunner.java:96) - SLocationRunner parse end:10
+06-18 15:18:05.574  1209  2020 D SLocation: GeofenceCoreManager - received Extra Data from core, len : 5
+06-18 15:18:05.574  1209  2020 D SLocation: GeofenceCoreManager - handleCommandCallback - UNKNOWN_CALLBACK 2 SUCCESS
+06-18 15:18:05.574  1209  2020 D SLocation: CommonCoreManager - received Extra Data from core, len : 5
+06-18 15:18:05.574  1209  1348 D SemContextService: Service.updateContext() : service = SLocation Core
+06-18 15:18:05.574  1209  2020 D SLocation: CommonCoreManager - handleCommandCallback - FUNC_TYPE : SET_LOCATION ERROR_CODE : ERROR_NONE
+06-18 15:18:05.574  1209  2020 D SLocation: ARDistanceGetARDistance - convertSensorHubTimeToElapsedTime 1781769659286668729
+06-18 15:18:05.574  1209  2020 D SLocation: ARDistanceGetARDistance - invalid location time from core pvt 1781769659286668729, do not use distance info
+06-18 15:18:05.574  1209  2020 D SLocation: GeofenceCoreManager - received Extra Data from core, len : 33
+06-18 15:18:05.574  1209  2020 D SLocation: CommonCoreManager - received Extra Data from core, len : 33
+06-18 15:18:05.574  1209  1209 D SemContextManager: onSemContextChanged() : event = SLocation Core
+06-18 15:18:05.574  1209  1209 D SLocation: SLocationCoreSem - SemContextChanged type = 47, packet received
+06-18 15:18:05.574  1209  2020 I SLocation: SemContextParser -  parse start : 3
+06-18 15:18:05.574  1209  2020 I SLocation: SemContextParser -  packet Length : 5packet total size : 10
+06-18 15:18:05.574  1209  2020 I SLocation: SemContextParser - packet : [2, 34, 0, 0, 0]
+06-18 15:18:05.574  1209  2020 D SLocation: ARDistanceLibManager - command callback received - CURRENT_LOCATION_REQUEST_DISTANCE ERROR CODE : ERROR_NONE
+06-18 15:18:05.574  1209  2020 D SLocation: GeofenceCoreManager - received Extra Data from core, len : 5
+06-18 15:18:05.574  1209  2020 D SLocation: GeofenceCoreManager - handleCommandCallback - UNKNOWN_CALLBACK 34 SUCCESS
+06-18 15:18:05.575  1209  2020 D SLocation: CommonCoreManager - received Extra Data from core, len : 5
+06-18 15:18:05.623  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.012250763]
+06-18 15:18:05.623  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.4383853]
+06-18 15:18:05.624  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.94610834]
+06-18 15:18:05.624  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.020462 msecs
+06-18 15:18:05.625  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.388885 msecs
+06-18 15:18:05.627  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.399 msecs
+06-18 15:18:05.887 23055  9115 I NearbyMediums: Found Fast Ble Advertisements :
+06-18 15:18:05.887 23055  9115 I NearbyMediums: BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x52 0x38 0x54 0x46 0x11 0x32 0xcd 0x75 0xe6 0x64 0x04 0x3e 0x65 0xdd 0xb2 0xb9 0x89 0xe6 0xda 0xef 0xc2 0x3b ], deviceToken=[ 0x71 0x82 ], rxAdvertisement=null } : 2 times.
+06-18 15:18:05.887 23055  9115 I NearbyMediums: BleAdvertisement { version=2, socketVersion=2, isFast=true, serviceIdHash=null, data=[ 0x23 0x34 0x38 0x42 0x56 0x11 0x32 0x1f 0x05 0xb1 0x77 0xec 0xd3 0x0c 0x69 0x6b 0x66 0x92 0x1f 0x2a 0xff 0x50 0x3f ], deviceToken=[ 0xe4 0x5b ], rxAdvertisement=null } : 1 times.
+06-18 15:18:05.887 23055  9115 I NearbyMediums: Total 3 fast advertisements from 2 unique advertisers.
+06-18 15:18:05.887 23055  9115 I NearbyMediums: Current Tracked Scanning Clients are : {NearbyConnections.EnvironmentMonitor, NearbySharing, NearbyConnections.TxAdvertisement}
+06-18 15:18:06.171 20713  9268 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:18:06.171 20713  9268 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:18:06.207  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:18:06.207  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:18:06.207 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:18:06.207  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:18:06.517  1209 25662 D SemWifiUsabilityStatsMonitor: onWifiUsabilityStats - seqNum 80918, isSameBssidAndFreq true
+06-18 15:18:06.517  1209  1565 I SemWifiLinkQualityMonitor: Link Qos Query: 0.821 ms / 9.750 Mbps (39 / 0.000 / 4.000)
+06-18 15:18:06.603  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.017566603]
+06-18 15:18:06.604  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.8158606]
+06-18 15:18:06.604  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.94389755]
+06-18 15:18:06.604  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 1.155692 msecs
+06-18 15:18:06.607  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 2.108576 msecs
+06-18 15:18:06.608  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.254192 msecs
+06-18 15:18:06.712   870  3010 D DlbDap2Process: process() called [127500] times with input format 0x22 and channel mask 0x3 (ProcessingMode=1), htEnable=0(0, 0, 0)
+06-18 15:18:07.110  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.009571421]
+06-18 15:18:07.110  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.82286334]
+06-18 15:18:07.110  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.7703978]
+06-18 15:18:07.110  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 0.97 msecs
+06-18 15:18:07.112  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 1.1485 msecs
+06-18 15:18:07.113  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 1.1045 msecs
+06-18 15:18:07.207  1021  1561 I bauth_FPBAuthService: pcf : 0x1012, 0 ,2 ,0 ,0 ,0 ,2, 7.0.0.1
+06-18 15:18:07.207  1021  1561 I bauth_FPBAuthService: thread id : 2, preenroll_flag : 0, nd cnt : 1, cso : 1, et : 0
+06-18 15:18:07.208  1021  1561 I bauth_FPBAuthService: FPBAuthService, 11463
+06-18 15:18:07.212 20713  9269 W adbd    : timed out while waiting for FUNCTIONFS_BIND, trying again
+06-18 15:18:07.212 20713  9269 I adbd    : UsbFfs: connection terminated: monitor thread finished
+06-18 15:18:07.247 20713 20718 I adbd    : opening control endpoint /dev/usb-ffs/adb/ep0
+06-18 15:18:07.595 20713 20713 I adbd    : adbd service requested 'shell,v2:export ANDROID_LOG_TAGS=''; exec logcat '-d''
+06-18 15:18:07.613  1209  1563 D SemNscXgbMsL1: Probability - Cloud gaming: [0.010259055]
+06-18 15:18:07.613  1209  1563 D SemNscXgbMsL1: Probability - Real time: [0.64719623]
+06-18 15:18:07.613  1209  1563 D SemNscXgbMsL1: Probability - Non real time: [0.75134903]
+06-18 15:18:07.613  1209  1563 D SemNscXgbMsL1: 1 sample inference time: 0.529193 msecs
+06-18 15:18:07.614  1209  1563 D SemNscXgbL2Rt: L2 RT 1 sample inference time: 0.7195 msecs
+06-18 15:18:07.615  1209  1563 D SemNscXgbL2Nrt: L2 NRT 1 sample inference time: 0.937884 msecs

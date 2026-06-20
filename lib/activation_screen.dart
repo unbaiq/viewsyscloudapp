@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'providers/player_provider.dart';
-import 'screens/player_screen.dart';
+import 'screens/player_shell.dart';
 
 class ActivationScreen extends ConsumerStatefulWidget {
   const ActivationScreen({super.key});
@@ -96,9 +96,10 @@ class _ActivationScreenState extends ConsumerState<ActivationScreen> with Single
     String companyId = '';
     String orientation = 'landscape';
     String syncInterval = '10';
+    String layout = 'fullscreen';
 
     try {
-      final url = Uri.parse('https://viewsys.co.in/api/player/login');
+      final url = Uri.parse('https://cms.thelocads.com/api/player/login');
       final response = await http.post(
         url,
         headers: {
@@ -118,6 +119,10 @@ class _ActivationScreenState extends ConsumerState<ActivationScreen> with Single
           companyId = data['company_id']?.toString() ?? '';
           orientation = data['orientation']?.toString() ?? 'landscape';
           syncInterval = data['sync_interval']?.toString() ?? '3';
+
+          layout = data['layout_type']?.toString() ?? data['layout']?.toString() ?? 'fullscreen';
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('screen_layout', layout);
         }
       }
     } catch (e) {
@@ -136,6 +141,7 @@ class _ActivationScreenState extends ConsumerState<ActivationScreen> with Single
         companyId: companyId,
         orientation: orientation,
         syncInterval: int.tryParse(syncInterval) ?? 3,
+        layout: layout,
       );
 
       _navigateToDashboard();
@@ -172,11 +178,17 @@ class _ActivationScreenState extends ConsumerState<ActivationScreen> with Single
     }
   }
 
-  void _navigateToDashboard() {
+  void _navigateToDashboard() async {
+    if (!mounted) return;
+    final prefs = await SharedPreferences.getInstance();
+    final layout = prefs.getString('screen_layout') ?? 'fullscreen';
+
+    final Widget destination = const PlayerShell();
+
     if (!mounted) return;
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => const PlayerScreen(),
+        pageBuilder: (context, animation, secondaryAnimation) => destination,
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,
@@ -287,6 +299,7 @@ class _ActivationScreenState extends ConsumerState<ActivationScreen> with Single
       await prefs.setString('company_id', '1');
       await prefs.setString('orientation', 'landscape');
       await prefs.setString('sync_interval', '10');
+      await prefs.setString('screen_layout', 'fullscreen');
 
       if (!mounted) return;
       Navigator.of(context).pop(); // pop dialogue
@@ -296,6 +309,7 @@ class _ActivationScreenState extends ConsumerState<ActivationScreen> with Single
         companyId: '1',
         orientation: 'landscape',
         syncInterval: 10,
+        layout: 'fullscreen',
       );
       _navigateToDashboard();
     });

@@ -4,30 +4,31 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:video_player/video_player.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+
 import '../models/media_item.dart';
 import '../providers/player_provider.dart';
 import '../services/heartbeat_service.dart';
 import '../services/sync_service.dart';
 import '../services/screenshot_service.dart';
 import '../activation_screen.dart';
-import '../services/video_preload_manager.dart';
-import 'package:screenshot/screenshot.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 
-class PlayerScreen extends ConsumerStatefulWidget {
-  const PlayerScreen({super.key});
+import '../widgets/video_player_widget.dart';
+import '../widgets/ticker_bar.dart';
+
+class PlayerShell extends ConsumerStatefulWidget {
+  const PlayerShell({super.key});
 
   @override
-  ConsumerState<PlayerScreen> createState() => _PlayerScreenState();
+  ConsumerState<PlayerShell> createState() => _PlayerShellState();
 }
 
-class _PlayerScreenState extends ConsumerState<PlayerScreen> {
+class _PlayerShellState extends ConsumerState<PlayerShell> {
   Timer? _imageTimer;
   Timer? _validityTimer;
   int? _scheduledItemId;
 
-  // Seamless fade transition states
   int? _lastProcessedItemId;
   MediaItem? _prevItem;
   MediaItem? _currItem;
@@ -36,13 +37,11 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
   @override
   void initState() {
     super.initState();
-    // Start background syncing and telemetry loops
     SyncService.instance.start(ref);
     HeartbeatService.instance.start(ref);
 
     _startValidityTimer();
 
-    // Lock initial orientation after the first frame renders
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         _applyOrientation(ref.read(activationProvider).orientation);
@@ -60,8 +59,9 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
       final now = DateTime.now();
       final currentItem = playlistState.items[playlistState.currentIndex];
 
-      // Rebuild if the current item has expired/is no longer valid
-      if (!currentItem.isValidNow(now, isOnline: playlistState.isOnline)) {
+      final hasValid = playlistState.items.any((item) => item.isValidNow(now, isOnline: playlistState.isOnline));
+      final ignoreSchedule = !hasValid && playlistState.items.isNotEmpty;
+      if (!currentItem.isValidNow(now, isOnline: playlistState.isOnline, ignoreSchedule: ignoreSchedule)) {
         setState(() {});
       }
     });
@@ -73,7 +73,6 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
     _validityTimer?.cancel();
     SyncService.instance.stop();
     HeartbeatService.instance.stop();
-    // Reset orientations when navigating back to setup/auth screen
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -83,7 +82,6 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
     super.dispose();
   }
 
-  /// Never fight the TV OS — allow all orientations and let RotatedBox do the work.
   void _applyOrientation(String orientation) {
     if (kIsWeb) return;
     SystemChrome.setPreferredOrientations([
@@ -94,7 +92,6 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
     ]);
   }
 
-  /// Computes rotation needed so CMS-desired orientation fills the physical screen correctly.
   int _getQuarterTurns(String orientation, BuildContext context) {
     final size = MediaQuery.of(context).size;
     final physicallyLandscape = size.width > size.height;
@@ -103,12 +100,11 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
     final wantsLandscape = (clean == 'landscape' || clean == '90' || clean == '270');
     final wantsPortrait = !wantsLandscape;
 
-    if (physicallyLandscape && wantsPortrait) return 1;  // TV landscape → rotate to portrait
-    if (!physicallyLandscape && wantsLandscape) return 1; // Panel portrait → rotate to landscape
-    return 0; // Physical and desired match → no rotation needed
+    if (physicallyLandscape && wantsPortrait) return 1;
+    if (!physicallyLandscape && wantsLandscape) return 1;
+    return 0;
   }
 
-  /// Sets up displaying a static image for a specified duration before advancing.
   void _scheduleImageTimer(MediaItem item) {
     if (_scheduledItemId == item.id && _imageTimer != null && _imageTimer!.isActive) {
       return;
@@ -126,20 +122,18 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
   Widget build(BuildContext context) {
     final actState = ref.watch(activationProvider);
     final playlistState = ref.watch(playlistProvider);
+    final currentTickers = ref.watch(tickersProvider);
 
-    // Dynamic orientation changes listener to prevent build-phase side effects
     ref.listen<ActivationState>(activationProvider, (previous, next) {
       if (previous?.orientation != next.orientation) {
-        _applyOrientation(next.orientation); // context no longer needed here
+        _applyOrientation(next.orientation);
       }
     });
 
-    // 1. Guard against initial loading of preferences
     if (actState.isLoading) {
       return _buildPremiumLoadingView();
     }
 
-    // Redirect unactivated device to ActivationScreen
     if (!actState.isActivated && actState.deviceCode != '------') {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
@@ -160,7 +154,6 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
           );
         }
       });
-      // Return a blank scaffold to stop execution and prevent empty/uninitialized errors
       return const Scaffold(
         backgroundColor: Colors.black,
         body: SizedBox.shrink(),
@@ -170,22 +163,37 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
     Widget playerBody;
 
     final now = DateTime.now();
-    final hasValidItems = playlistState.items.any((item) => item.isValidNow(now, isOnline: playlistState.isOnline));
+    final scheduledItems = playlistState.items.where((item) => item.schedule != null);
+    bool hasValidItems;
+    if (scheduledItems.isEmpty) {
+      hasValidItems = playlistState.items.any((item) => item.isValidNow(now, isOnline: playlistState.isOnline, ignoreSchedule: false));
+    } else {
+      hasValidItems = scheduledItems.any((item) => item.isValidNow(now, isOnline: playlistState.isOnline, ignoreSchedule: false));
+    }
 
-    if (playlistState.items.isEmpty || !hasValidItems) {
+    bool ignoreSchedule = false;
+    if (!hasValidItems && playlistState.items.isNotEmpty) {
+      hasValidItems = playlistState.items.any((item) => item.isValidNow(now, isOnline: playlistState.isOnline, ignoreSchedule: true));
+      if (hasValidItems) {
+        ignoreSchedule = true;
+      }
+    }
+
+    if (playlistState.items.isEmpty) {
       if (!playlistState.hasInitialized || playlistState.isLoading) {
         playerBody = _buildPremiumLoadingView();
       } else {
         playerBody = _buildEmptyPlaceholder();
       }
+    } else if (!hasValidItems) {
+      playerBody = _buildPremiumLoadingView();
     } else {
       var currentItem = playlistState.items[playlistState.currentIndex];
 
-      if (!currentItem.isValidNow(now, isOnline: playlistState.isOnline)) {
-        // Find the next valid item index
+      if (!currentItem.isValidNow(now, isOnline: playlistState.isOnline, ignoreSchedule: ignoreSchedule)) {
         int nextIdx = (playlistState.currentIndex + 1) % playlistState.items.length;
         while (nextIdx != playlistState.currentIndex) {
-          if (playlistState.items[nextIdx].isValidNow(now, isOnline: playlistState.isOnline)) {
+          if (playlistState.items[nextIdx].isValidNow(now, isOnline: playlistState.isOnline, ignoreSchedule: ignoreSchedule)) {
             break;
           }
           nextIdx = (nextIdx + 1) % playlistState.items.length;
@@ -206,7 +214,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
         _prevItem = _currItem;
         _currItem = currentItem;
         _lastProcessedItemId = currentItem.id;
-        _isCurrentItemReady = false; // Always false initially, wait for load/initialize frame
+        _isCurrentItemReady = false;
       }
 
       final bool isOpacityOne = (_prevItem == null) || _isCurrentItemReady;
@@ -264,24 +272,55 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
     }
 
     final quarterTurns = _getQuarterTurns(actState.orientation, context);
+    final isHeaderLayout = actState.layout == 'header';
+    final isTickerLayout = actState.layout == 'ticker';
 
     return Screenshot(
       controller: ScreenshotService.screenshotController,
       child: Stack(
         children: [
-          RotatedBox(
-            quarterTurns: quarterTurns,
-            child: Scaffold(
-              backgroundColor: Colors.black,
-              body: playerBody,
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+            top: isHeaderLayout ? 50.0 : 0.0,
+            bottom: isTickerLayout ? 50.0 : 0.0,
+            left: 0,
+            right: 0,
+            child: RotatedBox(
+              quarterTurns: quarterTurns,
+              child: Scaffold(
+                backgroundColor: Colors.black,
+                body: playerBody,
+              ),
             ),
           ),
-          // Gear icon is now outside rotation — always physically top-right
+          if (isHeaderLayout)
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 50.0,
+              child: TickerBar(
+                items: currentTickers,
+                position: TickerBarPosition.top,
+              ),
+            ),
+          if (isTickerLayout)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: 50.0,
+              child: TickerBar(
+                items: currentTickers,
+                position: TickerBarPosition.bottom,
+              ),
+            ),
           Positioned(
             top: 16,
             right: 16,
             child: Opacity(
-              opacity: 0.15,
+              opacity: 0.0,
               child: IconButton(
                 icon: const Icon(Icons.settings_rounded, color: Colors.white, size: 24),
                 onPressed: () => _showAdminDialog(context, actState),
@@ -292,7 +331,6 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
               ),
             ),
           ),
-          // Caching progress indicator card
           if (playlistState.downloadProgress > 0.0 && playlistState.downloadProgress < 1.0)
             Positioned(
               bottom: 24,
@@ -351,9 +389,9 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xFF0F172A), // Deep Slate
-            Color(0xFF1E293B), // Medium Slate
-            Color(0xFF0F172A), // Deep Slate
+            Color(0xFF0F172A),
+            Color(0xFF1E293B),
+            Color(0xFF0F172A),
           ],
         ),
       ),
@@ -444,7 +482,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
     if (!fileExists) {
       return Image.network(
         item.url,
-        fit: BoxFit.contain,
+        fit: BoxFit.cover,
         width: double.infinity,
         height: double.infinity,
         frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
@@ -460,7 +498,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
 
     return Image.file(
       File(item.localPath!),
-      fit: BoxFit.contain,
+      fit: BoxFit.cover,
       width: double.infinity,
       height: double.infinity,
       frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
@@ -537,6 +575,7 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
               _buildDiagText('Company ID', state.companyId),
               _buildDiagText('Orientation', state.orientation.toUpperCase()),
               _buildDiagText('Sync Interval', '${state.syncInterval} seconds'),
+              _buildDiagText('Layout', state.layout.toUpperCase()),
             ],
           ),
           actions: [
@@ -576,208 +615,6 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
             TextSpan(text: '$label: ', style: const TextStyle(fontWeight: FontWeight.bold)),
             TextSpan(text: value, style: const TextStyle(fontFamily: 'monospace', color: Colors.blueAccent)),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-/// A wrapper widget to manage the lifecycle of a video controller safely.
-class VideoPlayerWidget extends ConsumerStatefulWidget {
-  final MediaItem item;
-  final VoidCallback onComplete;
-  final VoidCallback? onInitialized;
-
-  const VideoPlayerWidget({
-    super.key,
-    required this.item,
-    required this.onComplete,
-    this.onInitialized,
-  });
-
-  @override
-  ConsumerState<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
-}
-
-class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
-  VideoPlayerController? _controller;
-  bool _initialized = false;
-  bool _hasError = false;
-  Timer? _fallbackTimer;
-  bool _notifiedReady = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _initVideo();
-  }
-
-  @override
-  void didUpdateWidget(VideoPlayerWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _updateLoopingState();
-  }
-
-  @override
-  void dispose() {
-    _fallbackTimer?.cancel();
-    _controller?.removeListener(_videoListener);
-    _controller?.dispose();
-    super.dispose();
-  }
-
-  void _updateLoopingState() {
-    if (_controller == null || !_initialized) return;
-    final playlistState = ref.read(playlistProvider);
-    final items = playlistState.items;
-    final now = DateTime.now();
-    final validCount = items.where((item) => item.isValidNow(now, isOnline: playlistState.isOnline)).length;
-    final shouldLoop = validCount <= 1;
-    if (_controller!.value.isLooping != shouldLoop) {
-      _controller!.setLooping(shouldLoop);
-      print('[VideoPlayerWidget] Dynamic looping updated to: $shouldLoop');
-    }
-  }
-
-  Future<void> _initVideo() async {
-    try {
-      final preloaded = VideoPreloadManager.instance.getAndRemove(widget.item.id);
-
-      if (preloaded != null) {
-        _controller = preloaded;
-        _controller!.addListener(_videoListener);
-
-        if (mounted) {
-          setState(() {
-            _initialized = _controller!.value.isInitialized;
-          });
-
-          if (!_controller!.value.isInitialized) {
-            await _controller!.initialize();
-            if (mounted) {
-              setState(() {
-                _initialized = true;
-              });
-            }
-          }
-
-          _updateLoopingState();
-          _controller!.play();
-        }
-      } else {
-        final fileExists = widget.item.localPath != null &&
-            widget.item.localPath!.isNotEmpty &&
-            !kIsWeb &&
-            File(widget.item.localPath!).existsSync() &&
-            File(widget.item.localPath!).lengthSync() > 0;
-
-        final playlistState = ref.read(playlistProvider);
-
-        if (!fileExists && !kIsWeb) {
-          if (!playlistState.isOnline) {
-            if (mounted) {
-              setState(() {
-                _hasError = true;
-              });
-            }
-            return;
-          }
-
-          print('[VideoPlayerWidget] File not cached yet. Streaming from network: ${widget.item.url}');
-          _controller = VideoPlayerController.networkUrl(Uri.parse(widget.item.url));
-        } else {
-          if (kIsWeb) {
-            _controller = VideoPlayerController.networkUrl(Uri.parse(widget.item.url));
-          } else {
-            _controller = VideoPlayerController.file(File(widget.item.localPath!));
-          }
-        }
-
-        _controller!.addListener(_videoListener);
-        await _controller!.initialize();
-
-        if (mounted) {
-          setState(() {
-            _initialized = true;
-          });
-
-          _updateLoopingState();
-          _controller!.play();
-        }
-      }
-    } catch (e) {
-      print('Video controller initialization failure: $e');
-      if (mounted) {
-        setState(() {
-          _hasError = true;
-        });
-        // Sched fallback to automatically advance in 4 seconds if initialization fails
-        _fallbackTimer = Timer(const Duration(seconds: 4), () {
-          widget.onComplete();
-        });
-      }
-    }
-  }
-
-  void _videoListener() {
-    if (_controller == null || !mounted) return;
-
-    if (_controller!.value.hasError) {
-      print('Video playback error: ${_controller!.value.errorDescription}');
-      _controller!.removeListener(_videoListener);
-      widget.onComplete();
-      return;
-    }
-
-    // Trigger parent ready callback only after video starts rendering/playing frames
-    if (!_notifiedReady &&
-        _controller!.value.isInitialized &&
-        _controller!.value.isPlaying &&
-        _controller!.value.position.inMilliseconds > 0) {
-      _notifiedReady = true;
-      widget.onInitialized?.call();
-    }
-
-    // Advance index once video playout finishes (only if it is not looping)
-    if (!_controller!.value.isLooping &&
-        _controller!.value.isInitialized &&
-        _controller!.value.position >= _controller!.value.duration) {
-      _controller!.removeListener(_videoListener);
-      widget.onComplete();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (_hasError) {
-      return Container(
-        color: Colors.black,
-        child: const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.videocam_off_rounded, color: Colors.redAccent, size: 40),
-              SizedBox(height: 12),
-              Text('Video playout failed',
-                  style: TextStyle(color: Colors.white70, fontSize: 13)),
-            ],
-          ),
-        ),
-      );
-    }
-
-    if (!_initialized) {
-      return const SizedBox.shrink();
-    }
-
-    // FittedBox correctly fills any rotated space while preserving aspect ratio
-    return SizedBox.expand(
-      child: FittedBox(
-        fit: BoxFit.contain,
-        child: SizedBox(
-          width: _controller!.value.size.width,
-          height: _controller!.value.size.height,
-          child: VideoPlayer(_controller!),
         ),
       ),
     );

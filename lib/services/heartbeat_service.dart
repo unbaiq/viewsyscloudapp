@@ -10,13 +10,15 @@ class HeartbeatService {
   HeartbeatService._init();
 
   Timer? _timer;
+  WidgetRef? _ref;
 
   /// Starts the telemetry heartbeat checker executing every 5 minutes.
   void start(WidgetRef ref) {
+    _ref = ref;
     _timer?.cancel();
     // Immediate call on activation, then trigger periodically
-    _sendHeartbeat(ref);
-    _timer = Timer.periodic(const Duration(minutes: 5), (_) => _sendHeartbeat(ref));
+    _sendHeartbeat();
+    _timer = Timer.periodic(const Duration(minutes: 5), (_) => _sendHeartbeat());
   }
 
   /// Cancels telemetry heartbeat checker execution.
@@ -25,15 +27,18 @@ class HeartbeatService {
     _timer = null;
   }
 
-  Future<void> _sendHeartbeat(WidgetRef ref) async {
-    final state = ref.read(activationProvider);
+  Future<void> _sendHeartbeat() async {
+    final activeRef = _ref;
+    if (activeRef == null || !activeRef.context.mounted) return;
+
+    final state = activeRef.read(activationProvider);
     if (!state.isActivated) return;
 
     final coords = await _determinePosition();
     final screenIdInt = int.tryParse(state.screenId) ?? 0;
 
     try {
-      final url = Uri.parse('https://viewsys.co.in/api/player/heartbeat');
+      final url = Uri.parse('https://cms.thelocads.com/api/player/heartbeat');
       final response = await http.post(
         url,
         headers: {
