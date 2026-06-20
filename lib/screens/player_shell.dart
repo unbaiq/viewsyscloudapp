@@ -12,10 +12,12 @@ import '../providers/player_provider.dart';
 import '../services/heartbeat_service.dart';
 import '../services/sync_service.dart';
 import '../services/screenshot_service.dart';
+import '../services/zone_content_service.dart';
 import '../activation_screen.dart';
 
 import '../widgets/video_player_widget.dart';
 import '../widgets/ticker_bar.dart';
+import 'layouts/half_split_layout.dart';
 
 class PlayerShell extends ConsumerStatefulWidget {
   const PlayerShell({super.key});
@@ -33,6 +35,8 @@ class _PlayerShellState extends ConsumerState<PlayerShell> {
   MediaItem? _prevItem;
   MediaItem? _currItem;
   bool _isCurrentItemReady = false;
+
+  final GlobalKey _playerBodyKey = GlobalKey();
 
   @override
   void initState() {
@@ -266,14 +270,35 @@ class _PlayerShellState extends ConsumerState<PlayerShell> {
         );
       }
 
-      playerBody = Stack(
-        children: stackChildren,
+      playerBody = KeyedSubtree(
+        key: _playerBodyKey,
+        child: Stack(
+          children: stackChildren,
+        ),
       );
     }
 
     final quarterTurns = _getQuarterTurns(actState.orientation, context);
     final isHeaderLayout = actState.layout == 'header';
     final isTickerLayout = actState.layout == 'ticker';
+    final isHalfSplitLayout = actState.layout == 'half_split';
+
+    Widget finalBody = AnimatedSwitcher(
+      duration: const Duration(milliseconds: 500),
+      layoutBuilder: (currentChild, previousChildren) {
+        // Custom layout builder to avoid multiple GlobalKeys in the tree during cross-fade
+        return currentChild ?? const SizedBox.shrink();
+      },
+      child: isHalfSplitLayout
+          ? HalfSplitLayout(
+              key: const ValueKey('half_split'),
+              baseMediaSurface: playerBody,
+            )
+          : Container(
+              key: const ValueKey('fullscreen'),
+              child: playerBody,
+            ),
+    );
 
     return Screenshot(
       controller: ScreenshotService.screenshotController,
@@ -290,7 +315,7 @@ class _PlayerShellState extends ConsumerState<PlayerShell> {
               quarterTurns: quarterTurns,
               child: Scaffold(
                 backgroundColor: Colors.black,
-                body: playerBody,
+                body: finalBody,
               ),
             ),
           ),

@@ -74,7 +74,8 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
 
   String _normalizeLayout(String? raw) {
     final clean = raw?.trim().toLowerCase();
-    if (clean == 'ticker' || clean == 'header') {
+    if (clean == 'half') return 'half_split';
+    if (clean == 'ticker' || clean == 'header' || clean == 'half_split') {
       return clean!;
     }
     return 'fullscreen';

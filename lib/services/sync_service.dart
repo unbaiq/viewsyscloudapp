@@ -159,8 +159,13 @@ class SyncService {
             layout = (data['cluster'] as Map)['layout_type']?.toString() ?? (data['cluster'] as Map)['layout']?.toString();
           }
           if (layout != null && layout.isNotEmpty) {
+            layout = layout.trim().toLowerCase();
+            if (layout == 'half') layout = 'half_split';
+            if (layout != 'ticker' && layout != 'header' && layout != 'half_split') {
+              layout = 'fullscreen';
+            }
             final currentActState = currentRefAfterFetch.read(activationProvider);
-            if (currentActState.layout != layout.trim().toLowerCase()) {
+            if (currentActState.layout != layout) {
               await currentRefAfterFetch.read(activationProvider.notifier).updateLayout(layout);
             }
           }
@@ -305,6 +310,11 @@ class SyncService {
             layout = (data['cluster'] as Map)['layout_type']?.toString() ?? (data['cluster'] as Map)['layout']?.toString();
           }
           if (layout != null && layout.isNotEmpty) {
+            layout = layout.trim().toLowerCase();
+            if (layout == 'half') layout = 'half_split';
+            if (layout != 'ticker' && layout != 'header' && layout != 'half_split') {
+              layout = 'fullscreen';
+            }
             await currentRef.read(activationProvider.notifier).updateLayout(layout);
           }
 

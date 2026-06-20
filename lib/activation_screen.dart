@@ -121,6 +121,10 @@ class _ActivationScreenState extends ConsumerState<ActivationScreen> with Single
           syncInterval = data['sync_interval']?.toString() ?? '3';
 
           layout = data['layout_type']?.toString() ?? data['layout']?.toString() ?? 'fullscreen';
+          layout = layout.trim().toLowerCase();
+          if (layout != 'ticker' && layout != 'header' && layout != 'half_split') {
+            layout = 'fullscreen';
+          }
           final prefs = await SharedPreferences.getInstance();
           await prefs.setString('screen_layout', layout);
         }

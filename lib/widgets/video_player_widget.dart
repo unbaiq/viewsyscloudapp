@@ -14,12 +14,14 @@ class VideoPlayerWidget extends ConsumerStatefulWidget {
   final MediaItem item;
   final VoidCallback onComplete;
   final VoidCallback? onInitialized;
+  final bool forceLoop;
 
   const VideoPlayerWidget({
     super.key,
     required this.item,
     required this.onComplete,
     this.onInitialized,
+    this.forceLoop = false,
   });
 
   @override
@@ -55,6 +57,15 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
 
   void _updateLoopingState() {
     if (_controller == null || !_initialized) return;
+    
+    if (widget.forceLoop) {
+      if (!_controller!.value.isLooping) {
+        _controller!.setLooping(true);
+        print('[VideoPlayerWidget] Dynamic looping updated to: true (forceLoop)');
+      }
+      return;
+    }
+
     final playlistState = ref.read(playlistProvider);
     final items = playlistState.items;
     final now = DateTime.now();
@@ -201,16 +212,21 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
       return const SizedBox.shrink();
     }
 
-    // FittedBox correctly fills any rotated space while preserving aspect ratio
-    return SizedBox.expand(
-      child: FittedBox(
-        fit: BoxFit.cover,
-        child: SizedBox(
-          width: _controller!.value.size.width,
-          height: _controller!.value.size.height,
-          child: VideoPlayer(_controller!),
-        ),
-      ),
+    // FittedBox correctly fills any rotated space while preserving aspect ratio.
+    // LayoutBuilder forces the widget tree to respond live to constraints/orientation changes.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SizedBox.expand(
+          child: FittedBox(
+            fit: BoxFit.cover,
+            child: SizedBox(
+              width: _controller!.value.size.width,
+              height: _controller!.value.size.height,
+              child: VideoPlayer(_controller!),
+            ),
+          ),
+        );
+      },
     );
   }
 }
