@@ -22,6 +22,7 @@ class ActivationState {
   final String orientation;
   final int syncInterval;
   final String layout;
+  final String? sidebarUrl;
 
   const ActivationState({
     required this.isActivated,
@@ -32,6 +33,7 @@ class ActivationState {
     required this.orientation,
     required this.syncInterval,
     required this.layout,
+    this.sidebarUrl,
   });
 
   ActivationState copyWith({
@@ -43,6 +45,7 @@ class ActivationState {
     String? orientation,
     int? syncInterval,
     String? layout,
+    String? sidebarUrl,
   }) {
     return ActivationState(
       isActivated: isActivated ?? this.isActivated,
@@ -53,6 +56,7 @@ class ActivationState {
       orientation: orientation ?? this.orientation,
       syncInterval: syncInterval ?? this.syncInterval,
       layout: layout ?? this.layout,
+      sidebarUrl: sidebarUrl ?? this.sidebarUrl,
     );
   }
 }
@@ -68,6 +72,7 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
           orientation: 'landscape',
           syncInterval: 10,
           layout: 'fullscreen',
+          sidebarUrl: null,
         )) {
     loadActivationFromPrefs();
   }
@@ -75,7 +80,7 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
   String _normalizeLayout(String? raw) {
     final clean = raw?.trim().toLowerCase();
     if (clean == 'half') return 'half_split';
-    if (clean == 'ticker' || clean == 'header' || clean == 'half_split') {
+    if (clean == 'ticker' || clean == 'header' || clean == 'half_split' || clean == 'sidebar') {
       return clean!;
     }
     return 'fullscreen';
@@ -92,6 +97,7 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
     final syncIntervalStr = prefs.getString('sync_interval') ?? '10';
     final syncInterval = int.tryParse(syncIntervalStr) ?? 10;
     final layout = _normalizeLayout(prefs.getString('screen_layout'));
+    final sidebarUrl = prefs.getString('sidebar_url');
 
     state = ActivationState(
       isActivated: isActivated && deviceCode != '------' && screenId.isNotEmpty,
@@ -154,13 +160,18 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
   }
 
   /// Update screen layout dynamically from central CMS sync pings
-  Future<void> updateLayout(String newLayout) async {
+  Future<void> updateLayout(String newLayout, {String? sidebarUrl}) async {
     final cleanLayout = _normalizeLayout(newLayout);
-    if (state.layout == cleanLayout) return;
+    if (state.layout == cleanLayout && state.sidebarUrl == sidebarUrl) return;
 
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('screen_layout', cleanLayout);
-    state = state.copyWith(layout: cleanLayout);
+    if (sidebarUrl != null) {
+      await prefs.setString('sidebar_url', sidebarUrl);
+    } else {
+      await prefs.remove('sidebar_url');
+    }
+    state = state.copyWith(layout: cleanLayout, sidebarUrl: sidebarUrl);
   }
 
   /// Refreshes the activation details from the server using the saved device/pairing code.

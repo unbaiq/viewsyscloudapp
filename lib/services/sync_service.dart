@@ -158,46 +158,34 @@ class SyncService {
           if (layout == null && data['cluster'] is Map) {
             layout = (data['cluster'] as Map)['layout_type']?.toString() ?? (data['cluster'] as Map)['layout']?.toString();
           }
-          if (layout != null && layout.isNotEmpty) {
-            layout = layout.trim().toLowerCase();
-            if (layout == 'half') layout = 'half_split';
-            if (layout != 'ticker' && layout != 'header' && layout != 'half_split') {
-              layout = 'fullscreen';
-            }
-            final currentActState = currentRefAfterFetch.read(activationProvider);
-            if (currentActState.layout != layout) {
-              await currentRefAfterFetch.read(activationProvider.notifier).updateLayout(layout);
-            }
+
+          // TODO: Confirm exactly which JSON key the backend uses for the sidebar URL and remove the fallback defensive parsing here
+          String? parsedSidebarUrl = data['sidebar_url']?.toString() ?? data['webview_url']?.toString() ?? data['cms_url']?.toString();
+          if (parsedSidebarUrl == null && data['data'] is Map) {
+            final inner = data['data'] as Map;
+            parsedSidebarUrl = inner['sidebar_url']?.toString() ?? inner['webview_url']?.toString() ?? inner['cms_url']?.toString();
+          }
+          if (parsedSidebarUrl == null && data['cluster'] is Map) {
+            final inner = data['cluster'] as Map;
+            parsedSidebarUrl = inner['sidebar_url']?.toString() ?? inner['webview_url']?.toString() ?? inner['cms_url']?.toString();
           }
 
-          dynamic tickersData = data['header_text'] ?? 
-                              data['headerText'] ?? 
-                              data['ticker_type'] ?? 
-                              data['tickerType'] ?? 
-                              data['tickers'] ?? 
-                              data['ticker'] ?? 
-                              data['ticker_text'] ?? 
-                              data['tickerText'] ?? 
-                              data['tickers_text'];
-                              
-          if (tickersData == null && data['data'] is Map) {
-            final innerData = data['data'] as Map;
-            tickersData = innerData['header_text'] ?? 
-                          innerData['headerText'] ?? 
-                          innerData['tickers'] ?? 
-                          innerData['ticker'] ?? 
-                          innerData['ticker_text'] ?? 
-                          innerData['tickerText'];
+          final currentActState = currentRefAfterFetch.read(activationProvider);
+          layout = layout?.trim().toLowerCase();
+          if (layout == 'half') layout = 'half_split';
+          if (layout != null && layout != 'ticker' && layout != 'header' && layout != 'half_split' && layout != 'sidebar') {
+            layout = 'fullscreen';
           }
-          if (tickersData == null && data['cluster'] is Map) {
-            final innerData = data['cluster'] as Map;
-            tickersData = innerData['header_text'] ?? 
-                          innerData['headerText'] ?? 
-                          innerData['tickers'] ?? 
-                          innerData['ticker'] ?? 
-                          innerData['ticker_text'] ?? 
-                          innerData['tickerText'];
+
+          final finalLayoutToSave = layout ?? currentActState.layout;
+          final finalSidebarUrlToSave = parsedSidebarUrl ?? currentActState.sidebarUrl;
+
+          if (currentActState.layout != finalLayoutToSave || currentActState.sidebarUrl != finalSidebarUrlToSave) {
+            await currentRefAfterFetch.read(activationProvider.notifier).updateLayout(finalLayoutToSave, sidebarUrl: finalSidebarUrlToSave);
           }
+
+          final activeLayout = finalLayoutToSave;
+          dynamic tickersData = _extractTextForLayout(data as Map<String, dynamic>, activeLayout);
 
           if (tickersData != null) {
             final List<TickerItem> parsedTickers = [];
@@ -309,43 +297,34 @@ class SyncService {
           if (layout == null && data['cluster'] is Map) {
             layout = (data['cluster'] as Map)['layout_type']?.toString() ?? (data['cluster'] as Map)['layout']?.toString();
           }
-          if (layout != null && layout.isNotEmpty) {
-            layout = layout.trim().toLowerCase();
-            if (layout == 'half') layout = 'half_split';
-            if (layout != 'ticker' && layout != 'header' && layout != 'half_split') {
-              layout = 'fullscreen';
-            }
-            await currentRef.read(activationProvider.notifier).updateLayout(layout);
+
+          // TODO: Confirm exactly which JSON key the backend uses for the sidebar URL and remove the fallback defensive parsing here
+          String? parsedSidebarUrl = data['sidebar_url']?.toString() ?? data['webview_url']?.toString() ?? data['cms_url']?.toString();
+          if (parsedSidebarUrl == null && data['data'] is Map) {
+            final inner = data['data'] as Map;
+            parsedSidebarUrl = inner['sidebar_url']?.toString() ?? inner['webview_url']?.toString() ?? inner['cms_url']?.toString();
+          }
+          if (parsedSidebarUrl == null && data['cluster'] is Map) {
+            final inner = data['cluster'] as Map;
+            parsedSidebarUrl = inner['sidebar_url']?.toString() ?? inner['webview_url']?.toString() ?? inner['cms_url']?.toString();
           }
 
-          dynamic tickersData = data['header_text'] ?? 
-                              data['headerText'] ?? 
-                              data['ticker_type'] ?? 
-                              data['tickerType'] ?? 
-                              data['tickers'] ?? 
-                              data['ticker'] ?? 
-                              data['ticker_text'] ?? 
-                              data['tickerText'] ?? 
-                              data['tickers_text'];
-                              
-          if (tickersData == null && data['data'] is Map) {
-            final innerData = data['data'] as Map;
-            tickersData = innerData['header_text'] ?? 
-                          innerData['headerText'] ?? 
-                          innerData['tickers'] ?? 
-                          innerData['ticker'] ?? 
-                          innerData['ticker_text'] ?? 
-                          innerData['tickerText'];
+          final currentActState = currentRef.read(activationProvider);
+          layout = layout?.trim().toLowerCase();
+          if (layout == 'half') layout = 'half_split';
+          if (layout != null && layout != 'ticker' && layout != 'header' && layout != 'half_split' && layout != 'sidebar') {
+            layout = 'fullscreen';
           }
-          if (tickersData == null && data['cluster'] is Map) {
-            final innerData = data['cluster'] as Map;
-            tickersData = innerData['header_text'] ?? 
-                          innerData['headerText'] ?? 
-                          innerData['tickers'] ?? 
-                          innerData['ticker'] ?? 
-                          innerData['ticker_text'] ?? 
-                          innerData['tickerText'];
+
+          final finalLayoutToSave = layout ?? currentActState.layout;
+          final finalSidebarUrlToSave = parsedSidebarUrl ?? currentActState.sidebarUrl;
+
+          if (currentActState.layout != finalLayoutToSave || currentActState.sidebarUrl != finalSidebarUrlToSave) {
+            await currentRef.read(activationProvider.notifier).updateLayout(finalLayoutToSave, sidebarUrl: finalSidebarUrlToSave);
           }
+
+          final activeLayout = finalLayoutToSave;
+          dynamic tickersData = _extractTextForLayout(data as Map<String, dynamic>, activeLayout);
 
           if (tickersData != null) {
             final List<TickerItem> parsedTickers = [];
@@ -405,5 +384,30 @@ class SyncService {
     } catch (e) {
       print('Schedule synchronization failed: $e');
     }
+  }
+
+  dynamic _extractTextForLayout(Map<String, dynamic> data, String layout) {
+    dynamic extract(Map<String, dynamic> map, String layoutType) {
+      if (layoutType == 'header') {
+        return map['header_text'] ?? map['headerText'];
+      } else {
+        return map['ticker_type'] ?? 
+               map['tickerType'] ?? 
+               map['tickers'] ?? 
+               map['ticker'] ?? 
+               map['ticker_text'] ?? 
+               map['tickerText'] ?? 
+               map['tickers_text'];
+      }
+    }
+
+    dynamic textData = extract(data, layout);
+    if (textData == null && data['data'] is Map) {
+      textData = extract(data['data'] as Map<String, dynamic>, layout);
+    }
+    if (textData == null && data['cluster'] is Map) {
+      textData = extract(data['cluster'] as Map<String, dynamic>, layout);
+    }
+    return textData;
   }
 }

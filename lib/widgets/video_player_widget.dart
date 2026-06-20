@@ -218,7 +218,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
       builder: (context, constraints) {
         return SizedBox.expand(
           child: FittedBox(
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
             child: SizedBox(
               width: _controller!.value.size.width,
               height: _controller!.value.size.height,

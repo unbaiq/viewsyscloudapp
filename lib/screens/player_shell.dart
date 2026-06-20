@@ -18,6 +18,7 @@ import '../activation_screen.dart';
 import '../widgets/video_player_widget.dart';
 import '../widgets/ticker_bar.dart';
 import 'layouts/half_split_layout.dart';
+import 'layouts/sidebar_layout.dart';
 
 class PlayerShell extends ConsumerStatefulWidget {
   const PlayerShell({super.key});
@@ -282,6 +283,7 @@ class _PlayerShellState extends ConsumerState<PlayerShell> {
     final isHeaderLayout = actState.layout == 'header';
     final isTickerLayout = actState.layout == 'ticker';
     final isHalfSplitLayout = actState.layout == 'half_split';
+    final isSidebarLayout = actState.layout == 'sidebar';
 
     Widget finalBody = AnimatedSwitcher(
       duration: const Duration(milliseconds: 500),
@@ -294,31 +296,36 @@ class _PlayerShellState extends ConsumerState<PlayerShell> {
               key: const ValueKey('half_split'),
               baseMediaSurface: playerBody,
             )
-          : Container(
-              key: const ValueKey('fullscreen'),
-              child: playerBody,
-            ),
+          : isSidebarLayout
+              ? SidebarLayout(
+                  key: const ValueKey('sidebar'),
+                  baseMediaSurface: playerBody,
+                  sidebarUrl: actState.sidebarUrl,
+                )
+              : Container(
+                  key: const ValueKey('fullscreen'),
+                  child: playerBody,
+                ),
     );
 
     return Screenshot(
       controller: ScreenshotService.screenshotController,
-      child: Stack(
-        children: [
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeInOut,
-            top: isHeaderLayout ? 50.0 : 0.0,
-            bottom: isTickerLayout ? 50.0 : 0.0,
-            left: 0,
-            right: 0,
-            child: RotatedBox(
-              quarterTurns: quarterTurns,
+      child: RotatedBox(
+        quarterTurns: quarterTurns,
+        child: Stack(
+          children: [
+            AnimatedPositioned(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+              top: isHeaderLayout ? 50.0 : 0.0,
+              bottom: isTickerLayout ? 50.0 : 0.0,
+              left: 0,
+              right: 0,
               child: Scaffold(
                 backgroundColor: Colors.black,
                 body: finalBody,
               ),
             ),
-          ),
           if (isHeaderLayout)
             Positioned(
               top: 0,
@@ -403,6 +410,7 @@ class _PlayerShellState extends ConsumerState<PlayerShell> {
               ),
             ),
         ],
+        ),
       ),
     );
   }

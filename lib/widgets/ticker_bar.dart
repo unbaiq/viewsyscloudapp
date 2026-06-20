@@ -164,7 +164,7 @@ class _TickerBarState extends State<TickerBar> with TickerProviderStateMixin {
 
     return Container(
       color: barBg,
-      alignment: Alignment.center,
+      // Removed alignment to force child to expand to full width
       child: ClipRect(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -184,24 +184,23 @@ class _TickerBarState extends State<TickerBar> with TickerProviderStateMixin {
 
             return Stack(
               clipBehavior: Clip.hardEdge,
+              fit: StackFit.expand, // Ensures the stack takes full width
               children: [
                 AnimatedBuilder(
                   animation: _animationController!,
                   builder: (context, child) {
                     final double val = _animationController!.value;
                     final double x = scrollingAreaWidth - (scrollingAreaWidth + _textRowWidth) * val;
-                    return Transform.translate(
-                      offset: Offset(x, 0),
-                      child: child,
+                    return Positioned(
+                      left: x,
+                      top: 0,
+                      bottom: 0,
+                      child: child!,
                     );
                   },
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    physics: const NeverScrollableScrollPhysics(),
-                    child: Row(
-                      key: _textRowKey,
-                      children: _buildTickerSegments(),
-                    ),
+                  child: Row(
+                    key: _textRowKey,
+                    children: _buildTickerSegments(),
                   ),
                 ),
               ],
