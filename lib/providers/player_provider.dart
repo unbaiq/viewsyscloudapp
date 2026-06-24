@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,6 +11,7 @@ import '../models/ticker_item.dart';
 import '../services/database_helper.dart';
 import '../services/file_manager.dart';
 import '../services/video_preload_manager.dart';
+import 'zone_content_provider.dart';
 
 // --- Activation State Model & Notifier ---
 
@@ -389,11 +391,12 @@ class PlaylistState {
 }
 
 class PlaylistNotifier extends StateNotifier<PlaylistState> {
+  final Ref ref;
   bool _isDownloading = false;
   final Set<int> _failedDownloads = {};
   final Map<int, double> _downloadProgresses = {};
 
-  PlaylistNotifier() : super(PlaylistState(items: [], hasInitialized: false, isOnline: true)) {
+  PlaylistNotifier(this.ref) : super(PlaylistState(items: [], hasInitialized: false, isOnline: true)) {
     loadCachedPlaylist().then((_) {
       if (kIsWeb && state.items.isEmpty) {
         final now = DateTime.now();
@@ -583,9 +586,23 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
       // Pre-resolve orientations in background before updating UI state
       final resolvedItems = await _resolveOrientations(itemsToUse);
 
-      // Determine the next index to use, preserving the currently playing item if possible
+      // Determine if the playlist has actually changed
+      bool playlistChanged = false;
+      if (oldItems.length != resolvedItems.length) {
+        playlistChanged = true;
+      } else {
+        for (int i = 0; i < oldItems.length; i++) {
+          if (oldItems[i].id != resolvedItems[i].id || oldItems[i].url != resolvedItems[i].url) {
+            playlistChanged = true;
+            break;
+          }
+        }
+      }
+
+      // Determine the next index to use. 
+      // If the playlist has functionally changed, interrupt current playback and start fresh from the first valid item.
       int targetIndex = 0;
-      if (state.items.isNotEmpty && state.currentIndex >= 0 && state.currentIndex < state.items.length) {
+      if (!playlistChanged && state.items.isNotEmpty && state.currentIndex >= 0 && state.currentIndex < state.items.length) {
         final currentItem = state.items[state.currentIndex];
         final matchIdx = resolvedItems.indexWhere((it) => it.id == currentItem.id && it.url == currentItem.url);
         if (matchIdx != -1) {
@@ -735,7 +752,24 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
       // Clean up orphaned cache files once everything is fully cached
       if (mounted) {
         state = state.copyWith(downloadProgress: 0.0);
-        await FileManager.instance.cleanUnusedFiles(state.items);
+        
+        final List<MediaItem> allActiveItems = List.from(state.items);
+        final zoneContent = ref.read(zoneContentProvider).item;
+        if (zoneContent != null) allActiveItems.add(zoneContent);
+        final leftZone = ref.read(leftZoneProvider).item;
+        if (leftZone != null) allActiveItems.add(leftZone);
+        final centerZone = ref.read(centerZoneProvider).item;
+        if (centerZone != null) allActiveItems.add(centerZone);
+        final rightZone = ref.read(rightZoneProvider).item;
+        if (rightZone != null) allActiveItems.add(rightZone);
+        final topRightZone = ref.read(topRightZoneProvider).item;
+        if (topRightZone != null) allActiveItems.add(topRightZone);
+        final bottomLeftZone = ref.read(bottomLeftZoneProvider).item;
+        if (bottomLeftZone != null) allActiveItems.add(bottomLeftZone);
+        final bottomRightZone = ref.read(bottomRightZoneProvider).item;
+        if (bottomRightZone != null) allActiveItems.add(bottomRightZone);
+
+        await FileManager.instance.cleanUnusedFiles(allActiveItems);
       }
     } finally {
       _isDownloading = false;
@@ -856,7 +890,7 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
 }
 
 final playlistProvider = StateNotifierProvider<PlaylistNotifier, PlaylistState>((ref) {
-  return PlaylistNotifier();
+  return PlaylistNotifier(ref);
 });
 
 class TickersNotifier extends StateNotifier<List<TickerItem>> {

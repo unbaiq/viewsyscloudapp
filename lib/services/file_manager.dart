@@ -45,7 +45,7 @@ class FileManager {
       // Handle urls with spaces
       final encodedUrl = url.trim().replaceAll(' ', '%20');
       final uri = Uri.parse(encodedUrl);
-      
+
       // Handle file extension or default to custom binary format suffix
       String extension = p.extension(uri.path);
       if (extension.isEmpty) {
@@ -56,7 +56,7 @@ class FileManager {
           extension = url.contains('.mp4') ? '.mp4' : '.jpeg';
         }
       }
-      
+
       final localFileName = 'media_$itemId$extension';
       localFilePath = p.join(dir.path, localFileName);
       tempFilePath = '$localFilePath.tmp';
@@ -65,7 +65,9 @@ class FileManager {
 
       // Return path if file is already fully downloaded and not empty (e.g. from failed downloads)
       if (await file.exists() && await file.length() > 0) {
-        print('Media file ID $itemId already exists locally at: $localFilePath');
+        print(
+          'Media file ID $itemId already exists locally at: $localFilePath',
+        );
         if (onProgress != null) onProgress(1.0);
         return localFilePath;
       }
@@ -77,8 +79,11 @@ class FileManager {
       bool acceptRanges = false;
       try {
         final headRequest = http.Request('HEAD', uri);
-        headRequest.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
-        final headResponse = await _client.send(headRequest).timeout(const Duration(seconds: 5));
+        headRequest.headers['User-Agent'] =
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
+        final headResponse = await _client
+            .send(headRequest)
+            .timeout(const Duration(seconds: 5));
         if (headResponse.statusCode == 200 || headResponse.statusCode == 206) {
           final lengthStr = headResponse.headers['content-length'];
           if (lengthStr != null) {
@@ -98,23 +103,42 @@ class FileManager {
       String? downloadedTempPath;
       // If file size is large (> 2MB) and server supports range queries, do parallel range downloads
       if (totalBytes > 2 * 1024 * 1024 && acceptRanges) {
-        print('Downloading media file ID $itemId via range-based parallel threads...');
-        downloadedTempPath = await _downloadMultiThreaded(uri, tempFile, totalBytes, onProgress, isCancelled: isCancelled);
+        print(
+          'Downloading media file ID $itemId via range-based parallel threads...',
+        );
+        downloadedTempPath = await _downloadMultiThreaded(
+          uri,
+          tempFile,
+          totalBytes,
+          onProgress,
+          isCancelled: isCancelled,
+        );
       } else {
-        print('Downloading media file ID $itemId via single-threaded stream...');
-        downloadedTempPath = await _downloadSingleThreaded(uri, tempFile, totalBytes, onProgress, isCancelled: isCancelled);
+        print(
+          'Downloading media file ID $itemId via single-threaded stream...',
+        );
+        downloadedTempPath = await _downloadSingleThreaded(
+          uri,
+          tempFile,
+          totalBytes,
+          onProgress,
+          isCancelled: isCancelled,
+        );
       }
 
       if (isCancelled?.call() == true) return null;
 
       if (downloadedTempPath != null) {
         final downloadedTempFile = File(downloadedTempPath);
-        if (await downloadedTempFile.exists() && await downloadedTempFile.length() > 0) {
+        if (await downloadedTempFile.exists() &&
+            await downloadedTempFile.length() > 0) {
           if (await file.exists()) {
             await file.delete();
           }
           await downloadedTempFile.rename(localFilePath);
-          print('Successfully completed download for ID $itemId: $localFilePath');
+          print(
+            'Successfully completed download for ID $itemId: $localFilePath',
+          );
           return localFilePath;
         }
       }
@@ -146,7 +170,9 @@ class FileManager {
     final List<Map<String, int>> ranges = [];
     for (int i = 0; i < numChunks; i++) {
       final start = i * chunkSize;
-      final end = (i == numChunks - 1) ? totalBytes - 1 : (start + chunkSize - 1);
+      final end = (i == numChunks - 1)
+          ? totalBytes - 1
+          : (start + chunkSize - 1);
       ranges.add({'start': start, 'end': end});
     }
 
@@ -167,7 +193,8 @@ class FileManager {
     try {
       await Future.wait(
         List.generate(numChunks, (index) async {
-          if (isCancelled?.call() == true) throw Exception('Download cancelled');
+          if (isCancelled?.call() == true)
+            throw Exception('Download cancelled');
           final range = ranges[index];
           final start = range['start']!;
           final end = range['end']!;
@@ -175,18 +202,26 @@ class FileManager {
 
           final request = http.Request('GET', uri);
           request.headers['Range'] = 'bytes=$start-$end';
-          request.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
-          
-          final response = await _client.send(request).timeout(const Duration(seconds: 15));
+          request.headers['User-Agent'] =
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
+
+          final response = await _client
+              .send(request)
+              .timeout(const Duration(minutes: 5));
           if (response.statusCode != 206) {
-            throw Exception('Server returned HTTP ${response.statusCode} instead of 206 for range download');
+            throw Exception(
+              'Server returned HTTP ${response.statusCode} instead of 206 for range download',
+            );
           }
 
           final sink = chunkFile.openWrite();
           try {
             int received = 0;
-            await for (final chunk in response.stream.timeout(const Duration(seconds: 15))) {
-              if (isCancelled?.call() == true) throw Exception('Download cancelled');
+            await for (final chunk in response.stream.timeout(
+              const Duration(minutes: 5),
+            )) {
+              if (isCancelled?.call() == true)
+                throw Exception('Download cancelled');
               sink.add(chunk);
               received += chunk.length;
               downloadedBytesPerChunk[index] = received;
@@ -198,7 +233,7 @@ class FileManager {
           }
         }),
       );
-      
+
       if (isCancelled?.call() == true) throw Exception('Download cancelled');
 
       // Concatenate all downloaded chunks into the final temp file
@@ -207,7 +242,8 @@ class FileManager {
         for (final chunkFile in chunkFiles) {
           final chunkStream = chunkFile.openRead();
           await for (final data in chunkStream) {
-            if (isCancelled?.call() == true) throw Exception('Download cancelled');
+            if (isCancelled?.call() == true)
+              throw Exception('Download cancelled');
             finalSink.add(data);
           }
         }
@@ -228,7 +264,9 @@ class FileManager {
       print('Successfully finished multi-threaded download: ${file.path}');
       return file.path;
     } catch (e) {
-      print('Multi-threaded download failed, cleaning up chunk files and falling back to single-threaded download: $e');
+      print(
+        'Multi-threaded download failed, cleaning up chunk files and falling back to single-threaded download: $e',
+      );
       // Clean up chunk files on failure
       for (final chunkFile in chunkFiles) {
         try {
@@ -237,7 +275,13 @@ class FileManager {
           }
         } catch (_) {}
       }
-      return _downloadSingleThreaded(uri, file, totalBytes, onProgress, isCancelled: isCancelled);
+      return _downloadSingleThreaded(
+        uri,
+        file,
+        totalBytes,
+        onProgress,
+        isCancelled: isCancelled,
+      );
     }
   }
 
@@ -249,17 +293,25 @@ class FileManager {
     bool Function()? isCancelled,
   }) async {
     final request = http.Request('GET', uri);
-    request.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
-    final response = await _client.send(request).timeout(const Duration(seconds: 15));
-    
+    request.headers['User-Agent'] =
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
+    final response = await _client
+        .send(request)
+        .timeout(const Duration(minutes: 5));
+
     if (response.statusCode == 200) {
-      final total = totalBytes > 0 ? totalBytes : (response.contentLength ?? -1);
+      final total = totalBytes > 0
+          ? totalBytes
+          : (response.contentLength ?? -1);
       int received = 0;
-      
+
       final sink = file.openWrite();
       try {
-        await for (final chunk in response.stream.timeout(const Duration(seconds: 15))) {
-          if (isCancelled?.call() == true) throw Exception('Download cancelled');
+        await for (final chunk in response.stream.timeout(
+          const Duration(minutes: 5),
+        )) {
+          if (isCancelled?.call() == true)
+            throw Exception('Download cancelled');
           sink.add(chunk);
           received += chunk.length;
           if (total != -1 && onProgress != null) {
@@ -273,7 +325,9 @@ class FileManager {
       print('Successfully finished single-threaded download: ${file.path}');
       return file.path;
     } else {
-      throw Exception('Failed to download: HTTP Status Code ${response.statusCode}');
+      throw Exception(
+        'Failed to download: HTTP Status Code ${response.statusCode}',
+      );
     }
   }
 

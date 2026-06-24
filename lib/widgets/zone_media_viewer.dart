@@ -5,6 +5,7 @@ import '../models/media_item.dart';
 import '../providers/zone_content_provider.dart';
 import 'video_player_widget.dart';
 import 'shimmer_placeholder.dart';
+import 'cms_webview_panel.dart';
 
 class ZoneMediaViewer extends StatelessWidget {
   final ZoneContentState state;
@@ -58,7 +59,7 @@ class ZoneMediaViewer extends StatelessWidget {
   Widget _buildMediaView(MediaItem item) {
     if (item.type == 'video') {
       return VideoPlayerWidget(
-        key: ValueKey('zone_video_${item.id}'),
+        key: ValueKey('zone_video_${item.id}_${item.localPath ?? item.url}'),
         item: item,
         forceLoop: true,
         onComplete: () {},

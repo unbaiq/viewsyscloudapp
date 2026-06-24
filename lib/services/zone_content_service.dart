@@ -121,8 +121,8 @@ class ZoneContentService {
         dynamic topRightZoneData = data['top_right_zone'] ?? data['top_right'] ?? data['grid_top_right_zone'] ?? data['grid_top_right'] ?? data['zone2'];
         dynamic bottomLeftZoneData = data['bottom_left_zone'] ?? data['bottom_left'] ?? data['grid_bottom_left_zone'] ?? data['grid_bottom_left'] ?? data['zone3'];
         dynamic bottomRightZoneData = data['bottom_right_zone'] ?? data['bottom_right'] ?? data['grid_bottom_right_zone'] ?? data['grid_bottom_right'] ?? data['zone4'];
-        dynamic centerZoneData = data['center_zone'] ?? data['center'] ?? data['triple_center'] ?? data['triple_center_zone'];
-        dynamic rightZoneData = data['right_zone'] ?? data['right'] ?? data['triple_right'] ?? data['triple_right_zone'];
+        dynamic centerZoneData = data['center_zone'] ?? data['center'] ?? data['triple_center'] ?? data['triple_center_zone'] ?? data['zone2'];
+        dynamic rightZoneData = data['right_zone'] ?? data['right'] ?? data['triple_right'] ?? data['triple_right_zone'] ?? data['zone3'];
 
         if (data['data'] is Map) {
           final innerData = data['data'] as Map;
@@ -130,8 +130,8 @@ class ZoneContentService {
           topRightZoneData ??= innerData['top_right_zone'] ?? innerData['top_right'] ?? innerData['grid_top_right_zone'] ?? innerData['grid_top_right'] ?? innerData['zone2'];
           bottomLeftZoneData ??= innerData['bottom_left_zone'] ?? innerData['bottom_left'] ?? innerData['grid_bottom_left_zone'] ?? innerData['grid_bottom_left'] ?? innerData['zone3'];
           bottomRightZoneData ??= innerData['bottom_right_zone'] ?? innerData['bottom_right'] ?? innerData['grid_bottom_right_zone'] ?? innerData['grid_bottom_right'] ?? innerData['zone4'];
-          centerZoneData ??= innerData['center_zone'] ?? innerData['center'] ?? innerData['triple_center'] ?? innerData['triple_center_zone'];
-          rightZoneData ??= innerData['right_zone'] ?? innerData['right'] ?? innerData['triple_right'] ?? innerData['triple_right_zone'];
+          centerZoneData ??= innerData['center_zone'] ?? innerData['center'] ?? innerData['triple_center'] ?? innerData['triple_center_zone'] ?? innerData['zone2'];
+          rightZoneData ??= innerData['right_zone'] ?? innerData['right'] ?? innerData['triple_right'] ?? innerData['triple_right_zone'] ?? innerData['zone3'];
         }
         if (data['cluster'] is Map) {
           final innerData = data['cluster'] as Map;
@@ -139,8 +139,17 @@ class ZoneContentService {
           topRightZoneData ??= innerData['top_right_zone'] ?? innerData['top_right'] ?? innerData['grid_top_right_zone'] ?? innerData['grid_top_right'] ?? innerData['zone2'];
           bottomLeftZoneData ??= innerData['bottom_left_zone'] ?? innerData['bottom_left'] ?? innerData['grid_bottom_left_zone'] ?? innerData['grid_bottom_left'] ?? innerData['zone3'];
           bottomRightZoneData ??= innerData['bottom_right_zone'] ?? innerData['bottom_right'] ?? innerData['grid_bottom_right_zone'] ?? innerData['grid_bottom_right'] ?? innerData['zone4'];
-          centerZoneData ??= innerData['center_zone'] ?? innerData['center'] ?? innerData['triple_center'] ?? innerData['triple_center_zone'];
-          rightZoneData ??= innerData['right_zone'] ?? innerData['right'] ?? innerData['triple_right'] ?? innerData['triple_right_zone'];
+          centerZoneData ??= innerData['center_zone'] ?? innerData['center'] ?? innerData['triple_center'] ?? innerData['triple_center_zone'] ?? innerData['zone2'];
+          rightZoneData ??= innerData['right_zone'] ?? innerData['right'] ?? innerData['triple_right'] ?? innerData['triple_right_zone'] ?? innerData['zone3'];
+        }
+        if (zoneData is Map) {
+          final innerData = zoneData as Map;
+          leftZoneData ??= innerData['left_zone'] ?? innerData['menu_zone'] ?? innerData['menu_content'] ?? innerData['menu'];
+          topRightZoneData ??= innerData['top_right_zone'] ?? innerData['top_right'] ?? innerData['grid_top_right_zone'] ?? innerData['grid_top_right'] ?? innerData['zone2'];
+          bottomLeftZoneData ??= innerData['bottom_left_zone'] ?? innerData['bottom_left'] ?? innerData['grid_bottom_left_zone'] ?? innerData['grid_bottom_left'] ?? innerData['zone3'];
+          bottomRightZoneData ??= innerData['bottom_right_zone'] ?? innerData['bottom_right'] ?? innerData['grid_bottom_right_zone'] ?? innerData['grid_bottom_right'] ?? innerData['zone4'];
+          centerZoneData ??= innerData['center_zone'] ?? innerData['center'] ?? innerData['triple_center'] ?? innerData['triple_center_zone'] ?? innerData['zone2'];
+          rightZoneData ??= innerData['right_zone'] ?? innerData['right'] ?? innerData['triple_right'] ?? innerData['triple_right_zone'] ?? innerData['zone3'];
         }
         if (data['layout'] is Map) {
           final layoutMap = data['layout'] as Map;
@@ -148,8 +157,8 @@ class ZoneContentService {
           topRightZoneData ??= layoutMap['top_right'] ?? layoutMap['top_right_zone'] ?? layoutMap['grid_top_right'] ?? layoutMap['zone2'];
           bottomLeftZoneData ??= layoutMap['bottom_left'] ?? layoutMap['bottom_left_zone'] ?? layoutMap['grid_bottom_left'] ?? layoutMap['zone3'];
           bottomRightZoneData ??= layoutMap['bottom_right'] ?? layoutMap['bottom_right_zone'] ?? layoutMap['grid_bottom_right'] ?? layoutMap['zone4'];
-          centerZoneData ??= layoutMap['center'] ?? layoutMap['center_zone'];
-          rightZoneData ??= layoutMap['right'] ?? layoutMap['right_zone'];
+          centerZoneData ??= layoutMap['center'] ?? layoutMap['center_zone'] ?? layoutMap['zone2'];
+          rightZoneData ??= layoutMap['right'] ?? layoutMap['right_zone'] ?? layoutMap['zone3'];
         }
         if (data['layouts'] is Map) {
           final layoutsData = data['layouts'] as Map;
@@ -157,8 +166,8 @@ class ZoneContentService {
           topRightZoneData ??= layoutsData['top_right'] ?? layoutsData['top_right_zone'] ?? layoutsData['grid_top_right'] ?? layoutsData['zone2'];
           bottomLeftZoneData ??= layoutsData['bottom_left'] ?? layoutsData['bottom_left_zone'] ?? layoutsData['grid_bottom_left'] ?? layoutsData['zone3'];
           bottomRightZoneData ??= layoutsData['bottom_right'] ?? layoutsData['bottom_right_zone'] ?? layoutsData['grid_bottom_right'] ?? layoutsData['zone4'];
-          centerZoneData ??= layoutsData['center'] ?? layoutsData['center_zone'];
-          rightZoneData ??= layoutsData['right'] ?? layoutsData['right_zone'];
+          centerZoneData ??= layoutsData['center'] ?? layoutsData['center_zone'] ?? layoutsData['zone2'];
+          rightZoneData ??= layoutsData['right'] ?? layoutsData['right_zone'] ?? layoutsData['zone3'];
           
           // Fallback for specific layout key (e.g., layoutsData['triple']['center'])
           if (actState.layout != null && layoutsData[actState.layout] is Map) {
@@ -167,8 +176,32 @@ class ZoneContentService {
             topRightZoneData ??= specificLayoutData['top_right'] ?? specificLayoutData['top_right_zone'] ?? specificLayoutData['grid_top_right'] ?? specificLayoutData['zone2'];
             bottomLeftZoneData ??= specificLayoutData['bottom_left'] ?? specificLayoutData['bottom_left_zone'] ?? specificLayoutData['grid_bottom_left'] ?? specificLayoutData['zone3'];
             bottomRightZoneData ??= specificLayoutData['bottom_right'] ?? specificLayoutData['bottom_right_zone'] ?? specificLayoutData['grid_bottom_right'] ?? specificLayoutData['zone4'];
-            centerZoneData ??= specificLayoutData['center'] ?? specificLayoutData['center_zone'];
-            rightZoneData ??= specificLayoutData['right'] ?? specificLayoutData['right_zone'];
+            centerZoneData ??= specificLayoutData['center'] ?? specificLayoutData['center_zone'] ?? specificLayoutData['zone2'];
+            rightZoneData ??= specificLayoutData['right'] ?? specificLayoutData['right_zone'] ?? specificLayoutData['zone3'];
+          }
+        }
+        
+        // Handle array of zones: if the API sends zones as a list of objects containing a 'zone' or 'name' key
+        final List<dynamic> possibleZoneLists = [];
+        if (data['layouts'] is List) possibleZoneLists.add(data['layouts']);
+        if (data['layout_zones'] is List) possibleZoneLists.add(data['layout_zones']);
+        if (data['zones'] is List) possibleZoneLists.add(data['zones']);
+        if (data['zone_content'] is List) possibleZoneLists.add(data['zone_content']);
+        if (data['data'] is Map && data['data']['zones'] is List) possibleZoneLists.add(data['data']['zones']);
+        
+        for (final list in possibleZoneLists) {
+          for (final item in list) {
+            if (item is Map) {
+              final zoneName = (item['zone'] ?? item['zone_name'] ?? item['name'] ?? '').toString().toLowerCase();
+              final content = item['content'] ?? item; // The content might be nested or the item itself
+              
+              if (zoneName == 'left' || zoneName == 'menu' || zoneName == 'zone1') leftZoneData ??= content;
+              if (zoneName == 'top_right' || zoneName == 'grid_top_right' || zoneName == 'zone2') topRightZoneData ??= content;
+              if (zoneName == 'bottom_left' || zoneName == 'grid_bottom_left' || zoneName == 'zone3') bottomLeftZoneData ??= content;
+              if (zoneName == 'bottom_right' || zoneName == 'grid_bottom_right' || zoneName == 'zone4') bottomRightZoneData ??= content;
+              if (zoneName == 'center' || zoneName == 'triple_center' || zoneName == 'zone2') centerZoneData ??= content;
+              if (zoneName == 'right' || zoneName == 'triple_right' || zoneName == 'zone3') rightZoneData ??= content;
+            }
           }
         }
 
@@ -211,8 +244,14 @@ class ZoneContentService {
             final Map<String, dynamic> dataMap = zData is List ? zData.first as Map<String, dynamic> : zData as Map<String, dynamic>;
             MediaItem item = MediaItem.fromJson(dataMap);
             
-            // If it's a video, download it completely BEFORE pushing to the UI to avoid stuttering streams
-            if (!kIsWeb && item.type == 'video' && item.url.isNotEmpty) {
+            // If item has ID 0, the API didn't send an ID. 
+            // Give it a pseudo-random ID based on the URL so it doesn't overwrite other zones' files.
+            if (item.id == 0 && item.url.isNotEmpty) {
+               item = item.copyWith(id: item.url.hashCode.abs());
+            }
+            
+            // If it's a video or image, download it completely BEFORE pushing to the UI to avoid network stuttering
+            if (!kIsWeb && (item.type == 'video' || item.type == 'image') && item.url.isNotEmpty) {
               final localPath = await FileManager.instance.downloadFile(item.url, item.id, itemType: item.type);
               if (localPath != null) {
                 item = item.copyWith(localPath: localPath);

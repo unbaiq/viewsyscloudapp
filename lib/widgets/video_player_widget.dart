@@ -4,6 +4,10 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:video_player/video_player.dart';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'package:flutter/rendering.dart';
+
 
 import '../models/media_item.dart';
 import '../providers/player_provider.dart';
@@ -18,9 +22,10 @@ class ActiveVideoCountNotifier extends Notifier<int> {
   void decrement() => state--;
 }
 
-final activeVideoCountProvider = NotifierProvider<ActiveVideoCountNotifier, int>(() {
-  return ActiveVideoCountNotifier();
-});
+final activeVideoCountProvider =
+    NotifierProvider<ActiveVideoCountNotifier, int>(() {
+      return ActiveVideoCountNotifier();
+    });
 
 /// A wrapper widget to manage the lifecycle of a video controller safely.
 class VideoPlayerWidget extends ConsumerStatefulWidget {
@@ -42,6 +47,7 @@ class VideoPlayerWidget extends ConsumerStatefulWidget {
 }
 
 class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
+  final GlobalKey _repaintKey = GlobalKey();
   VideoPlayerController? _controller;
   bool _initialized = false;
   bool _hasError = false;
@@ -56,12 +62,17 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
         ref.read(activeVideoCountProvider.notifier).increment();
       }
     });
+    VideoFrameRegistry.instance.register(widget.item.id, _repaintKey);
     _initVideo();
   }
 
   @override
   void didUpdateWidget(VideoPlayerWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if (oldWidget.item.id != widget.item.id) {
+      VideoFrameRegistry.instance.unregister(oldWidget.item.id);
+      VideoFrameRegistry.instance.register(widget.item.id, _repaintKey);
+    }
     _updateLoopingState();
   }
 
@@ -73,6 +84,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
       } catch (_) {}
     });
     _fallbackTimer?.cancel();
+    VideoFrameRegistry.instance.unregister(widget.item.id);
     _controller?.removeListener(_videoListener);
     _controller?.dispose();
     super.dispose();
@@ -80,11 +92,13 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
 
   void _updateLoopingState() {
     if (_controller == null || !_initialized) return;
-    
+
     if (widget.forceLoop) {
       if (!_controller!.value.isLooping) {
         _controller!.setLooping(true);
-        print('[VideoPlayerWidget] Dynamic looping updated to: true (forceLoop)');
+        print(
+          '[VideoPlayerWidget] Dynamic looping updated to: true (forceLoop)',
+        );
       }
       return;
     }
@@ -92,7 +106,9 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
     final playlistState = ref.read(playlistProvider);
     final items = playlistState.items;
     final now = DateTime.now();
-    final validCount = items.where((item) => item.isValidNow(now, isOnline: playlistState.isOnline)).length;
+    final validCount = items
+        .where((item) => item.isValidNow(now, isOnline: playlistState.isOnline))
+        .length;
     final shouldLoop = validCount <= 1;
     if (_controller!.value.isLooping != shouldLoop) {
       _controller!.setLooping(shouldLoop);
@@ -102,7 +118,9 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
 
   Future<void> _initVideo() async {
     try {
-      final preloaded = VideoPreloadManager.instance.getAndRemove(widget.item.id);
+      final preloaded = VideoPreloadManager.instance.getAndRemove(
+        widget.item.id,
+      );
 
       if (preloaded != null) {
         _controller = preloaded;
@@ -126,7 +144,8 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
           _controller!.play();
         }
       } else {
-        final fileExists = widget.item.localPath != null &&
+        final fileExists =
+            widget.item.localPath != null &&
             widget.item.localPath!.isNotEmpty &&
             !kIsWeb &&
             File(widget.item.localPath!).existsSync() &&
@@ -144,7 +163,9 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
             return;
           }
 
-          print('[VideoPlayerWidget] File not cached yet. Streaming from network: ${widget.item.url}');
+          print(
+            '[VideoPlayerWidget] File not cached yet. Streaming from network: ${widget.item.url}',
+          );
           _controller = VideoPlayerController.networkUrl(
             Uri.parse(widget.item.url),
             videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
@@ -229,15 +250,19 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
         final shouldMute = next > 1;
         if ((_controller!.value.volume == 0.0) != shouldMute) {
           _controller!.setVolume(shouldMute ? 0.0 : 1.0);
-          print('[VideoPlayerWidget] Mute state updated: $shouldMute (Active videos: $next)');
+          print(
+            '[VideoPlayerWidget] Mute state updated: $shouldMute (Active videos: $next)',
+          );
         }
       }
     });
 
     final activeVideoCount = ref.watch(activeVideoCountProvider);
     final isMuted = activeVideoCount > 1;
-    
-    if (_controller != null && _controller!.value.isInitialized && (_controller!.value.volume == 0.0) != isMuted) {
+
+    if (_controller != null &&
+        _controller!.value.isInitialized &&
+        (_controller!.value.volume == 0.0) != isMuted) {
       _controller!.setVolume(isMuted ? 0.0 : 1.0);
     }
 
@@ -248,10 +273,16 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.videocam_off_rounded, color: Colors.redAccent, size: 40),
+              Icon(
+                Icons.videocam_off_rounded,
+                color: Colors.redAccent,
+                size: 40,
+              ),
               SizedBox(height: 12),
-              Text('Video playout failed',
-                  style: TextStyle(color: Colors.white70, fontSize: 13)),
+              Text(
+                'Video playout failed',
+                style: TextStyle(color: Colors.white70, fontSize: 13),
+              ),
             ],
           ),
         ),
@@ -272,11 +303,50 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
             child: SizedBox(
               width: _controller!.value.size.width,
               height: _controller!.value.size.height,
-              child: VideoPlayer(_controller!),
+              child: RepaintBoundary(
+                key: _repaintKey,
+                child: VideoPlayer(_controller!),
+              ),
             ),
           ),
         );
       },
     );
+  }
+}
+
+class VideoFrameRegistry {
+  VideoFrameRegistry._();
+  static final VideoFrameRegistry instance = VideoFrameRegistry._();
+  
+  final Map<int, GlobalKey> _keys = {};
+  
+  void register(int itemId, GlobalKey key) {
+    _keys[itemId] = key;
+  }
+  
+  void unregister(int itemId) {
+    _keys.remove(itemId);
+  }
+  
+  GlobalKey? keyFor(int itemId) => _keys[itemId];
+  
+  Future<Map<int, Uint8List>> captureAllFrames() async {
+    final Map<int, Uint8List> frames = {};
+    for (final entry in _keys.entries) {
+      try {
+        final boundary = entry.value.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+        if (boundary != null) {
+          final image = await boundary.toImage(pixelRatio: 2.0);
+          final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+          if (byteData != null) {
+            frames[entry.key] = byteData.buffer.asUint8List();
+          }
+        }
+      } catch (e) {
+        print('Error capturing video frame for ${entry.key}: $e');
+      }
+    }
+    return frames;
   }
 }

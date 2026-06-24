@@ -115,7 +115,7 @@ class _TripleLayoutState extends ConsumerState<TripleLayout> {
   Widget _buildMediaView(MediaItem item, String? fallbackUrl) {
     if (item.type == 'video') {
       return VideoPlayerWidget(
-        key: ValueKey('zone_video_${item.id}'),
+        key: ValueKey('zone_video_${item.id}_${item.localPath ?? item.url}'),
         item: item,
         forceLoop: true,
         onComplete: () {},

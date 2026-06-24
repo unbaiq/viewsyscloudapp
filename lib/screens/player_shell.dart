@@ -22,6 +22,7 @@ import 'layouts/sidebar_layout.dart';
 import 'layouts/triple_layout.dart';
 import 'layouts/menu_board_layout.dart';
 import 'layouts/four_grid_layout.dart';
+import '../widgets/cms_webview_panel.dart';
 
 class PlayerShell extends ConsumerStatefulWidget {
   const PlayerShell({super.key});

@@ -8,6 +8,7 @@ import '../../providers/zone_content_provider.dart';
 import '../../services/zone_content_service.dart';
 import '../../widgets/video_player_widget.dart';
 import '../../widgets/shimmer_placeholder.dart';
+import '../../widgets/cms_webview_panel.dart';
 
 class HalfSplitLayout extends ConsumerStatefulWidget {
   final Widget baseMediaSurface;
@@ -107,7 +108,7 @@ class _HalfSplitLayoutState extends ConsumerState<HalfSplitLayout> {
   Widget _buildMediaView(MediaItem item) {
     if (item.type == 'video') {
       return VideoPlayerWidget(
-        key: ValueKey('zone_video_${item.id}'),
+        key: ValueKey('zone_video_${item.id}_${item.localPath ?? item.url}'),
         item: item,
         forceLoop: true,
         onComplete: () {
