@@ -3,23 +3,33 @@ import 'package:flutter_riverpod/legacy.dart';
 import '../models/media_item.dart';
 
 class ZoneContentState {
-  final MediaItem? item;
+  final List<MediaItem> items;
+  final int currentIndex;
   final bool isLoading;
   final String? errorMessage;
 
   const ZoneContentState({
-    this.item,
+    this.items = const [],
+    this.currentIndex = 0,
     this.isLoading = false,
     this.errorMessage,
   });
 
+  MediaItem? get item {
+    if (items.isEmpty) return null;
+    if (currentIndex >= items.length) return items[0];
+    return items[currentIndex];
+  }
+
   ZoneContentState copyWith({
-    MediaItem? item,
+    List<MediaItem>? items,
+    int? currentIndex,
     bool? isLoading,
     String? errorMessage,
   }) {
     return ZoneContentState(
-      item: item ?? this.item,
+      items: items ?? this.items,
+      currentIndex: currentIndex ?? this.currentIndex,
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage,
     );
@@ -37,15 +47,43 @@ class ZoneContentNotifier extends StateNotifier<ZoneContentState> {
     state = state.copyWith(isLoading: false, errorMessage: message);
   }
 
-  void updateItem(MediaItem item) {
-    // If the item URL, ID, and localPath are identical, do not replace to avoid unnecessary re-rendering
-    if (state.item?.id == item.id && state.item?.url == item.url && state.item?.localPath == item.localPath) {
-      return;
+  void updateItems(List<MediaItem> newItems) {
+    if (state.items.length == newItems.length) {
+      bool isIdentical = true;
+      for (int i = 0; i < newItems.length; i++) {
+        final a = state.items[i];
+        final b = newItems[i];
+        if (a.id != b.id || a.url != b.url || a.localPath != b.localPath) {
+          isIdentical = false;
+          break;
+        }
+      }
+      if (isIdentical) return;
     }
+
+    int nextIndex = state.currentIndex;
+    if (nextIndex >= newItems.length) {
+      nextIndex = 0;
+    }
+    
     state = ZoneContentState(
-      item: item,
+      items: newItems,
+      currentIndex: nextIndex,
       isLoading: false,
     );
+  }
+
+  void updateItem(MediaItem item) {
+    updateItems([item]);
+  }
+
+  void nextItem() {
+    if (state.items.isEmpty) return;
+    int next = state.currentIndex + 1;
+    if (next >= state.items.length) {
+      next = 0;
+    }
+    state = state.copyWith(currentIndex: next);
   }
 }
 

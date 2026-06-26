@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
 import '../providers/player_provider.dart';
 import '../providers/zone_content_provider.dart';
 import '../models/media_item.dart';
@@ -12,6 +14,8 @@ import 'file_manager.dart';
 class ZoneContentService {
   static final ZoneContentService instance = ZoneContentService._init();
   ZoneContentService._init();
+
+  static final Set<int> _activeDownloads = {};
 
   Timer? _timer;
   bool _isSyncing = false;
@@ -22,7 +26,7 @@ class ZoneContentService {
     _ref = ref;
     _timer?.cancel();
     // Delay initial sync to let main layout stabilize
-    _scheduleNextSync(const Duration(seconds: 2));
+    _scheduleNextSync(const Duration(milliseconds: 500));
   }
 
   void _scheduleNextSync(Duration delay) {
@@ -65,7 +69,7 @@ class ZoneContentService {
       // Mock data for web demo mode
       final mockItem = MediaItem(
         id: 9999,
-        url: 'https://cms.thelocads.com/assets/images/logo.png',
+        url: 'https://viewsys.co.in/assets/images/logo.png',
         type: 'image',
         duration: 10,
         order: 1,
@@ -87,7 +91,7 @@ class ZoneContentService {
       // TODO: Confirm correct backend URL for "right zone content" with backend team.
       // Re-using the schedule sync endpoint as a placeholder that will return the unified JSON.
       final scheduleUrl = Uri.parse(
-        'https://cms.thelocads.com/api/player/schedule?screen_id=$screenId',
+        'https://viewsys.co.in/api/player/schedule?screen_id=$screenId',
       );
 
       final response = await http.get(
@@ -240,26 +244,58 @@ class ZoneContentService {
         }
 
         Future<void> updateProvider(dynamic provider, dynamic zData) async {
-          if (zData != null && (zData is Map<String, dynamic> || (zData is List && zData.isNotEmpty && zData.first is Map))) {
-            final Map<String, dynamic> dataMap = zData is List ? zData.first as Map<String, dynamic> : zData as Map<String, dynamic>;
-            MediaItem item = MediaItem.fromJson(dataMap);
-            
-            // If item has ID 0, the API didn't send an ID. 
-            // Give it a pseudo-random ID based on the URL so it doesn't overwrite other zones' files.
-            if (item.id == 0 && item.url.isNotEmpty) {
-               item = item.copyWith(id: item.url.hashCode.abs());
-            }
-            
-            // If it's a video or image, download it completely BEFORE pushing to the UI to avoid network stuttering
-            if (!kIsWeb && (item.type == 'video' || item.type == 'image') && item.url.isNotEmpty) {
-              final localPath = await FileManager.instance.downloadFile(item.url, item.id, itemType: item.type);
-              if (localPath != null) {
-                item = item.copyWith(localPath: localPath);
+          if (zData != null && (zData is Map<String, dynamic> || (zData is List && zData.isNotEmpty))) {
+            final List<dynamic> dataList = zData is List ? zData : [zData];
+            final List<MediaItem> processedItems = [];
+
+            for (var dataMap in dataList) {
+              if (dataMap is! Map<String, dynamic>) continue;
+              MediaItem item = MediaItem.fromJson(dataMap);
+              
+              if (item.id == 0 && item.url.isNotEmpty) {
+                 item = item.copyWith(id: item.url.hashCode.abs());
               }
+
+              if (!kIsWeb && (item.type == 'video' || item.type == 'image') && item.url.isNotEmpty) {
+                final dir = await getApplicationDocumentsDirectory();
+                final mediaDir = Directory(p.join(dir.path, 'media'));
+                final encodedUrl = item.url.trim().replaceAll(' ', '%20');
+                String extension = p.extension(Uri.parse(encodedUrl).path);
+                if (extension.isEmpty) {
+                  extension = item.type == 'video' ? '.mp4' : '.jpeg';
+                }
+                final expectedLocalPath = p.join(mediaDir.path, 'media_${item.id}$extension');
+                final file = File(expectedLocalPath);
+
+                if (file.existsSync() && file.lengthSync() > 0) {
+                  item = item.copyWith(localPath: expectedLocalPath);
+                } else {
+                  if (!_activeDownloads.contains(item.id)) {
+                    _activeDownloads.add(item.id);
+                    Future.microtask(() async {
+                      try {
+                        final localPath = await FileManager.instance.downloadFile(item.url, item.id, itemType: item.type);
+                        if (localPath != null && activeRef.context.mounted) {
+                          final currentState = activeRef.read(provider);
+                          final updatedItems = currentState.items.map<MediaItem>((e) => e.id == item.id ? e.copyWith(localPath: localPath) : e).toList();
+                          activeRef.read(provider.notifier).updateItems(updatedItems);
+                        }
+                      } finally {
+                        _activeDownloads.remove(item.id);
+                      }
+                    });
+                  } else {
+                    print('Zone content skipping download for ${item.id} - already in progress.');
+                  }
+                }
+              }
+              processedItems.add(item);
             }
-            
-            if (activeRef.context.mounted) {
-              activeRef.read(provider.notifier).updateItem(item);
+
+            if (activeRef.context.mounted && processedItems.isNotEmpty) {
+              activeRef.read(provider.notifier).updateItems(processedItems);
+            } else if (activeRef.context.mounted) {
+              activeRef.read(provider.notifier).setLoading(false);
             }
           } else {
             if (activeRef.context.mounted) {

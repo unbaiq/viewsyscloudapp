@@ -48,6 +48,7 @@ class _PlayerShellState extends ConsumerState<PlayerShell> {
     super.initState();
     SyncService.instance.start(ref);
     HeartbeatService.instance.start(ref);
+    ZoneContentService.instance.start(ref);
 
     _startValidityTimer();
 
@@ -82,6 +83,7 @@ class _PlayerShellState extends ConsumerState<PlayerShell> {
     _validityTimer?.cancel();
     SyncService.instance.stop();
     HeartbeatService.instance.stop();
+    ZoneContentService.instance.stop();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -424,7 +426,7 @@ class _PlayerShellState extends ConsumerState<PlayerShell> {
                     ),
                     const SizedBox(width: 12),
                     Text(
-                      'Caching media... ${(playlistState.downloadProgress * 100).toStringAsFixed(0)}%',
+                      'Downloading media... ${(playlistState.downloadProgress * 100).toStringAsFixed(0)}%',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
@@ -504,31 +506,239 @@ class _PlayerShellState extends ConsumerState<PlayerShell> {
   }
 
   Widget _buildEmptyPlaceholder() {
-    return Container(
-      color: const Color(0xFF0F172A),
-      padding: const EdgeInsets.all(32),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.dashboard_customize_rounded, color: Colors.blueAccent, size: 64),
-            const SizedBox(height: 24),
-            const Text(
-              'No Content Scheduled',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+    final actState = ref.watch(activationProvider);
+    final uid = actState.deviceCode.isNotEmpty && actState.deviceCode != '------' ? actState.deviceCode : actState.screenId;
+    
+    return Scaffold(
+      backgroundColor: const Color(0xFF0F172A),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: Image.asset('assets/images/logo.png', height: 36, errorBuilder: (c,e,s) => const Icon(Icons.monitor, color: Colors.amberAccent)),
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final isLandscape = constraints.maxWidth > constraints.maxHeight;
+
+              if (isLandscape) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text('UID', style: TextStyle(color: Colors.white70, fontSize: 16)),
+                              Row(
+                                children: [
+                                  Text(uid, style: const TextStyle(color: Colors.amberAccent, fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
+                                  const SizedBox(width: 8),
+                                  const Icon(Icons.copy, color: Colors.white70, size: 18),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 32),
+                          const Text('Setup Progress', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 4),
+                          const Text('Complete the steps to start displaying your content', style: TextStyle(color: Colors.white70, fontSize: 14)),
+                          const SizedBox(height: 24),
+                          _buildSetupTimeline(),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 48),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _buildScreenGraphic(),
+                          const SizedBox(height: 24),
+                          const Text('Waiting for Content', style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 12),
+                          const Text(
+                            "You've scheduled this screen, but there is no\ncontent assigned yet.\nOnce content is scheduled, it will appear here.",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white70, fontSize: 14, height: 1.5),
+                          ),
+                          const SizedBox(height: 24),
+                          
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              }
+
+              // Portrait layout
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('UID', style: TextStyle(color: Colors.white70, fontSize: 16)),
+                      Row(
+                        children: [
+                          Text(uid, style: const TextStyle(color: Colors.amberAccent, fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
+                          const SizedBox(width: 8),
+                          const Icon(Icons.copy, color: Colors.white70, size: 18),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const Spacer(flex: 1),
+                  const Text('Setup Progress', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 4),
+                  const Text('Complete the steps to start displaying your content', style: TextStyle(color: Colors.white70, fontSize: 14)),
+                  const SizedBox(height: 24),
+                  _buildSetupTimeline(),
+                  const Spacer(flex: 2),
+                  Center(
+                    child: Column(
+                      children: [
+                        _buildScreenGraphic(),
+                        const SizedBox(height: 32),
+                        const Text('Waiting for Content', style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 12),
+                        const Text(
+                          "You've scheduled this screen, but there is no\ncontent assigned yet.\nOnce content is scheduled, it will appear here.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white70, fontSize: 14, height: 1.5),
+                        ),
+
+                      ],
+                    ),
+                  ),
+                  const Spacer(flex: 2),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSetupTimeline() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildTimelineStep(Icons.check, 'Make Screen', true),
+        _buildTimelineLine(true),
+        _buildTimelineLine(false),
+        _buildTimelineStep(Icons.access_time, 'Schedule Content', false),
+      ],
+    );
+  }
+
+  Widget _buildTimelineStep(IconData icon, String label, bool isCompleted) {
+    return Expanded(
+      flex: 3,
+      child: Column(
+        children: [
+          Container(
+            width: 28,
+            height: 28,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: isCompleted ? Colors.amberAccent : Colors.transparent,
+              border: Border.all(color: Colors.amberAccent, width: 2),
+            ),
+            child: Icon(icon, size: 16, color: isCompleted ? Colors.black : Colors.amberAccent),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            label, 
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: isCompleted ? Colors.white : Colors.white54, 
+              fontSize: 10, 
+              fontWeight: isCompleted ? FontWeight.bold : FontWeight.normal
+            )
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTimelineLine(bool isCompleted) {
+    return Expanded(
+      flex: 2,
+      child: Container(
+        height: 2,
+        margin: const EdgeInsets.only(top: 14),
+        color: isCompleted ? Colors.amberAccent : Colors.white24,
+      ),
+    );
+  }
+
+  Widget _buildScreenGraphic() {
+    return SizedBox(
+      width: 200,
+      height: 120,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            width: 180,
+            height: 110,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.white24, width: 2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white12, width: 1, style: BorderStyle.solid),
+                ),
+                child: Center(
+                  child: Container(
+                    width: 48,
+                    height: 48,
+                    decoration: const BoxDecoration(
+                      color: Colors.white12,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.hourglass_empty, color: Colors.amberAccent, size: 24),
+                  ),
+                ),
               ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              'Add slides or media schedules to this screen profile inside the central CMS dashboard.',
-              style: TextStyle(color: Colors.grey.shade400, fontSize: 13),
-              textAlign: TextAlign.center,
+          ),
+          Positioned(
+            bottom: 0,
+            child: Container(
+              width: 60,
+              height: 4,
+              color: Colors.white24,
             ),
-          ],
-        ),
+          ),
+          Positioned(
+            bottom: 4,
+            child: Container(
+              width: 16,
+              height: 8,
+              color: Colors.white24,
+            ),
+          ),
+          const Positioned(
+            right: 0,
+            bottom: 10,
+            child: Icon(Icons.spa, color: Colors.amberAccent, size: 24),
+          ),
+        ],
       ),
     );
   }

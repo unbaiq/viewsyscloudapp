@@ -47,7 +47,7 @@ class MediaItem {
   factory MediaItem.fromJson(Map<String, dynamic> json) {
     String url = json['url'] as String? ?? '';
     if (url.isNotEmpty && !url.startsWith('http://') && !url.startsWith('https://')) {
-      final baseUrl = 'https://cms.thelocads.com';
+      final baseUrl = 'https://viewsys.co.in';
       final cleanUrl = url.startsWith('/') ? url : '/$url';
       url = '$baseUrl$cleanUrl';
     }

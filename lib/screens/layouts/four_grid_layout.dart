@@ -26,21 +26,15 @@ class _FourGridLayoutState extends ConsumerState<FourGridLayout> {
   @override
   void initState() {
     super.initState();
-    ZoneContentService.instance.start(ref);
   }
 
   @override
   void dispose() {
-    ZoneContentService.instance.stop();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final topRightZoneState = ref.watch(topRightZoneProvider);
-    final bottomLeftZoneState = ref.watch(bottomLeftZoneProvider);
-    final bottomRightZoneState = ref.watch(bottomRightZoneProvider);
-
     return Column(
       children: [
         // TOP ROW
@@ -58,7 +52,7 @@ class _FourGridLayoutState extends ConsumerState<FourGridLayout> {
                 flex: 1,
                 child: Container(
                   color: Colors.black,
-                  child: ZoneMediaViewer(state: topRightZoneState),
+                  child: ZoneMediaViewer(provider: topRightZoneProvider),
                 ),
               ),
             ],
@@ -74,7 +68,7 @@ class _FourGridLayoutState extends ConsumerState<FourGridLayout> {
                 flex: 1,
                 child: Container(
                   color: Colors.black,
-                  child: ZoneMediaViewer(state: bottomLeftZoneState),
+                  child: ZoneMediaViewer(provider: bottomLeftZoneProvider),
                 ),
               ),
               // BOTTOM-RIGHT: Independent API Media
@@ -82,7 +76,7 @@ class _FourGridLayoutState extends ConsumerState<FourGridLayout> {
                 flex: 1,
                 child: Container(
                   color: Colors.black,
-                  child: ZoneMediaViewer(state: bottomRightZoneState),
+                  child: ZoneMediaViewer(provider: bottomRightZoneProvider),
                 ),
               ),
             ],

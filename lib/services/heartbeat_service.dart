@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
 import '../providers/player_provider.dart';
 
@@ -18,7 +19,7 @@ class HeartbeatService {
     _timer?.cancel();
     // Immediate call on activation, then trigger periodically
     _sendHeartbeat();
-    _timer = Timer.periodic(const Duration(minutes: 5), (_) => _sendHeartbeat());
+    _timer = Timer.periodic(const Duration(seconds: 10), (_) => _sendHeartbeat());
   }
 
   /// Cancels telemetry heartbeat checker execution.
@@ -36,21 +37,24 @@ class HeartbeatService {
 
     final coords = await _determinePosition();
     final screenIdInt = int.tryParse(state.screenId) ?? 0;
+    final Map<String, dynamic> bodyData = {
+      'screen_id': screenIdInt,
+      'app_version': '1.0',
+    };
+    if (coords != null) {
+      bodyData['latitude'] = coords['latitude'];
+      bodyData['longitude'] = coords['longitude'];
+    }
 
     try {
-      final url = Uri.parse('https://cms.thelocads.com/api/player/heartbeat');
+      final url = Uri.parse('https://viewsys.co.in/api/player/heartbeat');
       final response = await http.post(
         url,
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-        body: jsonEncode({
-          'screen_id': screenIdInt,
-          'app_version': '1.0',
-          'latitude': coords['latitude'],
-          'longitude': coords['longitude'],
-        }),
+        body: jsonEncode(bodyData),
       );
 
       if (response.statusCode == 200) {
@@ -63,32 +67,31 @@ class HeartbeatService {
     }
   }
 
-  /// Determines geolocation. Falls back to default values if permission is denied/service is disabled.
-  Future<Map<String, double>> _determinePosition() async {
-    const defaultCoords = {'latitude': 28.61, 'longitude': 77.23};
+  /// Determines geolocation exactly. Returns null if permission is denied/service is disabled.
+  Future<Map<String, double>?> _determinePosition() async {
     try {
       final serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) return defaultCoords;
+      if (!serviceEnabled) return null;
 
-      var permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) return defaultCoords;
+      var status = await Permission.location.status;
+      if (status.isDenied) {
+        status = await Permission.location.request();
+        if (status.isDenied) return null;
       }
 
-      if (permission == LocationPermission.deniedForever) return defaultCoords;
+      if (status.isPermanentlyDenied) return null;
 
       final position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.low,
-        timeLimit: const Duration(seconds: 4),
+        desiredAccuracy: LocationAccuracy.high,
+        timeLimit: const Duration(seconds: 15),
       );
       return {
         'latitude': position.latitude,
         'longitude': position.longitude,
       };
     } catch (e) {
-      print('Geolocation lookup failure, using fallbacks: $e');
-      return defaultCoords;
+      print('Geolocation lookup failure: $e');
+      return null;
     }
   }
 }

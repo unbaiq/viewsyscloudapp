@@ -25,19 +25,15 @@ class _MenuBoardLayoutState extends ConsumerState<MenuBoardLayout> {
   @override
   void initState() {
     super.initState();
-    ZoneContentService.instance.start(ref);
   }
 
   @override
   void dispose() {
-    ZoneContentService.instance.stop();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final zoneState = ref.watch(leftZoneProvider);
-
     return Row(
       children: [
         // LEFT ZONE (~30%): Independent API Media
@@ -45,7 +41,7 @@ class _MenuBoardLayoutState extends ConsumerState<MenuBoardLayout> {
           flex: _flexLeft,
           child: Container(
             color: Colors.black,
-            child: ZoneMediaViewer(state: zoneState),
+            child: ZoneMediaViewer(provider: leftZoneProvider),
           ),
         ),
 

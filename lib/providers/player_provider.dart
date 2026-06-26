@@ -244,7 +244,7 @@ class ActivationNotifier extends StateNotifier<ActivationState> {
     }
 
     try {
-      final url = Uri.parse('https://cms.thelocads.com/api/player/login');
+      final url = Uri.parse('https://viewsys.co.in/api/player/login');
       final response = await http.post(
         url,
         headers: {
@@ -403,7 +403,7 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
         final mockItems = [
           MediaItem(
             id: 991,
-            url: 'https://cms.thelocads.com/assets/images/logo.png',
+            url: 'https://viewsys.co.in/assets/images/logo.png',
             type: 'image',
             duration: 10,
             order: 1,
@@ -416,7 +416,7 @@ class PlaylistNotifier extends StateNotifier<PlaylistState> {
           ),
           MediaItem(
             id: 992,
-            url: 'https://cms.thelocads.com/assets/images/logo.png',
+            url: 'https://viewsys.co.in/assets/images/logo.png',
             type: 'image',
             duration: 10,
             order: 2,

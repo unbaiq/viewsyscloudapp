@@ -185,7 +185,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
         }
 
         _controller!.addListener(_videoListener);
-        await _controller!.initialize();
+        await _controller!.initialize().timeout(const Duration(seconds: 15));
 
         if (mounted) {
           setState(() {
@@ -193,12 +193,22 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
           });
 
           _updateLoopingState();
+
+          final layout = ref.read(activationProvider).layout;
+          final singleZoneLayouts = const ['fullscreen', 'ticker', 'header'];
+          final currentActive = ref.read(activeVideoCountProvider);
+          final shouldMute = singleZoneLayouts.contains(layout) ? false : currentActive > 1;
+          _controller!.setVolume(shouldMute ? 0.0 : 1.0);
+
           _controller!.play();
         }
       }
     } catch (e) {
       print('Video controller initialization failure: $e');
-      ref.read(playlistProvider.notifier).handleCorruptVideo(widget.item.id);
+      final playlistState = ref.read(playlistProvider);
+      if (playlistState.items.any((item) => item.id == widget.item.id)) {
+        ref.read(playlistProvider.notifier).handleCorruptVideo(widget.item.id);
+      }
 
       if (mounted) {
         setState(() {
@@ -217,7 +227,10 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
 
     if (_controller!.value.hasError) {
       print('Video playback error: ${_controller!.value.errorDescription}');
-      ref.read(playlistProvider.notifier).handleCorruptVideo(widget.item.id);
+      final playlistState = ref.read(playlistProvider);
+      if (playlistState.items.any((item) => item.id == widget.item.id)) {
+        ref.read(playlistProvider.notifier).handleCorruptVideo(widget.item.id);
+      }
 
       _controller!.removeListener(_videoListener);
       widget.onComplete();
@@ -247,7 +260,9 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
     // Dynamic audio muting: if more than 1 video is rendering, mute all.
     ref.listen<int>(activeVideoCountProvider, (previous, next) {
       if (_controller != null && _controller!.value.isInitialized) {
-        final shouldMute = next > 1;
+        final layout = ref.read(activationProvider).layout;
+        final singleZoneLayouts = const ['fullscreen', 'ticker', 'header'];
+        final shouldMute = singleZoneLayouts.contains(layout) ? false : next > 1;
         if ((_controller!.value.volume == 0.0) != shouldMute) {
           _controller!.setVolume(shouldMute ? 0.0 : 1.0);
           print(
@@ -258,7 +273,9 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
     });
 
     final activeVideoCount = ref.watch(activeVideoCountProvider);
-    final isMuted = activeVideoCount > 1;
+    final layout = ref.watch(activationProvider).layout;
+    final singleZoneLayouts = const ['fullscreen', 'ticker', 'header'];
+    final isMuted = singleZoneLayouts.contains(layout) ? false : activeVideoCount > 1;
 
     if (_controller != null &&
         _controller!.value.isInitialized &&
@@ -331,17 +348,14 @@ class VideoFrameRegistry {
   
   GlobalKey? keyFor(int itemId) => _keys[itemId];
   
-  Future<Map<int, Uint8List>> captureAllFrames() async {
-    final Map<int, Uint8List> frames = {};
+  Future<Map<int, ui.Image>> captureAllFrames() async {
+    final Map<int, ui.Image> frames = {};
     for (final entry in _keys.entries) {
       try {
         final boundary = entry.value.currentContext?.findRenderObject() as RenderRepaintBoundary?;
         if (boundary != null) {
-          final image = await boundary.toImage(pixelRatio: 2.0);
-          final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-          if (byteData != null) {
-            frames[entry.key] = byteData.buffer.asUint8List();
-          }
+          final image = await boundary.toImage(pixelRatio: 1.0);
+          frames[entry.key] = image;
         }
       } catch (e) {
         print('Error capturing video frame for ${entry.key}: $e');

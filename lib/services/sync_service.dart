@@ -116,7 +116,7 @@ class SyncService {
   Future<void> _runSyncPing(String screenId, int localVersion) async {
     try {
       final syncUrl = Uri.parse(
-        'https://cms.thelocads.com/api/player/sync?screen_id=$screenId&version=$localVersion',
+        'https://viewsys.co.in/api/player/sync?screen_id=$screenId&version=$localVersion',
       );
 
       final response = await http.get(
@@ -207,12 +207,12 @@ class SyncService {
             parsedBottomRightUrl = inner['bottom_right_url']?.toString() ?? inner['grid_bottom_right_url']?.toString() ?? inner['zone4_url']?.toString();
           }
 
-          parsedSidebarUrl ??= 'https://cms.thelocads.com/clusters';
-          parsedCenterUrl ??= 'https://cms.thelocads.com/clusters';
-          parsedRightUrl ??= 'https://cms.thelocads.com/clusters';
-          parsedTopRightUrl ??= 'https://cms.thelocads.com/clusters';
-          parsedBottomLeftUrl ??= 'https://cms.thelocads.com/clusters';
-          parsedBottomRightUrl ??= 'https://cms.thelocads.com/clusters';
+          parsedSidebarUrl ??= 'https://viewsys.co.in/clusters';
+          parsedCenterUrl ??= 'https://viewsys.co.in/clusters';
+          parsedRightUrl ??= 'https://viewsys.co.in/clusters';
+          parsedTopRightUrl ??= 'https://viewsys.co.in/clusters';
+          parsedBottomLeftUrl ??= 'https://viewsys.co.in/clusters';
+          parsedBottomRightUrl ??= 'https://viewsys.co.in/clusters';
 
           final currentActState = currentRefAfterFetch.read(activationProvider);
           layout = layout?.trim().toLowerCase();
@@ -341,7 +341,7 @@ class SyncService {
     print('Fetching playlist schedule for Screen ID: $screenId...');
     try {
       final scheduleUrl = Uri.parse(
-        'https://cms.thelocads.com/api/player/schedule?screen_id=$screenId',
+        'https://viewsys.co.in/api/player/schedule?screen_id=$screenId',
       );
 
       final response = await http.get(
@@ -413,12 +413,12 @@ class SyncService {
             parsedBottomRightUrl = inner['bottom_right_url']?.toString() ?? inner['grid_bottom_right_url']?.toString() ?? inner['zone4_url']?.toString();
           }
 
-          parsedSidebarUrl ??= 'https://cms.thelocads.com/clusters';
-          parsedCenterUrl ??= 'https://cms.thelocads.com/clusters';
-          parsedRightUrl ??= 'https://cms.thelocads.com/clusters';
-          parsedTopRightUrl ??= 'https://cms.thelocads.com/clusters';
-          parsedBottomLeftUrl ??= 'https://cms.thelocads.com/clusters';
-          parsedBottomRightUrl ??= 'https://cms.thelocads.com/clusters';
+          parsedSidebarUrl ??= 'https://viewsys.co.in/clusters';
+          parsedCenterUrl ??= 'https://viewsys.co.in/clusters';
+          parsedRightUrl ??= 'https://viewsys.co.in/clusters';
+          parsedTopRightUrl ??= 'https://viewsys.co.in/clusters';
+          parsedBottomLeftUrl ??= 'https://viewsys.co.in/clusters';
+          parsedBottomRightUrl ??= 'https://viewsys.co.in/clusters';
 
           final currentActState = currentRef.read(activationProvider);
           layout = layout?.trim().toLowerCase();

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
+import '../utils/uid_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -51,10 +51,8 @@ class _ActivationScreenState extends ConsumerState<ActivationScreen> with Single
   Future<void> _initActivationCode() async {
     final prefs = await SharedPreferences.getInstance();
     String? code = prefs.getString('activation_code');
-    if (code == null || code.isEmpty || code.length != 6) {
-      final random = Random();
-      final number = random.nextInt(900000) + 100000;
-      code = number.toString();
+    if (code == null || code.isEmpty || code.length != 16) {
+      code = UidGenerator.generateUid();
       await prefs.setString('activation_code', code);
     }
     if (mounted) {
@@ -67,9 +65,7 @@ class _ActivationScreenState extends ConsumerState<ActivationScreen> with Single
 
   Future<void> _generateNewCode() async {
     final prefs = await SharedPreferences.getInstance();
-    final random = Random();
-    final number = random.nextInt(900000) + 100000;
-    final code = number.toString();
+    final code = UidGenerator.generateUid();
     
     await prefs.setString('activation_code', code);
     await prefs.setBool('is_activated', false);
@@ -99,7 +95,7 @@ class _ActivationScreenState extends ConsumerState<ActivationScreen> with Single
     String layout = 'fullscreen';
 
     try {
-      final url = Uri.parse('https://cms.thelocads.com/api/player/login');
+      final url = Uri.parse('https://viewsys.co.in/api/player/login');
       final response = await http.post(
         url,
         headers: {
@@ -348,24 +344,10 @@ class _ActivationScreenState extends ConsumerState<ActivationScreen> with Single
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         // App Logo Header
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.blue.withOpacity(0.1),
-                                blurRadius: 16,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Image.asset(
-                            'assets/images/logo.png',
-                            height: 36,
-                            fit: BoxFit.contain,
-                          ),
+                        Image.asset(
+                          'assets/images/logo.png',
+                          height: 80,
+                          fit: BoxFit.contain,
                         ),
                         const SizedBox(height: 48),
 
@@ -428,6 +410,37 @@ class _ActivationScreenState extends ConsumerState<ActivationScreen> with Single
                                 highlight: '',
                                 instructionSuffix: '',
                               ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 12),
+                                child: Divider(color: Colors.white10, height: 1),
+                              ),
+                              _buildStepRow(
+                                stepNumber: '4',
+                                instruction: 'Create a ',
+                                highlight: 'cluster',
+                                instructionSuffix: '.',
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 12),
+                                child: Divider(color: Colors.white10, height: 1),
+                              ),
+                              _buildStepRow(
+                                stepNumber: '5',
+                                instruction: 'Create a ',
+                                highlight: 'playlist',
+                                instructionSuffix: '.',
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 12),
+                                child: Divider(color: Colors.white10, height: 1),
+                              ),
+                              _buildStepRow(
+                                stepNumber: '6',
+                                instruction: 'Create a ',
+                                highlight: 'schedule',
+                                instructionSuffix: '.',
+                              ),
+
                             ],
                           ),
                         ),
@@ -512,64 +525,7 @@ class _ActivationScreenState extends ConsumerState<ActivationScreen> with Single
                             ),
                           ),
                         ),
-                        const SizedBox(height: 24),
 
-                        // Action Buttons
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextButton.icon(
-                              onPressed: _copyToClipboard,
-                              icon: const Icon(Icons.copy_rounded, size: 18, color: Colors.blueAccent),
-                              label: const Text(
-                                'Copy Code',
-                                style: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.w600),
-                              ),
-                              style: TextButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            TextButton.icon(
-                              onPressed: _generateNewCode,
-                              icon: const Icon(Icons.refresh_rounded, size: 18, color: Colors.blueAccent),
-                              label: const Text(
-                                'Refresh Code',
-                                style: TextStyle(color: Colors.blueAccent, fontWeight: FontWeight.w600),
-                              ),
-                              style: TextButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 48),
-
-                        // Simulation button
-                        ElevatedButton.icon(
-                          onPressed: _simulateSuccessfulActivation,
-                          icon: const Icon(Icons.check_circle_rounded, size: 20),
-                          label: const Text(
-                            'Simulate Activation Pairing',
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueAccent,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 18),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            elevation: 8,
-                            shadowColor: Colors.blueAccent.withOpacity(0.3),
-                          ),
-                        ),
                       ],
                     ),
                   ),

@@ -12,13 +12,13 @@ class ScreenshotService {
   /// Captures the current player screen repaint boundary and sends PNG bytes to `/screenshot`.
   static Future<void> captureAndUpload(String screenId) async {
     try {
-      final Uint8List? baseImageBytes = await screenshotController.capture(pixelRatio: 2.0);
+      final Uint8List? baseImageBytes = await screenshotController.capture(pixelRatio: 1.0);
       if (baseImageBytes == null) {
         print('Screenshot capture failed: baseImageBytes is null.');
         return;
       }
 
-      final Map<int, Uint8List> videoFrames = await VideoFrameRegistry.instance.captureAllFrames();
+      final Map<int, ui.Image> videoFrames = await VideoFrameRegistry.instance.captureAllFrames();
 
       if (videoFrames.isEmpty) {
         await _upload(screenId, baseImageBytes);
@@ -39,7 +39,7 @@ class ScreenshotService {
       // Composite each active video frame
       for (final entry in videoFrames.entries) {
         final int itemId = entry.key;
-        final Uint8List frameBytes = entry.value;
+        final ui.Image frameImage = entry.value;
 
         final GlobalKey? key = VideoFrameRegistry.instance.keyFor(itemId);
         if (key != null && key.currentContext != null) {
@@ -49,15 +49,11 @@ class ScreenshotService {
             final Size size = box.size;
 
             final Rect videoRect = Rect.fromLTWH(
-              position.dx * 2.0,
-              position.dy * 2.0,
-              size.width * 2.0,
-              size.height * 2.0,
+              position.dx * 1.0,
+              position.dy * 1.0,
+              size.width * 1.0,
+              size.height * 1.0,
             );
-
-            final ui.Codec frameCodec = await ui.instantiateImageCodec(frameBytes);
-            final ui.FrameInfo frameInfo = await frameCodec.getNextFrame();
-            final ui.Image frameImage = frameInfo.image;
 
             final Rect srcRect = Rect.fromLTWH(0, 0, frameImage.width.toDouble(), frameImage.height.toDouble());
             canvas.drawImageRect(frameImage, srcRect, videoRect, Paint());
@@ -85,7 +81,7 @@ class ScreenshotService {
   /// Sends the captured binary PNG bytes using multipart/form-data via http.
   static Future<bool> _upload(String screenId, Uint8List bytes) async {
     try {
-      final uri = Uri.parse('https://cms.thelocads.com/api/player/screenshot');
+      final uri = Uri.parse('https://viewsys.co.in/api/player/screenshot');
       final request = http.MultipartRequest('POST', uri);
       request.headers['Accept'] = 'application/json';
       request.fields['screen_id'] = screenId;

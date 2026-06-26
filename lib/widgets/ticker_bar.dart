@@ -111,8 +111,8 @@ class _TickerBarState extends State<TickerBar> with TickerProviderStateMixin {
     final List<Widget> segments = [];
     for (int i = 0; i < widget.items.length; i++) {
       final item = widget.items[i];
-      final bg = _parseColor(item.bgColor, Colors.white);
-      final fg = _parseColor(item.textColor, Colors.black);
+      final bg = _parseColor(item.bgColor, const Color.fromARGB(221, 0, 28, 127));
+      final fg = _parseColor(item.textColor, const Color.fromARGB(255, 255, 255, 255));
       segments.add(
         Container(
           color: bg,

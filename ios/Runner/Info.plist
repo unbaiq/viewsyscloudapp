@@ -66,5 +66,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app requires access to your location to provide accurate telemetry and location-based content.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app requires access to your location to provide accurate telemetry even when running in the background.</string>
 </dict>
 </plist>

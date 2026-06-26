@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'activation_screen.dart';
 import 'player_shell.dart';
 
@@ -66,6 +68,17 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   }
 
   void _navigateToNext() async {
+    if (!mounted) return;
+
+    try {
+      var status = await Permission.location.status;
+      if (status.isDenied) {
+        await Permission.location.request();
+      }
+    } catch (e) {
+      print('Location permission request error: $e');
+    }
+
     if (!mounted) return;
 
     final prefs = await SharedPreferences.getInstance();

@@ -9,6 +9,7 @@ import '../../services/zone_content_service.dart';
 import '../../widgets/video_player_widget.dart';
 import '../../widgets/shimmer_placeholder.dart';
 import '../../widgets/cms_webview_panel.dart';
+import '../../widgets/zone_media_viewer.dart';
 
 class HalfSplitLayout extends ConsumerStatefulWidget {
   final Widget baseMediaSurface;
@@ -26,19 +27,15 @@ class _HalfSplitLayoutState extends ConsumerState<HalfSplitLayout> {
   @override
   void initState() {
     super.initState();
-    ZoneContentService.instance.start(ref);
   }
 
   @override
   void dispose() {
-    ZoneContentService.instance.stop();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final zoneState = ref.watch(zoneContentProvider);
-
     return Row(
       children: [
         // LEFT ZONE (50%): Existing base media surface
@@ -58,112 +55,10 @@ class _HalfSplitLayoutState extends ConsumerState<HalfSplitLayout> {
           flex: 1,
           child: Container(
             color: Colors.black,
-            child: _buildRightZoneContent(zoneState),
+            child: ZoneMediaViewer(provider: zoneContentProvider),
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildRightZoneContent(ZoneContentState state) {
-    if (state.isLoading) {
-      return const Center(child: ShimmerPlaceholder());
-    }
-
-    if (state.errorMessage != null) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.error_outline, color: Colors.redAccent, size: 40),
-            const SizedBox(height: 12),
-            Text(
-              'Failed to load zone content',
-              style: const TextStyle(color: Colors.white70, fontSize: 13),
-            ),
-          ],
-        ),
-      );
-    }
-
-    if (state.item == null) {
-      return const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.image_not_supported_outlined, color: Colors.white24, size: 40),
-            SizedBox(height: 12),
-            Text(
-              'No content configured',
-              style: TextStyle(color: Colors.white54, fontSize: 13),
-            ),
-          ],
-        ),
-      );
-    }
-
-    return _buildMediaView(state.item!);
-  }
-
-  Widget _buildMediaView(MediaItem item) {
-    if (item.type == 'video') {
-      return VideoPlayerWidget(
-        key: ValueKey('zone_video_${item.id}_${item.localPath ?? item.url}'),
-        item: item,
-        forceLoop: true,
-        onComplete: () {
-          // Loop the video until new content is fetched
-        },
-      );
-    } else {
-      return _buildImageView(item);
-    }
-  }
-
-  Widget _buildImageView(MediaItem item) {
-    final fileExists = item.localPath != null &&
-        item.localPath!.isNotEmpty &&
-        !kIsWeb &&
-        File(item.localPath!).existsSync() &&
-        File(item.localPath!).lengthSync() > 0;
-
-    if (!fileExists) {
-      return Image.network(
-        item.url,
-        fit: BoxFit.cover,
-        width: double.infinity,
-        height: double.infinity,
-        errorBuilder: (context, error, stackTrace) =>
-            _buildErrorPlaceholder('Image failed to stream'),
-      );
-    }
-
-    return Image.file(
-      File(item.localPath!),
-      fit: BoxFit.cover,
-      width: double.infinity,
-      height: double.infinity,
-      errorBuilder: (context, error, stackTrace) =>
-          _buildErrorPlaceholder('Cached image failed to read'),
-    );
-  }
-
-  Widget _buildErrorPlaceholder(String error) {
-    return Container(
-      color: Colors.black,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.error_outline_rounded, color: Colors.redAccent, size: 40),
-            const SizedBox(height: 12),
-            Text(
-              error,
-              style: const TextStyle(color: Colors.white70, fontSize: 13),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
